@@ -1,5 +1,17 @@
 [paypal]: https://paypal.me/GerdNaschenweng
 
+Gunbot Edition Docker
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
+[![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own version badge on microbadger.com")
+[![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
+[![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
+
+Compatible with Gunbot version : v11.7.6
+`https://github.com/GuntharDeNiro/BTCT/releases`
+
+
 <p align="center">
 <a href="https://wiki.gunthy.org/"><img src="https://gblobscdn.gitbook.com/assets%2F-L_Rejuz9K0BDQxSQvUH%2F-MP8i9_pHeuD_bvxnAAl%2F-MP8j1c3cbIvuS9yckyg%2Fimage.png?alt=media&token=90c41159-642e-4978-ba26-ee6c7713ee2a" alt="Gunbot Docker File"></a><br/>
 <b>Gunbot Dockerfile with glibc and colorised output</b><br/>
