@@ -33,7 +33,9 @@ ___
 To run Gunbot via Docker download the contents of this repo. Then:
 
 1) Adjust the mountpoints of `/volume1/docker/gunbot/`in docker-compose.yml
+
 2) Adjust the download Link in `Dockerfile` for `INSTALL_URL` - latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
+
 3) Place your config.js into `/config`
 
 
