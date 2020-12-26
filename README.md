@@ -8,7 +8,7 @@ Gunbot Edition Docker
 [![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 [![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 
-Compatible with Gunbot version : v11.7.6
+Compatible with Gunbot version : Gunbot v21
 `https://github.com/GuntharDeNiro/BTCT/releases`
 
 
