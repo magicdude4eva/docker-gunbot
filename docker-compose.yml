@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   gunbot:
-    image: gunbot:latest
+    image: magicdude4eva/gunbot-colorised
     build: .
     container_name: gunbot
     restart: always
