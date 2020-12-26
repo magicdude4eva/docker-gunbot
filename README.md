@@ -10,6 +10,12 @@ ___
 :beer: **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
 ___
 
+## Docker image with colorised output
+
+<p align="center">
+<a href="https://wiki.gunthy.org/"><img src="https://github.com/magicdude4eva/docker-gunbot/raw/main/gunbot.png" alt="Gunbot Colorised Output"></a><br/>
+<b>Gunbot Dockerfile with glibc and colorised output</b><br/>
+</p>
 
 ## Setup On Synology
 To run Gunbot via Docker download the contents of this repo. Then:
