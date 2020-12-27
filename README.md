@@ -1,6 +1,6 @@
 [paypal]: https://paypal.me/GerdNaschenweng
 
-Gunbot Edition Docker
+Gunbot Edition Docker for Synology NAS
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
 [![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
