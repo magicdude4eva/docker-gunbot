@@ -3,6 +3,9 @@ FROM bitnami/minideb:latest
 ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2110/lin_v14.zip"
 ARG DEBIAN_FRONTEND=noninteractive
 
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF org.label-schema.vcs-url="https://github.com/magicdude4eva/docker-gunbot"
+
 ## Setup Enviroment
 ENV TZ=Europe/Vienna \
   TERM=xterm-256color \
