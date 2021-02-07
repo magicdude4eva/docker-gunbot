@@ -1,8 +1,9 @@
-FROM bitnami/minideb:stretch
+FROM bitnami/minideb:latest
 
-#ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2046/lin.zip"
-ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2100/lin_v14.zip"
+ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2110/lin_v14.zip"
+ARG DEBIAN_FRONTEND=noninteractive
 
+## Setup Enviroment
 ENV TZ=Europe/Vienna \
   TERM=xterm-256color \
   FORCE_COLOR=true \
@@ -10,13 +11,21 @@ ENV TZ=Europe/Vienna \
   MOCHA_COLORS=true \
   INSTALL_URL=${INSTALL_URL}
 
+## Setup pre-requisites
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get -y update && \
- apt-get -y upgrade && \
- apt-get install -y unzip curl fontconfig && \
+ apt-get install -y apt-utils
+
+## Install additional libraries and upgrade
+RUN apt-get -y upgrade && \
+ apt-get install -y unzip curl fontconfig fonts-dejavu-extra && \
  apt-get clean -y && \
  apt-get autoclean -y && \
  apt-get autoremove -y
 
+RUN fc-cache -fv
+
+## Install Gunbot
 WORKDIR /tmp
 RUN curl -Lo /tmp/lin.zip ${INSTALL_URL}
 

@@ -1,0 +1,269 @@
+{
+    "Add pairs": {
+        "pairs": {
+            "exclude": "BRD,VET,TROY,ONE,RVN,ERD,ADA",
+            "include": "BTC-",
+            "maxPairs": 10,
+            "exchange": "binance"
+        },
+        "filters": {
+            "price": {
+                "type": "minPrice",
+                "min": 0.000001
+            },
+            "price2": {
+                "type": "maxPrice",
+                "max": 0.05
+            },
+            "volume": {
+                "type": "minVolume24h",
+                "min": 120
+            },
+            "volume2": {
+                "type": "maxVolume24h",
+                "max": 1500
+            },
+            "volatility": {
+                "type": "minVolatilityPct24h",
+                "min": 2
+            },
+            "volatility2": {
+                "type": "maxVolatilityPct24h",
+                "max": 6
+            },
+            "slope": {
+                "type": "minSlopePctInterval",
+                "min": 0.009
+            },
+            "slope2": {
+                "type": "maxSlopePctInterval",
+                "max": 0.06
+            },
+            "change": {
+                "type": "minPricePctChangeInterval",
+                "min": 0.5
+            },
+            "change2": {
+                "type": "maxPricePctChangeInterval",
+                "max": 5
+            },
+            "volumerank": {
+                "type": "maxVolumeRank",
+                "min": 40
+            },
+            "spread": {
+                "type": "maxSpreadPct",
+                "max": 0.6
+            }
+        },
+        "schedule": "*/5 * * * *",
+        "type": "addPairs",
+        "strategy": "experimental",
+        "snapshots": 144,
+        "debug": false,
+        "setITB": true,
+        "resume": true,
+        "enabled": true
+    },
+    "Remove pairs": {
+        "pairs": {
+            "exclude": "",
+            "noBag": true,
+            "removeDisabled": true,
+            "exchange": "binance",
+            "notRemoveBefore": 60
+        },
+        "filters": {
+            "change": {
+                "type": "maxPricePctChangeInterval",
+                "max": 0.01
+            },
+            "volumerank": {
+                "type": "minVolumeRank",
+                "min": 41
+            },
+            "spread": {
+                "type": "minSpreadPct",
+                "min": 0.6
+            }
+        },
+        "schedule": "*/15 * * * *",
+        "type": "removePairs",
+        "snapshots": 16,
+        "enabled": true,
+        "debug": true
+    },
+    "Change settings after first DCA": {
+        "pairs": {
+            "exclude": "",
+            "include": "BTC-",
+            "exchange": "binance"
+        },
+        "filters": {
+            "ducount": {
+                "type": "exact",
+                "ducount": 1
+            }
+        },
+        "overrides": {
+            "TRAIL_ME_BUY_RANGE": 1.5,
+            "DU_BUYDOWN": 8,
+            "GAIN": 0.1,
+            "SELL_RANGE": 0.2
+        },
+        "clearOverrides": false,
+        "schedule": "* * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "resume": true,
+        "enabled": true
+    },
+    "Change settings after completed DCA": {
+        "pairs": {
+            "exclude": "",
+            "include": "BTC-",
+            "exchange": "binance"
+        },
+        "filters": {
+            "dudone": {
+                "type": "exact",
+                "dudone": true
+            }
+        },
+        "overrides": {
+            "SELL_METHOD": "gain",
+            "GAIN": 0.1,
+            "TRAIL_ME_SELL": false,
+            "STOCHRSI_ENABLED": false
+        },
+        "clearOverrides": false,
+        "schedule": "* * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "resume": true,
+        "enabled": true
+    },
+    "Disable buy": {
+        "pairs": {
+            "exclude": "",
+            "include": "BTC-",
+            "exchange": "binance"
+        },
+        "filters": {
+            "variable": {
+                "type": "variableExact",
+                "pnd": true
+            }
+        },
+        "overrides": {
+            "BUY_ENABLED": false
+        },
+        "clearOverrides": false,
+        "schedule": "* * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "resume": true,
+        "enabled": true
+    },
+    "Enable buy": {
+        "pairs": {
+            "exclude": "",
+            "include": "BTC-",
+            "exchange": "binance"
+        },
+        "filters": {
+            "variable": {
+                "type": "variableExact",
+                "pnd": false
+            }
+        },
+        "overrides": {
+            "BUY_ENABLED": true
+        },
+        "clearOverrides": false,
+        "schedule": "* * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "resume": true,
+        "enabled": true
+    },
+    "BTC pump": {
+        "pairs": {
+            "exclude": "USDT-BTCUP,USDT-BTCDOWN",
+            "include": "USDT-BTC",
+            "exchange": "binance",
+            "maxPairs": 0
+        },
+        "filters": {
+            "Min Price pct Change 60min": {
+                "type": "minPricePctChangeInterval",
+                "min": 0.4
+            }
+        },
+        "overrides": {},
+        "setVariable": {
+            "pnd": true
+        },
+        "clearOverrides": false,
+        "schedule": "*/60 * * * * *",
+        "type": "addPairs",
+        "onStart": false,
+        "debug": false,
+        "snapshots": 60,
+        "resume": true
+    },
+    "BTC dump": {
+        "pairs": {
+            "exclude": "USDT-BTCUP,USDT-BTCDOWN",
+            "include": "USDT-BTC",
+            "exchange": "binance",
+            "maxPairs": 0
+        },
+        "filters": {
+            "Min Price pct Change 60min": {
+                "type": "maxPricePctChangeInterval",
+                "max": -0.4
+            }
+        },
+        "overrides": {},
+        "setVariable": {
+            "pnd": true
+        },
+        "clearOverrides": false,
+        "schedule": "*/60 * * * * *",
+        "type": "addPairs",
+        "onStart": false,
+        "debug": false,
+        "snapshots": 60,
+        "resume": true
+    },
+    "BTC PnD reset": {
+        "pairs": {
+            "exclude": "USDT-BTCUP,USDT-BTCDOWN",
+            "include": "USDT-BTC",
+            "exchange": "binance",
+            "maxPairs": 0
+        },
+        "filters": {
+            "Max Price pct Change 60min LONG": {
+                "type": "maxPricePctChangeInterval",
+                "max": 0.4
+            },
+            "Max Price pct Change 60min SHORT": {
+                "type": "minPricePctChangeInterval",
+                "min": -0.4
+            }
+        },
+        "overrides": {},
+        "setVariable": {
+            "pnd": false
+        },
+        "clearOverrides": false,
+        "schedule": "*/60 * * * * *",
+        "type": "addPairs",
+        "onStart": false,
+        "debug": false,
+        "snapshots": 60,
+        "resume": true
+    }
+}
