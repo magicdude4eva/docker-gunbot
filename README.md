@@ -1,6 +1,6 @@
 [paypal]: https://paypal.me/GerdNaschenweng
 
-Gunbot Edition Docker for Synology NAS
+# Gunbot Docker Edition for Synology NAS
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
 [![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
@@ -8,13 +8,17 @@ Gunbot Edition Docker for Synology NAS
 [![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 [![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 
-Compatible with Gunbot version : Gunbot v21
-`https://github.com/GuntharDeNiro/BTCT/releases`
+:white_check_mark: Compatible with Gunbot version : Gunbot v21 [https://github.com/GuntharDeNiro/BTCT/releases](https://github.com/GuntharDeNiro/BTCT/releases)
 
+:white_check_mark: Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
+
+Although this Docker Image has been tested on a Synology NAS, it will work essentially in any Docker-environment with the adjustment of the mount-point needed. I have provided a base-configuration under `/config/` which I suggest you read and adjust. If you use the autoconfig provided, and once you have added your Binance credentials, the BOT will start trading. The only thing to adjust is your "TRADING_LIMIT" in `config/config.js` and your Telegram and Binance settings.
+
+Detailed Gunbot documentation and support is available via [https://wiki.gunthy.org/](https://wiki.gunthy.org/)
 
 <p align="center">
 <a href="https://wiki.gunthy.org/"><img src="https://gblobscdn.gitbook.com/assets%2F-L_Rejuz9K0BDQxSQvUH%2F-MP8i9_pHeuD_bvxnAAl%2F-MP8j1c3cbIvuS9yckyg%2Fimage.png?alt=media&token=90c41159-642e-4978-ba26-ee6c7713ee2a" alt="Gunbot Docker File"></a><br/>
-<b>Gunbot Dockerfile with glibc and colorised output</b><br/>
+<b>Gunbot Trading Console via Webview</b><br/>
 </p>
 
 ___
@@ -22,24 +26,37 @@ ___
 :beer: **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
 ___
 
-## Docker image with colorised output
+### I am a Gunbot Reseller and Binance Affiliate
+You need at least a Gunbot Standard License to trade on Binance and use the provided autoconfig tool which automatically trades BTC-ALT coins for you. I am an offical [Gunbot Reseller](https://gunthy.org/resellers/) and you can purchase a license straight from this link.
+
+:trophy: If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://www.binance.com/en/register?ref=WXNEJLQB).
+
+
+## Docker image with colorised output & Telegram Support
 
 <p align="center">
-<a href="https://wiki.gunthy.org/"><img src="https://github.com/magicdude4eva/docker-gunbot/raw/main/gunbot.png" alt="Gunbot Colorised Output"></a><br/>
+<a href="https://wiki.gunthy.org/"><img src="https://github.com/magicdude4eva/docker-gunbot/raw/main/gunbot-console.gif" alt="Gunbot Colorised Console Output via Docker"></a><br/>
 <b>Gunbot Dockerfile with glibc and colorised output</b><br/>
 </p>
 
+<p align="center">
+<a href="https://wiki.gunthy.org/"><img src="https://github.com/magicdude4eva/docker-gunbot/raw/main/gunbot-telegram.gif" alt="Gunbot Telegram Notifications via Docker"></a><br/>
+<b>Gunbot Dockerfile with Telegram Notifications</b><br/>
+</p>
+
+
 ## Setup On Synology
-To run Gunbot via Docker download the contents of this repo. Then:
+1) If you have a mount-point `/volume1/`, create the directory `/volume1/docker/gunbot/` and skip to Step 3)
 
-1) Adjust the mountpoints of `/volume1/docker/gunbot/`in docker-compose.yml
+2) If you do not have `/volume1/, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
 
-2) Adjust the download Link in `Dockerfile` for `INSTALL_URL` - latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
+3) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile`
 
-3) Place your config.js into `/config`
+4) Place your config.js into `/config`
 
+5) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
 
-and then execute:
+6) and then execute:
 ```
 cd /volume1/docker/gunbot/
 docker build -t gunbot .
@@ -47,6 +64,22 @@ docker-compose up -d
 docker logs -f gunbot
 ```
 
+## Updating Gunbot
+From time to time I publish updates - mostly to adjust the Linux image or to include the latest Gunbot release. You can manually update by:
+1) Stop and delete the Gunbot-Container in Synology Docker
+2) Repeat Steps 4-6 above
+
+## Telegram Configuration
+Notifications work by first creating a personal bot on Telegram, Gunbot then connects to this bot to push notifications to you.
+
+This is how to create a bot:
+* Talk to @botfather. Create a new bot with the command /newbot and choose a name and username for your bot. Save the bot token shown.
+* Talk to @myidbot to see your Chat ID, save it.
+* Enable Telegram notifications for Gunbot, and enter the token and ID you've just gathered. Use the ID for both the user and admin ID fields, this makes sure that only you can interact with the Telegram bot. Alternatively, you can set a comma separated list for Admin ID, specifying multiple IDs who may interact with the bot.
+* Start a chat with the username you've picked for your bot, and hit the start button. If you don't see a start button, write "/start" and send it as message.
+* To enable trade notifications, enable these in the settings menu inside the Telegram bot.
+* The Telegram bot is fully integrated into Gunbot. All you need to do to start the Telegram bot is enable Telegram notifications in your Gunbot settings.
+* After setting it up, type /start to your bot to open the menu.
 
 -----
 
