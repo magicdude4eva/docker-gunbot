@@ -27,10 +27,23 @@ ___
 ___
 
 ### I am a Gunbot Reseller and Binance Affiliate
-You need at least a Gunbot Standard License to trade on Binance and use the provided autoconfig tool which automatically trades BTC-ALT coins for you. I am an offical [Gunbot Reseller](https://gunthy.org/resellers/) and you can purchase a license straight from this link.
+You need at least a "Gunbot Standard" License to trade on Binance and use the provided autoconfig tool which automatically trades BTC-ALT coins for you. I am an offical [Gunbot Reseller](https://gunthy.org/resellers/) and you can purchase a license straight from the links below:
+
+
+
+| Gunbot Edition   |   Price    |  Link |
+| ---------------- |------------| ------------------------------------------------------------------------------ |
+| Gunbot Starter   | BTC 0.0100 | [gunbot/promoStarter](https://otc.gunthy.org:444/magicdude4eva/promoStarter)   |
+| Gunbot Standard  | BTC 0.0250 | [gunbot/promoStandard](https://otc.gunthy.org:444/magicdude4eva/promoStandard) |
+| Gunbot Pro       | BTC 0.0375 | [gunbot/promoPro](https://otc.gunthy.org:444/magicdude4eva/promoPro)           |
+| Gunbot Ultimate  | BTC 0.0625 | [gunbot/promoUltimate](https://otc.gunthy.org:444/magicdude4eva/promoUltimate) |
+
+<p align="center">
+(*) You can always upgrade to a higher license later - I can help you - contact me on Telegram <a href="https://t.me/magicdude4eva" title="Contact @magicdude4eva on Telegram">@magicdude4eva</a>
+</p>
+
 
 :trophy: If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://www.binance.com/en/register?ref=WXNEJLQB).
-
 
 ## Docker image with colorised output & Telegram Support
 
@@ -80,6 +93,18 @@ This is how to create a bot:
 * To enable trade notifications, enable these in the settings menu inside the Telegram bot.
 * The Telegram bot is fully integrated into Gunbot. All you need to do to start the Telegram bot is enable Telegram notifications in your Gunbot settings.
 * After setting it up, type /start to your bot to open the menu.
+
+## Overview of Gunbot Licenses
+Note: You will need to have at lease "Gunbot Standard" to support all strategies, and I strongly recommend it. If you want to trade on multiple exchanges use "Gunbot Pro" (3 API Slots) or "Gunbot Ultimate (5 API Slots)
+
+<p align="center">
+<a href="https://otc.gunthy.org:444/magicdude4eva/promoStandard"><img src="https://user-images.githubusercontent.com/1632781/107265057-18b88b80-6a44-11eb-8071-5c3f48ba4bf4.png" alt="Gunbot License differences"></a><br/>
+<b>Gunbot License differences - click to purchase a "Gunbot Standard License" or pick other licenses from above</b><br/>
+</p>
+
+
+
+
 
 -----
 
