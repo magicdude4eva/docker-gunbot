@@ -48,7 +48,7 @@ You need at least a Gunbot Standard License to trade on Binance and use the prov
 ## Setup On Synology
 1) If you have a mount-point `/volume1/`, create the directory `/volume1/docker/gunbot/` and skip to Step 3)
 
-2) If you do not have `/volume1/, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
+2) If you do not have `/volume1/`, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
 
 3) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile`
 
