@@ -103,7 +103,20 @@ Note: You will need to have at lease "Gunbot Standard" to support all strategies
 </p>
 
 
+## How does the autoconfig work?
+The idea is to have a fully automated setup for BTC-alt trading that trades relatively frequently (in tests, about 10 times per day) and only focusses on small trades with around 0.5% to 2% profit per trade.
 
+![image](https://user-images.githubusercontent.com/1632781/107397927-6940ef00-6aff-11eb-9c0f-803125b178a8.png)
+
+The setup consists of a config.js and autoconfig.json file, which do the following (summarized):
+
+`Autoconfig.json`
+- Adds & removes pairs, mainly based on their direction in the past 12h
+- Disables buying on all pairs when USDT-BTC is moving up or down more than average in the last hour
+- Changes some settings based on the DCA phase: when DCA started it increases the buydown for the second DCA order, the strategy sell criteria are set to a minimal 0.1% gain once DCA is completed.
+
+`Config.js`
+- Contains only one preconfigured trading strategy, based on buy trailing and stochrsi selling. It's very basic but does its job.
 
 
 -----
