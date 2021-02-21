@@ -27,8 +27,7 @@ ___
 ___
 
 ### I am a Gunbot Reseller and Binance Affiliate
-You need at least a "Gunbot Standard" License to trade on Binance and use the provided autoconfig tool which automatically trades BTC-ALT coins for you. I am an offical [Gunbot Reseller](https://gunthy.org/resellers/) and you can purchase a license straight from the links below:
-
+You need at least a "Gunbot Standard" License to trade on Binance and use the provided autoconfig tool which automatically trades BTC-ALT coins for you. I am an offical [Gunbot Reseller](https://gunthy.org/resellers/) and you can purchase a license straight from the links below or via [gunbot.at](https://gunbot.at/):
 
 
 | Gunbot Edition   |   Price    |  Link |
