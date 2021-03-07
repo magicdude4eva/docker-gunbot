@@ -62,13 +62,15 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 2) If you do not have `/volume1/`, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
 
-3) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile`
+3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder
 
-4) Place your config.js into `/config`
+4) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile` to your local settings
 
-5) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
+5) Place your config.js into `/config`
 
-6) and then execute:
+6) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
+
+7) and then execute:
 ```
 cd /volume1/docker/gunbot/
 docker build -t gunbot .
@@ -79,7 +81,7 @@ docker logs -f gunbot
 ## Updating Gunbot
 From time to time I publish updates - mostly to adjust the Linux image or to include the latest Gunbot release. You can manually update by:
 1) Stop and delete the Gunbot-Container in Synology Docker
-2) Repeat Steps 4-6 above
+2) Repeat Steps 6-7 above
 
 ## Telegram Configuration
 Notifications work by first creating a personal bot on Telegram, Gunbot then connects to this bot to push notifications to you.
