@@ -1,6 +1,7 @@
 FROM bitnami/minideb:latest
 
-ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2110/lin_v14.zip"
+#ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/23/lin_v14.zip"
+ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2304/gunthy_linux.zip"
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG VCS_REF
@@ -35,13 +36,17 @@ RUN curl -Lo /tmp/lin.zip ${INSTALL_URL}
 RUN unzip -q lin.zip \
  && rm -rf lin.zip \
  && rm -rf __MACOSX \
- && mv lin* /gunbot \
+ && mv gunthy_* /gunbot \
+## && mv lin* /gunbot \
  && rm -f /gunbot/config.js \
  && rm -f /gunbot/tgconfig.json \
  && rm -f /gunbot/autoconfig.json \
  && chmod +x /gunbot/gunthy-linux
 
 WORKDIR /gunbot
+
+## COPY gunthy-linux /gunbot/
+## RUN chmod +x /gunbot/gunthy-linux
 
 EXPOSE 5000
 VOLUME [ "/gunbot/backups", "/gunbot/logs", "/gunbot/json", "/gunbot/config.js", "/gunbot/gunbotgui.db"]
