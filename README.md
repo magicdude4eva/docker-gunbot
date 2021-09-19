@@ -109,19 +109,38 @@ Note: You will need to have at lease "Gunbot Standard" to support all strategies
 
 
 ## How does the autoconfig work?
-The idea is to have a fully automated setup for BTC-alt trading that trades relatively frequently (in tests, about 10 times per day) and only focusses on small trades with around 0.5% to 2% profit per trade.
+The idea is to have a fully automated setup for BTC-alt trading that trades relatively frequently (in tests, about 20-50 times per day) and only focusses on small trades with around 0.5% to 2% profit per trade. This config bundle offers completely autonomous trading with the stepGrid strategy. You set a few basic settings like how many pairs to trade, the script handles everything else.
 
-![image](https://user-images.githubusercontent.com/1632781/107397927-6940ef00-6aff-11eb-9c0f-803125b178a8.png)
+<img width="1335" alt="CleanShot 2021-09-19 at 11 53 11@2x" src="https://user-images.githubusercontent.com/1632781/133923199-378e3e51-5771-4894-a4d6-e0ec3cd44ce3.png">
 
 The setup consists of a config.js and autoconfig.json file, which do the following (summarized):
 
 `Autoconfig.json`
-- Adds & removes pairs, mainly based on their direction in the past 12h
-- Disables buying on all pairs when USDT-BTC is moving up or down more than average in the last hour
-- Changes some settings based on the DCA phase: when DCA started it increases the buydown for the second DCA order, the strategy sell criteria are set to a minimal 0.1% gain once DCA is completed.
 
-`Config.js`
-- Contains only one preconfigured trading strategy, based on buy trailing and stochrsi selling. It's very basic but does its job.
+:children_crossing: Warnings:
+* Because of how trading limit compounding is handled, the setup is difficult to combine with other trades on the same acount
+* Manual trading on the same exchange account and base currency, or manually made config changes can lead to unexpected behavior
+* Due to the lack of a bid/ask spread filter on Huobi, pair selection is likely more risky there
+* Since stop losses are sometimes used in this setup, losing sell orders can happen
+* The stepGrid strategy is great, but beware for very low volume markets as trading behavior might get erratic. In such a case using the enforce step size option in the strategy itself can help.
+* All pairs for the exchange must be handled by the included AutoConfig jobs
+* READ THE WHOLE INSTRUCTIONS 
+
+Features:
+* Scans markets for volatile pairs and adds them automatically, trades them with the stepGrid strategy
+* Evaluates results for active trading pairs, continously replacing the worst performing pair with another
+* Supports trading multiple base currencies on the same account, overlap between pairs is prevented automatically
+* Supports the following base currencies: BTC
+* Compounding trading limit, with an option to keep reserves
+* Occasionally uses a higher trading limit when the market seems favorable, including a stop loss mechanism
+* Frees up funds in case the account runs out of money for further buy orders
+* Protection against possible losing trades after a very large price difference between buy orders
+
+Notes:
+* Don’t use all your funds for this. Keeping reserves is always a good idea, you never know what the market will bring in the future
+* Try to keep relatively low numbers of pairs, to ensure frequent processing per pair
+* You'll see more pairs being added than it may trade, this is fine because it won't actually trade every single added pair
+* Upgrades are as simple as overwriting the autoconfig.json file, unless specified differently in the release notes
 
 
 -----
@@ -137,6 +156,8 @@ The setup consists of a config.js and autoconfig.json file, which do the followi
 (XLM)    GDQP2KPQGKIHYJGXNUIYOMHARUARCA7DJT5FO2FFOOKY3B2WSQHG4W37 (Memo ID: 909493707)
 ```
 
-Sign up to [Cointracking](https://cointracking.info?ref=M263159) which uses APIs to connect to all exchanges and helps you with tax. Use [Binance Exchange](https://www.binance.com/?ref=13896895) to trade #altcoins. Join [TradingView](http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=7432) to get trend-reports. Sign up with [Coinbase](https://www.coinbase.com/join/nasche_x) and **instantly get $10 in BTC**. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
+Sign up to [Cointracking](https://cointracking.info?ref=M263159) which uses APIs to connect to all exchanges and helps you with tax. Use [Binance Exchange](https://www.binance.com/?ref=13896895) to trade #altcoins. Sign up with [Coinbase](https://www.coinbase.com/join/nasche_x) and **instantly get $10 in BTC**. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
 
 If you have no crypto, follow me at least on [Twitter](https://twitter.com/gerdnaschenweng).
+
+Referral: A great crypto currency tracking platform which can be selfhosted is [Rotki](https://github.com/rotki/rotki)
