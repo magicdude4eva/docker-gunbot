@@ -14,6 +14,10 @@
 
 Although this Docker Image has been tested on a Synology NAS, it will work essentially in any Docker-environment with the adjustment of the mount-point needed. I have provided a base-configuration under `/config/` which I suggest you read and adjust. If you use the autoconfig (please read the `/config/autoconfig-instructions.txt` before enabling) provided, and once you have added your Binance credentials, the BOT will start trading.
 
+:warning: The provided config contains a Autoconfig using a Stepgrid trading algorithm with the base of BTC, trading 8 pairs. This works at the moment extremly well for at the current market (August 2021) with returns of 1-8% per trade and trading between 20-50 times per day on Binance. Do read the `/config/autoconfig-instructions.txt` and only change what is allowed. Alternatively use the standard Gunbot install and use an algorithm you understand / are comfortable with.
+
+:sob: Do not come crying to me if you lost your house and your wife left you because you traded away your savings. Be responsible and only trade what you are prepared to lose. I am not a financial advisor, and will not help you with your financial troubles.
+
 Detailed Gunbot documentation and support is available via [https://wiki.gunthy.org/](https://wiki.gunthy.org/)
 
 <p align="center">
