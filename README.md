@@ -8,11 +8,11 @@
 [![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 [![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 
-:white_check_mark: Compatible with Gunbot version : Gunbot v21 [https://github.com/GuntharDeNiro/BTCT/releases](https://github.com/GuntharDeNiro/BTCT/releases)
+:white_check_mark: Compatible with Gunbot version : Gunbot v23 [https://github.com/GuntharDeNiro/BTCT/releases](https://github.com/GuntharDeNiro/BTCT/releases)
 
 :white_check_mark: Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
 
-Although this Docker Image has been tested on a Synology NAS, it will work essentially in any Docker-environment with the adjustment of the mount-point needed. I have provided a base-configuration under `/config/` which I suggest you read and adjust. If you use the autoconfig provided, and once you have added your Binance credentials, the BOT will start trading. The only thing to adjust is your "TRADING_LIMIT" in `config/config.js` and your Telegram and Binance settings.
+Although this Docker Image has been tested on a Synology NAS, it will work essentially in any Docker-environment with the adjustment of the mount-point needed. I have provided a base-configuration under `/config/` which I suggest you read and adjust. If you use the autoconfig (please read the `/config/autoconfig-instructions.txt` before enabling) provided, and once you have added your Binance credentials, the BOT will start trading.
 
 Detailed Gunbot documentation and support is available via [https://wiki.gunthy.org/](https://wiki.gunthy.org/)
 
