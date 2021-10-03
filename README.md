@@ -164,3 +164,5 @@ If you have no crypto, follow me at least on [Twitter](https://twitter.com/gerdn
 Referral: A great crypto currency tracking platform which can be selfhosted is [Rotki](https://github.com/rotki/rotki)
 ![CleanShot 2021-10-03 at 10 09 53@2x](https://user-images.githubusercontent.com/1632781/135745563-1d0880a8-486d-450a-823a-499763f14d57.png)
 
+You can find the composer file under the `rotki` folder.
+
