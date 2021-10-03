@@ -1,0 +1,125 @@
+{
+    "addPairs_binance": {
+        "pairs": {
+            "exclude": "BTC-BNB,UP,DOWN",
+            "include": "BTC-,BNB-",
+            "maxPairs": " (function maxPairs(data){const maxPairCount=12;if(typeof data.config.pairs?.binance==='undefined'){return maxPairCount+11}const configPairCount=Object.keys(data.config.pairs.binance).length;let haveInactivePair=JSON.stringify(data.config.pairs.binance).includes('inactive');if(configPairCount<maxPairCount){return maxPairCount+11}else if(configPairCount===maxPairCount&&haveInactivePair){return maxPairCount+11}else if(configPairCount===maxPairCount&&!haveInactivePair){return maxPairCount}else if(configPairCount>maxPairCount){return maxPairCount}})(this)",
+            "noCrossOver": true,
+            "exchange": "binance"
+        },
+        "filters": {
+            "alphabet": {
+                "type": "custom",
+                "target": " (function feedPairs(data){const currentMinute=new Date(Date.now()).getMinutes();const currentHour=new Date(Date.now()).getHours();const firstCharacter=data.pairName.split('-')[1].toLowerCase().charAt(0);const ranges=[['a','b','c','d'],['e','f','g','h'],['i','j','k'],['l','m','n'],['o','p','q'],['r','s','t'],['u','v','w'],['x','y','z','0','1','2','3','4','5','6','7','8','9']];if(currentMinute==0||currentMinute==1||currentMinute==35||currentMinute==36){if(currentHour%2!=0){if(ranges[0].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[1].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute==15||currentMinute==16||currentMinute==50||currentMinute==51){if(currentHour%2!=0){if(ranges[2].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[3].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute===30||currentMinute===31||currentMinute==20||currentMinute==21){if(currentHour%2!=0){if(ranges[4].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[5].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute===45||currentMinute===46||currentMinute==5||currentMinute==6){if(currentHour%2!=0){if(ranges[6].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[7].indexOf(firstCharacter)>-1){return true;}}}else{return false;}})(this)"
+            },
+            "stdv": {
+                "type": "minStandardDevPctInterval",
+                "target": "0.3"
+            },
+            "spread": {
+                "type": "maxSpreadPct",
+                "max": 0.15
+            }
+        },
+        "overrides": {
+            "LOW_TL_RATIO": 15,
+            "HIGH_TL_RATIO": 4,
+            "BASE_RESERVE_PCT": 10,
+            "TRADING_LIMIT": 0.00011,
+            "STATUS": "new",
+            "STOP_AFTER_SELL": false,
+            "BUY_ENABLED": false,
+            "RANKING_RATIO": -1,
+            "RANKING_RESULT": -1,
+            "RANKING_TRADE_COUNT": -1,
+            "RANKING_PNL": -1,
+            "REMOVE": false,
+            "MIN_VOLUME_TO_SELL": 10,
+            "MAX_PAIR_PER_BASE": 6,
+            "BAG_SIZE": "none",
+            "MAX_BUY_COUNT": 999,
+            "ALLOW_HIGH_TL": true
+        },
+        "schedule": "*/5 * * * *",
+        "type": "addPairs",
+        "strategy": "stepGrid",
+        "snapshots": "12",
+        "setITB": false,
+        "resume": true,
+        "debug": false,
+        "muteTG": true,
+        "enabled": true
+    },
+    "manageOverrides_binance": {
+        "pairs": {
+            "exclude": "BTC-BNB,UP,DOWN",
+            "include": "BTC-,BNB-",
+            "exchange": "binance"
+        },
+        "filters": {
+            "Sanity checks": {
+                "type": "custom",
+                "target": " (function CheckDataExists(data){if(typeof data.pair.whatstrat==='undefined'){return false;} if(typeof data.pair.ABP==='undefined'){return false;} if(typeof data.pair.candlesclose==='undefined'){return false;} if(typeof data.pair.candlesopen==='undefined'){return false;} if(typeof data.pair.atr==='undefined'){return false;} if(typeof data.pair.ema2==='undefined'){return false;} if(typeof data.pair.ema1==='undefined'){return false;} if(typeof data.pair.quoteBalance==='undefined'){return false;}else{return true;}})(this)"
+            }
+        },
+        "setPairVariable": {
+            "newOverrides": " (function handleOverrides(data){const base=data.pairName.split('-')[0];let overrides={TRADING_LIMIT:data.pair.whatstrat.TRADING_LIMIT,STOP_AFTER_SELL:data.pair.whatstrat.STOP_AFTER_SELL,BUY_ENABLED:data.pair.whatstrat.BUY_ENABLED,BAG_SIZE:data.pair.whatstrat.BAG_SIZE,BAG_VALUE:data.pair.whatstrat.BAG_VALUE||'none',BAG_BIGGEST:data.pair.whatstrat.BAG_BIGGEST||0,RANKING_RATIO:data.pair.whatstrat.RANKING_RATIO||-1,RANKING_RESULT:data.pair.whatstrat.RANKING_RESULT||-1,RANKING_TRADE_COUNT:data.pair.whatstrat.RANKING_TRADE_COUNT||-1,RANKING_PNL:data.pair.whatstrat.RANKING_PNL||-1,REMOVE:data.pair.whatstrat.REMOVE,STATUS:data.pair.whatstrat.STATUS||'new',BUY_METHOD:data.pair.whatstrat.BUY_METHOD||'stepGrid',SELL_METHOD:data.pair.whatstrat.SELL_METHOD||'stepGrid',PANIC_SELL:data.pair.whatstrat.PANIC_SELL||false,VERY_BULLISH:data.pair.whatstrat.VERY_BULLISH||false,MAX_BUY_COUNT:data.pair.whatstrat.MAX_BUY_COUNT,MIN_VOLUME_TO_SELL:base==='USDT'||base==='BUSD'||base==='USDC'||base==='USD'||base==='EUR'?10:base==='BTC'?2e-4:base==='ETH'?.005:base==='BNB'?.05:2e-4,ALLOW_HIGH_TL:data.pair.whatstrat.ALLOW_HIGH_TL||true};const bid=data.pair.Bid;const quoteBalance=data.pair.quoteBalance;const baseBalance=data.pair.baseBalance;const mvts=parseFloat(overrides.MIN_VOLUME_TO_SELL);const ABP=parseFloat(data.pair.ABP);const keepQuote=parseFloat(data.pair.whatstrat.KEEP_QUOTE);const baseReservePct=parseFloat(data.pair.whatstrat.BASE_RESERVE_PCT)/100||0;const notEnoughCandles=typeof data.pair.candlesclose==='undefined'?true:data.pair.candlesclose.length<80;const maxSameBase=parseFloat(data.pair.whatstrat.MAX_PAIR_PER_BASE);const totalBaseValue=parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)-parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)*baseReservePct;const reserveThreshold=parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)*baseReservePct;const rankingRatio=parseFloat(overrides.RANKING_RATIO);const rankingResult=parseFloat(overrides.RANKING_RESULT);const tl=parseFloat(overrides.TRADING_LIMIT);const allowHighTl=parseFloat(overrides.ALLOW_HIGH_TL);const status=overrides.STATUS;const minRankingRatio=.4;const ema20=parseFloat(data.pair.ema1);const ema200=parseFloat(data.pair.ema2);const ema10=parseFloat(data.pair.ema3);const sma5=parseFloat(data.pair.FAST_SMA);const highBB=parseFloat(data.pair.highBB);const lowBB=parseFloat(data.pair.lowBB);const middleBB=lowBB+(highBB-lowBB)/2;const howManyTL=parseFloat(data.pair.howManyTL)||0;const lowTLRatio=parseFloat(data.pair.whatstrat?.LOW_TL_RATIO)||40;const highTLRatio=parseFloat(data.pair.whatstrat?.HIGH_TL_RATIO)||6;const lowTLprojection=totalBaseValue/maxSameBase/lowTLRatio;const highTLprojection=totalBaseValue/maxSameBase/highTLRatio;const hasHighTL=Math.abs(highTLprojection-tl)<Math.abs(lowTLprojection-tl)&&lowTLprojection>mvts*1.2;const notCompressed=highBB/ema200>1.05&&sma5/ema10>1.005&&ema10/ema20>1.005;const veryBullish=allowHighTl?middleBB>ema200&&ema10>ema20&&ema10>ema200&&sma5>ema10&&lowBB<ema200&&notCompressed:false;const dropBag=hasHighTL&&!veryBullish&&howManyTL>=6;const needFunds=baseBalance>0&&baseBalance<tl*2||baseBalance>0&&baseBalance<reserveThreshold;const lastOrderType=data.pair?.orders?.[0]?.type;const hasMissedSteps=false;let worstBagSameBase='';let worstBagSameBaseUpnl=0;Object.keys(data.config.pairs.binance).forEach((pair=>{if(pair.split('-')[0]===base){if(overrides.BAG_SIZE!=='none'&&overrides.BAG_VALUE!=='none'){const drawdown=parseFloat(overrides.BAG_SIZE)-parseFloat(overrides.BAG_VALUE);if(drawdown>worstBagSameBaseUpnl){worstBagSameBase=pair;worstBagSameBaseUpnl=drawdown}}}}));function setNewPairRankingData(){const candlesOpen=data.pair.candlesopen;const candlesClose=data.pair.candlesclose;const candlesHigh=data.pair.candleshigh;const candlesLow=data.pair.candleslow;let sumBody=0;let sumWick=0;candlesOpen.forEach(((item,index)=>{const body=Math.max(candlesOpen[index],candlesClose[index])-Math.min(candlesOpen[index],candlesClose[index]);const total=Math.max(candlesHigh[index],candlesLow[index])-Math.min(candlesHigh[index],candlesLow[index]);const wick=total-body;sumBody=sumBody+body;sumWick=sumWick+wick}));overrides.RANKING_RATIO=sumWick/sumBody}function setStatus(){let activePairsSameBase=0;Object.keys(data.config.pairs.binance).forEach((pair=>{if(pair.split('-')[0]===base){if(data.config.pairs.binance[pair].override.STATUS==='active'){activePairsSameBase++}}}));const freeSlots=maxSameBase-activePairsSameBase;overrides.VERY_BULLISH=veryBullish;if(status==='new'&&rankingResult>0&&freeSlots>0){if(rankingResult<=freeSlots&&rankingRatio>=minRankingRatio){overrides.STATUS='active';return true}else{overrides.STATUS='inactive';overrides.REMOVE=true}}else if(status==='new'&&freeSlots<1){overrides.STATUS='inactive';overrides.REMOVE=true}if(status==='active'&&overrides.BAG_SIZE==='none'&&lastOrderType==='sell'&&overrides.STOP_AFTER_SELL){overrides.STATUS='inactive';overrides.REMOVE=true;overrides.BUY_ENABLED=false}else if(dropBag&&status==='active'){overrides.BUY_METHOD='gain';overrides.SELL_METHOD='gain';overrides.PANIC_SELL=true;overrides.STOP_AFTER_SELL=true}else if(needFunds&&status==='active'&&data.pairName===worstBagSameBase){overrides.BUY_METHOD='gain';overrides.SELL_METHOD='gain';overrides.PANIC_SELL=true;overrides.STOP_AFTER_SELL=true}else if(status==='inactive'&&!overrides.REMOVE){overrides.REMOVE=true}else if(status==='inactive'&&overrides.REMOVE&&overrides.BAG_SIZE!=='none'){overrides.STATUS='active';overrides.REMOVE=false;overrides.BUY_ENABLED=true}}function setBagSize(){if(overrides.BAG_SIZE!=='none'){if(lastOrderType==='sell'&&(quoteBalance-keepQuote)*bid<mvts){overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}else if((quoteBalance-keepQuote)*ABP>0){overrides.BAG_SIZE=(quoteBalance-keepQuote)*ABP;overrides.BAG_VALUE=(quoteBalance-keepQuote)*bid;overrides.BAG_BIGGEST=howManyTL>overrides.BAG_BIGGEST?howManyTL:overrides.BAG_BIGGEST}}else if((quoteBalance-keepQuote)*bid<mvts){overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}else{if((quoteBalance-keepQuote)*ABP>0){overrides.BAG_SIZE=(quoteBalance-keepQuote)*ABP;overrides.BAG_VALUE=(quoteBalance-keepQuote)*bid;overrides.BAG_BIGGEST=howManyTL>overrides.BAG_BIGGEST?howManyTL:overrides.BAG_BIGGEST}else{overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}}}function setActivePairStats(){const orders=data.pair.orders;const timeLimit=Date.now()-432e5;if(orders.length<1){return}if(data.config.pairs.binance[data.pairName].override.timestamp*1e3>timeLimit){overrides.RANKING_TRADE_COUNT=-1;overrides.RANKING_PNL=-1;return}let sellOrderCount=0;let sumPnl=0;let lastSellTime=0;for(var i=1;i<1e4;i++){if(!orders[i]){break}if(orders[i].time<timeLimit){break}if(orders[i].type==='sell'){if(lastSellTime!==orders[i].time){lastSellTime=orders[i].time;sellOrderCount++;sumPnl=sumPnl+orders[i].pnl}else{sumPnl=sumPnl+orders[i].pnl}}}const rankingTradeCount=sellOrderCount;overrides.RANKING_TRADE_COUNT=rankingTradeCount;overrides.RANKING_PNL=Math.abs(parseFloat(sumPnl))>0?sumPnl:0}function setTradingLimit(){const tl=veryBullish?totalBaseValue/maxSameBase/highTLRatio:totalBaseValue/maxSameBase/lowTLRatio;if(tl>mvts){overrides.TRADING_LIMIT=tl.toPrecision(5);overrides.BUY_ENABLED=true}else{overrides.TRADING_LIMIT=mvts*1.1;overrides.BUY_ENABLED=true}}setBagSize();if(rankingRatio===-1){setNewPairRankingData()}if(Object.is(totalBaseValue,NaN)||totalBaseValue===0||notEnoughCandles){return overrides}setActivePairStats();if(setStatus()===true){setTradingLimit()}if(overrides.BAG_SIZE==='none'&&overrides.STATUS==='active'&&!overrides.STOP_AFTER_SELL){setTradingLimit()}if(overrides.BAG_SIZE!=='none'&&overrides.STATUS==='active'&&tl<mvts){setTradingLimit()}if(hasMissedSteps){overrides.MAX_BUY_COUNT=howManyTL}else if(!hasMissedSteps){overrides.MAX_BUY_COUNT=999}return overrides})(this)"
+        },
+        "overrides": {
+            "TRADING_LIMIT": " this.pairVariables.binance[this.pairName].newOverrides.TRADING_LIMIT",
+            "BUY_ENABLED": " this.pairVariables.binance[this.pairName].newOverrides.BUY_ENABLED",
+            "MIN_VOLUME_TO_SELL": " this.pairVariables.binance[this.pairName].newOverrides.MIN_VOLUME_TO_SELL",
+            "STOP_AFTER_SELL": " (function deactivateWorstPair(data){const base=data.pairName.split('-')[0];let configPairCount=0;let sameBasePairs=[];let maxSameBase=0;Object.keys(data.config.pairs.binance).forEach((pair=>{if(pair.split('-')[0]===base){configPairCount++;sameBasePairs.push(pair)}if(maxSameBase===0){maxSameBase=parseFloat(data.config.pairs.binance[pair].override.MAX_PAIR_PER_BASE)}}));let positions=[];let activePairCount=0;let activePairCountWithoutRankingCheck=0;let worstPairStats=0;let worstPairName='';let leastDrawdown=999;let leastDrawdownPairName='';sameBasePairs.forEach((pair=>{if(Object.keys(data.pairVariables.binance).indexOf(pair)>-1){if(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE)>0){positions.push(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE))}else if(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE==='none'){positions.push(0)}if(data.pairVariables.binance?.[pair]?.newOverrides?.STATUS==='active'&&parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_TRADE_COUNT)>-1&&parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_PNL)>-1||data.pairVariables.binance?.[pair]?.newOverrides?.PANIC_SELL){activePairCount++}if(data.pairVariables.binance?.[pair]?.newOverrides?.STATUS==='active'){activePairCountWithoutRankingCheck++}}}));sameBasePairs.forEach((pair=>{let howManyTL;if(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE==='none'){howManyTL=0}else{howManyTL=Math.round(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE)/parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.TRADING_LIMIT))}if(howManyTL<leastDrawdown){leastDrawdown=howManyTL;leastDrawdownPairName=pair}if(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_TRADE_COUNT)>-1&&parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_PNL)>-1&&activePairCount>=maxSameBase){const pnl=parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_PNL);const sellCount=parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_TRADE_COUNT);const biggestBag=parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_BIGGEST);const pnlFactor=pnl/sellCount;const activityFactor=sellCount===0?1:sellCount;const drawdownFactor=biggestBag/activityFactor;const pairStats=pnlFactor+activityFactor-drawdownFactor;if(worstPairStats===0){worstPairName=pair;worstPairStats=pairStats}else if(pairStats<worstPairStats){worstPairName=pair;worstPairStats=pairStats}}}));if(positions.length===configPairCount&&activePairCount>=maxSameBase&&data.pairName===worstPairName){return true}else if(positions.length===configPairCount&&activePairCountWithoutRankingCheck>maxSameBase&&data.pairName===leastDrawdownPairName){console.log('setting stop after sell for',data.pairName);return true}else if(data.pair.whatstrat?.PANIC_SELL){return true}else{return false}})(this)",
+            "BAG_SIZE": " this.pairVariables.binance[this.pairName].newOverrides.BAG_SIZE",
+            "BAG_VALUE": " this.pairVariables.binance[this.pairName].newOverrides.BAG_VALUE",
+            "BAG_BIGGEST": " this.pairVariables.binance[this.pairName].newOverrides.BAG_BIGGEST",
+            "RANKING_RESULT": " (function rankNewPairs(data){const base=data.pairName.split('-')[0];let configSameBasePairCount=0;let sameBasePairs=[];let maxSameBase=0;Object.keys(data.config.pairs.binance).forEach((pair=>{if(pair.split('-')[0]===base){configSameBasePairCount++;sameBasePairs.push(pair)}if(maxSameBase===0){maxSameBase=parseFloat(data.config.pairs.binance[pair].override.MAX_PAIR_PER_BASE)}}));let positionSameBase=[];let ratiosToRank=[];let newPairCount=[];let activePairCount=0;sameBasePairs.forEach((pair=>{if(data.config.pairs?.binance?.[pair]?.override?.STATUS==='active'||data.pairVariables.binance?.[pair]?.newOverrides?.STATUS==='active'){activePairCount++}if(Object.keys(data.pairVariables.binance).indexOf(pair)>-1){if(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE)>0){positionSameBase.push(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE))}else if(data.pairVariables.binance?.[pair]?.newOverrides?.BAG_SIZE==='none'){positionSameBase.push(0)}if(data.pairVariables.binance?.[pair]?.newOverrides?.STATUS==='new'){newPairCount.push(pair);if(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_RATIO)>-1){ratiosToRank.push(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_RATIO))}}}}));if(activePairCount>=maxSameBase){return-1}let bullishPairRatios=[];sameBasePairs.forEach((pair=>{if(Object.keys(data.pairVariables.binance).indexOf(pair)>-1){if(data.pairVariables.binance?.[pair]?.newOverrides?.STATUS==='new'){if(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_RATIO)>-1&&data.pairVariables.binance?.[pair]?.newOverrides?.VERY_BULLISH){bullishPairRatios.push(parseFloat(data.pairVariables.binance?.[pair]?.newOverrides?.RANKING_RATIO))}}}}));const rankedRatios=ratiosToRank.sort((function(a,b){return b-a}));const rankedBullishRatios=bullishPairRatios.sort((function(a,b){return b-a}));const finalRanking=[...rankedBullishRatios,...rankedRatios];let rankIndexList={};sameBasePairs.forEach((pair=>{const rankIndex=finalRanking.indexOf(parseFloat(data.pairVariables?.binance?.[pair]?.newOverrides?.RANKING_RATIO));if(rankIndex<0){}else{rankIndexList[pair]=rankIndex+1}}));const ranksWithoutDuplicates=[...new Set(Object.values(rankIndexList))];let result={};ranksWithoutDuplicates.forEach((rank=>{const pairName=Object.keys(rankIndexList)[Object.values(rankIndexList).indexOf(rank)];result[pairName]=rank}));if(positionSameBase.length===configSameBasePairCount&&newPairCount.length===ratiosToRank.length&&newPairCount.length>0&&Object.keys(result).length>0&&data.pairVariables.binance?.[data.pairName]?.newOverrides?.STATUS==='new'&&data.pairVariables.binance?.[data.pairName]?.newOverrides?.RANKING_RESULT!==-2){return result?.[data.pairName]||-2}else{return-1}})(this)",
+            "TOTAL_BASE_VALUE": " (function totalBaseBalance(data){const baseBalance=data.pair.baseBalance;const base=data.pairName.split('-')[0];let configPairCount=0;let sameBasePairs=[];Object.keys(data.config.pairs.binance).forEach((pair=>{if(pair.split('-')[0]===base){configPairCount++;sameBasePairs.push(pair)}}));let positions=[];let combinedBaseValue=0;sameBasePairs.forEach((pair=>{if(Object.keys(data.pairVariables.binance).indexOf(pair)>-1){if(parseFloat(data.pairVariables.binance[pair].newOverrides.BAG_SIZE)>0){positions.push(parseFloat(data.pairVariables.binance[pair].newOverrides.BAG_SIZE))}else if(data.pairVariables.binance[pair].newOverrides.BAG_SIZE==='none'){positions.push(0)}}else if(data.config.pairs.binance[pair].override.BAG_SIZE==='none'){positions.push(0);}}));if(positions.length===configPairCount){combinedBaseValue=positions.reduce((function(a,b){return a+b}),0)+baseBalance;return combinedBaseValue}else{return 0}})(this)",
+            "REMOVE": " (function dontLetLastPairBeRemoved(data){const configPairCount=Object.keys(data.config.pairs.binance).length;const isLastPair=data.pairName===Object.keys(data.config.pairs.binance)[configPairCount-1];const mainFunctionReturn=data.pairVariables.binance[data.pairName].newOverrides.REMOVE;let havePairVarsForEachPair=false;let otherPairRemoveCount=0;let allOtherPairsWillStop=false;Object.keys(data.config.pairs.binance).forEach(pair=>{if(Object.keys(data.pairVariables.binance).indexOf(pair)>-1){havePairVarsForEachPair=true;}else{havePairVarsForEachPair=false;}if(typeof data.pairVariables?.binance?.[pair]==='undefined'){}else if(data.pairVariables?.binance?.[pair]?.newOverrides?.REMOVE&&pair!==Object.keys(data.config.pairs.binance)[configPairCount-1]){otherPairRemoveCount++;}});if(otherPairRemoveCount>=configPairCount-1){allOtherPairsWillStop=true;} if(!havePairVarsForEachPair){return mainFunctionReturn;}else if(isLastPair&&allOtherPairsWillStop){return false;}else{return mainFunctionReturn}})(this)",
+            "RANKING_RATIO": " this.pairVariables.binance[this.pairName].newOverrides.RANKING_RATIO",
+            "RANKING_TRADE_COUNT": " this.pairVariables.binance[this.pairName].newOverrides.RANKING_TRADE_COUNT",
+            "RANKING_PNL": " this.pairVariables.binance[this.pairName].newOverrides.RANKING_PNL",
+            "STATUS": " this.pairVariables.binance[this.pairName].newOverrides.STATUS",
+            "SELL_METHOD": " this.pairVariables.binance[this.pairName].newOverrides.SELL_METHOD",
+            "BUY_METHOD": " this.pairVariables.binance[this.pairName].newOverrides.BUY_METHOD",
+            "PANIC_SELL": " this.pairVariables.binance[this.pairName].newOverrides.PANIC_SELL",
+            "MAX_BUY_COUNT": " this.pairVariables.binance[this.pairName].newOverrides.MAX_BUY_COUNT",
+            "VERY_BULLISH": " this.pairVariables.binance[this.pairName].newOverrides.VERY_BULLISH",
+            "ALLOW_HIGH_TL": " this.pairVariables.binance[this.pairName].newOverrides.ALLOW_HIGH_TL"
+        },
+        "clearOverrides": false,
+        "schedule": "21,31,41,51 * * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "enabled": true
+    },
+    "removePairs_binance": {
+        "pairs": {
+            "exclude": "BTC-BNB,UP,DOWN",
+            "noBag": true,
+            "removeDisabled": false,
+            "notRemoveBefore": 3,
+            "exchange": "binance",
+            "include": "BTC-,BNB-"
+        },
+        "filters": {
+            "status": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.STATUS === 'inactive'"
+        },
+            "noBag": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.BAG_SIZE === 'none'"
+        },
+            "remove": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.REMOVE === true"
+            }
+        },
+        "schedule": "* * * * *",
+        "type": "removePairs2",
+        "debug": false,
+        "muteTG": true,
+        "enabled": true
+    }
+}
