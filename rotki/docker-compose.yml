@@ -1,0 +1,35 @@
+version: "3.9"
+
+networks:
+  cryptonetwork:
+    name: cryptonetwork
+    driver: bridge
+
+services:
+# Rotki 
+# https://rotki.readthedocs.io/en/latest/installation_guide.html#packaged-binaries
+# mkdir -p /volume1/docker/rotki/data /volume1/docker/rotki/logs
+  crypto_rotki:
+    container_name: crypto_rotki
+    image: rotki/rotki:latest
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: always
+    networks:
+      cryptonetwork:
+        aliases:
+          - crypto_rotki
+    ports:
+      - 5550:80
+    environment:
+      - PUID=1024
+      - PGID=100
+      - TZ=Europe/Vienna
+      - TIMEZONE=Europe/Vienna
+      - UMASK=0002
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/TZ:/etc/timezone:ro
+      - /volume1/docker/rotki/data:/data:rw
+      - /volume1/docker/rotki/logs:/logs:rw
