@@ -160,4 +160,7 @@ Sign up to [Cointracking](https://cointracking.info?ref=M263159) which uses APIs
 
 If you have no crypto, follow me at least on [Twitter](https://twitter.com/gerdnaschenweng).
 
+## Use Rotki for Crypto Tracking
 Referral: A great crypto currency tracking platform which can be selfhosted is [Rotki](https://github.com/rotki/rotki)
+![CleanShot 2021-10-03 at 10 09 53@2x](https://user-images.githubusercontent.com/1632781/135745563-1d0880a8-486d-450a-823a-499763f14d57.png)
+
