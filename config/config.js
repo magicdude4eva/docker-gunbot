@@ -196,9 +196,6 @@
             "DIRECTION": "LONG",
             "TREND_CT_MULTIPLIER": 2,
             "TREND_GRID_MULTIPLIER": 2,
-            "AUTO_STEP_SIZE": true,
-            "STEP_SIZE": 500,
-            "ENFORCE_STEP": false,
             "STRAT_FILENAME": "filename.js",
             "TREND_STRICT_MODE": true
         }

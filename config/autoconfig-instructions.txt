@@ -1,3 +1,4 @@
+v1.4 update: make high tl trading optional (see override parameters below, default: enabled), remove logic that paused trading after missing steps (did more harm than good), add protection against accidentially triggering panic sell when the account does not have enough balance for the configured tl ratios, add auto pair configs for ftx (excludes leveraged tokens and tokenized stocks), minor bugfixes
 v1.3 update: fix wrong exchange name reference in binanceus configs, add config presets for okex
 v1.2 update: fix critical reported issue with trading more pairs than it should
 v1.1 update: add config variants for manual trading pairs with compounding profits. Fix reported issue with gathering pnl stats on Kraken. Update instructions.txt
@@ -113,7 +114,8 @@ Read “do not change” as: only change if you know exactly what you are doing 
 "MIN_VOLUME_TO_SELL": 10, // do not change
 "MAX_PAIR_PER_BASE": 4, // do not change
 "BAG_SIZE": "none", // do not change
-"MAX_BUY_COUNT": 999 // do not change
+"MAX_BUY_COUNT": 999 // do not change,
+"ALLOW_HIGH_TL": true // set false to disallow high tl trading phases
 },
 
 Values for MIN_VOLUME_TO_SELL and TRADING_LIMIT get automatically set before trading is enabled for a pair.
