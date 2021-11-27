@@ -1,6 +1,6 @@
 [paypal]: https://paypal.me/GerdNaschenweng
 
-# Gunbot Docker Edition for Synology NAS
+# Gunbot Docker Edition for Synology NAS (Binance, Kucoin)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
 [![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
@@ -47,6 +47,10 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 
 :trophy: If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://www.binance.com/en/register?ref=WXNEJLQB).
+
+:trophy: 2021-11-20: I have started trading CRO on Kucoin with Gunbot - if you are not signed up with them use my link: [Kucoin Signup Referral](https://www.kucoin.com/ucenter/signup?rcode=7wrbxe)
+
+:rocket: 2021-11-20: If you have not signed up with Crypto.com to trade in CRO, read this: [Crypto.com Visa Debit Card with Cashback and 100% rebate on Netflix, Spotify & Amazon Prime](https://www.naschenweng.info/2021/11/10/crypto_com_visa_debit_card_supercharger/)
 
 ## Docker image with colorised output & Telegram Support
 
@@ -159,7 +163,7 @@ Notes:
 (XLM)    GB67TJFJO3GUA432EJ4JTODHFYSBTM44P4XQCDOFTXJNNPV2UKUJYVBF (Memo ID: 1406379394)
 ```
 
-Go to [Curve.com to add your Crypto.com card to ApplePay](https://www.curve.com/join#DWPXKG6E) and signup to [Crypto.com for a staking and free Crypto debit card](https://crypto.com/app/ref6ayzqvp).
+Go to [Curve.com to add your Crypto.com card to ApplePay](https://www.curve.com/join#DWPXKG6E) and signup to [Crypto.com for a staking and free Crypto debit card](https://crypto.com/app/ref6ayzqvp) - please use referral **ref6ayzqvp** to get that sweep $25 bonus.
 
 
 Use [Binance Exchange](https://www.binance.com/?ref=13896895) to trade #altcoins. Sign up with [Coinbase](https://www.coinbase.com/join/nasche_x) and **instantly get $10 in BTC**. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
