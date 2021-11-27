@@ -1,9 +1,9 @@
 {
     "addPairs_binance": {
         "pairs": {
-            "exclude": "UP,DOWN",
-            "include": "BTC-",
-            "maxPairs": " (function maxPairs(data){const maxPairCount=8;if(typeof data.config.pairs?.binance==='undefined'){return maxPairCount+11}const configPairCount=Object.keys(data.config.pairs.binance).length;let haveInactivePair=JSON.stringify(data.config.pairs.binance).includes('inactive');if(configPairCount<maxPairCount){return maxPairCount+11}else if(configPairCount===maxPairCount&&haveInactivePair){return maxPairCount+11}else if(configPairCount===maxPairCount&&!haveInactivePair){return maxPairCount}else if(configPairCount>maxPairCount){return maxPairCount}})(this)",
+            "exclude": "BTC-BNB,UP,DOWN",
+            "include": "BTC-,BNB-",
+            "maxPairs": " (function maxPairs(data){const maxPairCount=12;if(typeof data.config.pairs?.binance==='undefined'){return maxPairCount+11}const configPairCount=Object.keys(data.config.pairs.binance).length;let haveInactivePair=JSON.stringify(data.config.pairs.binance).includes('inactive');if(configPairCount<maxPairCount){return maxPairCount+11}else if(configPairCount===maxPairCount&&haveInactivePair){return maxPairCount+11}else if(configPairCount===maxPairCount&&!haveInactivePair){return maxPairCount}else if(configPairCount>maxPairCount){return maxPairCount}})(this)",
             "noCrossOver": true,
             "exchange": "binance"
         },
@@ -22,8 +22,8 @@
             }
         },
         "overrides": {
-            "LOW_TL_RATIO": 32,
-            "HIGH_TL_RATIO": 6,
+            "LOW_TL_RATIO": 15,
+            "HIGH_TL_RATIO": 4,
             "BASE_RESERVE_PCT": 10,
             "TRADING_LIMIT": 0.00011,
             "STATUS": "new",
@@ -35,7 +35,7 @@
             "RANKING_PNL": -1,
             "REMOVE": false,
             "MIN_VOLUME_TO_SELL": 10,
-            "MAX_PAIR_PER_BASE": 8,
+            "MAX_PAIR_PER_BASE": 6,
             "BAG_SIZE": "none",
             "MAX_BUY_COUNT": 999,
             "ALLOW_HIGH_TL": true
@@ -52,8 +52,8 @@
     },
     "manageOverrides_binance": {
         "pairs": {
-            "exclude": "UP,DOWN",
-            "include": "BTC-",
+            "exclude": "BTC-BNB,UP,DOWN",
+            "include": "BTC-,BNB-",
             "exchange": "binance"
         },
         "filters": {
@@ -95,12 +95,12 @@
     },
     "removePairs_binance": {
         "pairs": {
-            "exclude": "UP,DOWN",
+            "exclude": "BTC-BNB,UP,DOWN",
             "noBag": true,
             "removeDisabled": false,
             "notRemoveBefore": 3,
             "exchange": "binance",
-            "include": "BTC-"
+            "include": "BTC-,BNB-"
         },
         "filters": {
             "status": {

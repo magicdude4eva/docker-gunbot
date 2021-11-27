@@ -1,5 +1,17 @@
 {
-    "pairs": {},
+    "pairs": {
+        "kucoin": {
+            "USDT-CRO": {
+                "strategy": "stepGrid",
+                "enabled": true,
+                "override": {
+                    "TRADING_LIMIT": "150",
+                    "MIN_VOLUME_TO_SELL": "10",
+                    "MIN_VOLUME_TO_BUY": "10"
+                }
+            }
+        }
+    },
     "strategies": {
         "stepGrid": {
             "ADX_ENABLED": false,
@@ -204,38 +216,35 @@
         }
     },
     "exchanges": {
-        "binance": {
+        "kucoin": {
             "key": "KEY",
             "secret": "SECRET",
             "masterkey": "MASTERKEY",
             "mastersecret": "MASTERSECRET",
-            "type": "binance",
+            "passphrase": "KUCOINPASSPHRASE",
+            "clientId": "",
             "market": "spot",
             "delay": 5,
-            "TRADING_FEES": "0.1",
-            "isEncrypted": true,
+            "filteredBase": [],
+            "filteredQuote": [],
+            "filteredPair": [],
+            "TRADING_FEES": 0.25,
             "includeCoins": "",
-            "filteredBase": "",
-            "filteredQuote": "",
             "autoPairs": false,
             "tick_interval": 30,
-            "tick_time": false
+            "tick_time": false,
+            "isEncrypted": true
         }
     },
     "bot": {
-        "gunthy_wallet": "YOUR_GUNTHY_WALLET",
-        "TELEGRAM_ENABLED": true,
-        "TELEGRAM_NICK": "binance",
-        "TOKEN": "YOUR_TELEGRAM_TOKEN",
-        "chat_id": "YOUR_TELEGRAM_CHATID",
-        "admin_id": "YOUR_TELEGRAM_CHATID",
         "json_output": "./json",
         "debug": false,
-        "BEST_CURRENCIES": false,
-        "BOT_DELAY": 2,
-        "BOT_CCLEAN": 12,
-        "CANCEL_ORDERS_ENABLED": false,
+        "BOT_DELAY": 4,
+        "BOT_CCLEAN": 200,
+        "gunthy_wallet": "YOUR_GUNTHY_WALLET",
+        "CANCEL_ORDERS_ENABLED": true,
         "CANCEL_ORDERS_CYCLE_CAP": 10,
+        "CANCEL_ONCAP": false,
         "RESERVE_PILE_UP": false,
         "interval_ticker_update": 25000,
         "period_storage_ticker": 2000,
@@ -248,31 +257,35 @@
         "TV_PYRAMID": false,
         "TV_TRADING_LIMIT_SELL": 50,
         "TV_PROTECTION": false,
+        "TV_MARKET_ORDERS": true,
         "TV_TRADING_LIMIT_CAP": 0.0001,
         "TV_STOPLOSS_PERCENTAGE": 60,
         "TV_TRADING_LIMIT_ALLIN": false,
         "TV_MVTS": 0.0001,
         "TV_GB": false,
         "TV_LEVERAGE": 0,
+        "TV_LENDING": 0.02,
+        "TV_CLOSE_ALL": false,
         "RETRY_TV_ORDER": false,
         "VERBOSE": true,
         "WATCH_MODE": false,
         "MULTIPLE_BASE": false,
-        "MINIMUM_VOLUME_GOOD_CURRENCY": 200,
-        "MINIMUM_VARIATION_SUGGEST_TRADE": 1,
         "withdraw_address": "YOURBTCADDRESSHERE",
         "withdraw_threshold": 0.5,
+        "TELEGRAM_ENABLED": true,
         "TG_ORDER_TIMEOUT": 0,
-        "TG_TEST": false,
+        "TG_TEST": true,
         "TG_PL_ONLY": false,
-        "UTA_ENABLED": false,
-        "TEST_BITRAGE": false,
+        "TELEGRAM_NICK": "Kucoin",
+        "TOKEN": "YOUR_TELEGRAM_TOKEN",
+        "BR_TOKEN": "botToken",
         "TG_AUTOCONFIG": false,
-        "enabled": true,
-        "BR_TOKEN": "TELEGRA_BOT_TOKEN_BITRAGE_AUTOCONFIG",
-        "LOG_SIZE": "50m",
+        "chat_id": "YOUR_TELEGRAM_CHATID",
+        "admin_id": "YOUR_TELEGRAM_CHATID",
+        "OLD_TELEGRAM": false,
+        "INSTANCE_NAME": "MYBOTNAME",
         "LOGS": true,
-        "INSTANCE_NAME": "MYBOTNAME"
+        "LOG_SIZE": "50m"
     },
     "ws": {
         "port": 5001,
@@ -299,7 +312,8 @@
         "demo": false
     },
     "AutoConfig": {
-        "enabled": true
+        "enabled": false,
+        "silentMode": false
     },
     "imap_listener": {
         "enabled": false,

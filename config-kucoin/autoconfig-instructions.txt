@@ -1,0 +1,187 @@
+v1.4 update: make high tl trading optional (see override parameters below, default: enabled), remove logic that paused trading after missing steps (did more harm than good), add protection against accidentially triggering panic sell when the account does not have enough balance for the configured tl ratios, add auto pair configs for ftx (excludes leveraged tokens and tokenized stocks), minor bugfixes
+v1.3 update: fix wrong exchange name reference in binanceus configs, add config presets for okex
+v1.2 update: fix critical reported issue with trading more pairs than it should
+v1.1 update: add config variants for manual trading pairs with compounding profits. Fix reported issue with gathering pnl stats on Kraken. Update instructions.txt
+
+
+This config bundle offers completely autonomous trading with the stepGrid strategy. 
+You set a few basic settings like how many pairs to trade, the script handles everything else.
+
+ 
+Warnings:
+– Because of how trading limit compounding is handled, the setup is difficult to combine with other trades on the same acount
+– Manual trading on the same exchange account and base currency, or manually made config changes can lead to unexpected behavior
+- Due to the lack of a bid/ask spread filter on Huobi, pair selection is likely more risky there
+- Since stop losses are sometimes used in this setup, losing sell orders can happen
+- The stepGrid strategy is great, but beware for very low volume markets as trading behavior might get erratic. In such a case using the enforce step size option in the strategy itself can help.
+– All pairs for the exchange must be handled by the included AutoConfig jobs
+– READ THE WHOLE INSTRUCTIONS 
+
+
+Includes:
+– Hundreds of ready made config bundles for spot trading on binance, binanceus, huobi, kraken, kucoin and mex_gunthy
+– For devs: a build script and commented source code
+
+
+Features:
+– Scans markets for volatile pairs and adds them automatically, trades them with the stepGrid strategy
+- Evaluates results for active trading pairs, continously replacing the worst performing pair with another
+– Supports trading multiple base currencies on the same account, overlap between pairs is prevented automatically
+– Supports the following base currencies: USDT, BUSD, USDC, USD, EUR, BTC, ETH, BNB
+– Compounding trading limit, with an option to keep reserves
+- Occasionally uses a higher trading limit when the market seems favorable, including a stop loss mechanism
+- Frees up funds in case the account runs out of money for further buy orders
+– Protection against possible losing trades after a very large price difference between buy orders
+
+
+Tested on:
+– Gunbot v23.0.2 beta
+– Should stay working in future versions
+
+
+Notes:
+– Don’t use all your funds for this. Keeping reserves is always a good idea, you never know what the market will bring in the future
+– Try to keep relatively low numbers of pairs, to ensure frequent processing per pair
+- You'll see more pairs being added than it may trade, this is fine because it won't actually trade every single added pair
+- Upgrades are as simple as overwriting the autoconfig.json file, unless specified differently in the release notes
+
+
+Variations:
+- Auto pairs, compounding trading limit 
+--- Selects pairs automatically, based on volatility and bid/ask spread
+--- After all current pairs have ran for at least 12h, the worst performing pair eventually gets removed by enabling "stop after sell". Performance is measured for max drawdown, pnl and sell order frequency
+--- In case the account runs out of money or base balance drops below a reserved percentage, it frees up funds by selling off the worst performing pair
+--- Under specific conditions, it will use a higher trading limit but also have a stop loss in place in case the position grows too big and the market seems unfavorable
+
+- Auto pairs, manual trading limit (tbd)
+---- soon available
+
+- Manual pairs, compounding trading limit 
+--- Trades manually selected trading pairs, compounds profits 
+--- In case the account runs out of money or base balance drops below a reserved percentage, trading is halted
+
+
+
+Installation instructions:
+
+Use one of the ready made bundles in the /build folder, you can just add your gunthy wallet address and exchange keys. But read on until the end.
+
+Config bundles include:
+- autoconfig.json with all needed jobs
+- config.js with the needed strategy and exchange settings
+
+Usage instructions:
+
+The instructions below apply to config variations with automatically selected trading pairs. Instructions for adding manual pairs are one section lower.
+
+1. Clean your account!
+Sell every asset. Leave only base currency that may be used. Make sure to have balances in each base currency you want to use.
+
+(Optional: change settings – explained below)
+
+2. Enable AutoConfig
+You will see a few jobs starting to run in the console logs. It takes at least one hour before it adds the first pairs.
+
+3. One hour later: check if pairs got added and start trading
+If pairs were added, hit the start trading button. From now on everything is automatic.
+
+4. Done!
+The first minutes/hours are a bit chaotic, in terms of the number of settings changes and restarts that go along with it.
+After all pair slots are actively trading, restarts will happen a lot less frequently.
+
+
+Settings options - for config variations with auto selected pairs:
+
+To control the strategy settings you need to change the relevant overrides in the output of the “addPairs” AutoConfig job. You can do this in the GUI or directly in the autoconfig.json file.
+It is important to not change pair overrides for running pairs, it can cause unexpected behavior. If you want to change strategy settings, do it in the addPairs job.
+
+The available overrides are shown below, comments are added after each line. You cannot use these comments in the actual autoconfig.json file.
+Read “do not change” as: only change if you know exactly what you are doing and you have modified the needed scripts.
+
+"overrides": {
+"LOW_TL_RATIO": 32, // sets normal trading limit as: (wallet balance - base reserve) / max pair per base / LOW_TL_RATIO
+"HIGH_TL_RATIO": 6, // must be lower value for LOW_TL_RATIO, sets high trading limit as: (wallet balance - base reserve) / max pair per base / HIGH_TL_RATIO
+"BASE_RESERVE_PCT": 0, // reserves a percentage of wallet balance for the relevant base currency. settings 10 when trading USDT means that 10% of the wallet balance will not get assigned to active trading pairs
+"TRADING_LIMIT": 0.00011, // do not change
+"STATUS": "new", // do not change
+"STOP_AFTER_SELL": false, // do not change
+"BUY_ENABLED": false, // do not change
+"RANKING_RATIO": -1, // do not change
+"RANKING_RESULT": -1, // do not change
+"RANKING_TRADE_COUNT": -1, // do not change
+"RANKING_PNL": -1, // do not change
+"REMOVE": false, // do not change
+"MIN_VOLUME_TO_SELL": 10, // do not change
+"MAX_PAIR_PER_BASE": 4, // do not change
+"BAG_SIZE": "none", // do not change
+"MAX_BUY_COUNT": 999 // do not change,
+"ALLOW_HIGH_TL": true // set false to disallow high tl trading phases
+},
+
+Values for MIN_VOLUME_TO_SELL and TRADING_LIMIT get automatically set before trading is enabled for a pair.
+If your exchange requires different minimums, you need to change these values in the function that sets pairVariables in the addPairs job using a text editor.
+
+Settings options - for config variations with manually added pairs
+
+The required overrides are shown below, comments are added after each line. You cannot use these comments in the actual autoconfig.json file.
+Read “do not change” as: only change if you know exactly what you are doing and you have modified the needed scripts.
+
+Make sure to have the manageOverrides job and strategy in place, then add your trading pairs with exactly the following overrides:
+
+"override": {
+"TL_RATIO": 40, // sets trading limit as: (wallet balance - base reserve) / max pair per base / TL_RATIO
+"MAX_PAIR_PER_BASE": 12, // set this to exactly the number of active pairs with the same base currency 
+"BASE_RESERVE_PCT": 0, // reserves a percentage of wallet balance for the relevant base currency. settings 10 when trading USDT means that 10% of the wallet balance will not get assigned to active trading pairs
+"TRADING_LIMIT": 0.00011, // do not change
+"BUY_ENABLED": false, // do not change
+"MIN_VOLUME_TO_SELL": 10, // do not change
+"BAG_SIZE": "none", // do not change
+"STOP_AFTER_SELL": false, // do not change
+"STATUS": "new", // do not change
+"MAX_BUY_COUNT": 999 // do not change
+}
+
+Values for MIN_VOLUME_TO_SELL and TRADING_LIMIT get automatically set before trading is enabled for a pair.
+If your exchange requires different minimums, you need to change these values in the function that sets pairVariables in the addPairs job using a text editor.
+
+
+Balance handling:
+
+Trading limit is set completely automatically, proportionally to the wallet balance.
+Value only gets updated when a pair starts trading, or when it has no funds to sell.
+
+The setup determines the total available base balance for each traded base, then allocates that between trading pairs.
+If multiple base currencies are traded, like USDT and BTC, each of these will have it’s own total balance value.
+
+The total wallet balance value is calculated at break even price of each bag, this makes the value comparable to how “wallet balance” in futures platforms is used.
+
+Formula for normal trading limit:
+(wallet balance - base reserve) / MAX_PAIR_PER_BASE / LOW_TL_RATIO
+
+Formula for high trading limit:
+(wallet balance - base reserve) / MAX_PAIR_PER_BASE / HIGH_TL_RATIO
+
+Make sure to allocate enough funds for your number of allowed pairs and settings for LOW_TL_RATIO and HIGH_TL_RATIO
+If not enough funds are available for your settings, a fallback trading limit of MIN_VOLUME_TO_SELL * 1.1 is set.
+
+
+Build instructions (for devs):
+
+You can find the source code for various functions in the autoconfig.json in the /src folder. The included build script can generate config bundles from that, and takes care of minifying the code.
+
+Steps:
+- Install Node.js
+- Unpack stepGrid controller folder
+- Run: npm install (in the folder where the package.json file is)
+- Edit source code and autoconfig.json template in the /scr/compounding_auto-pairs folder
+- You can add config variations for different exchanges or base currencies in /src/index.js, in the outputVariations array. 
+- Run: npm run build
+- Get your configs in the /build folder
+
+ 
+
+Disclaimer
+It’s not feasible for a free config example to test all possible things that could go wrong. Use with caution!
+
+Enjoy!
+I’d appreciate it if you do not contact me through personal messages about this free config example. Thanks!
