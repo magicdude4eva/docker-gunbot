@@ -66,15 +66,18 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 
 ## Setup On Synology
+:info: I use the container `gunbot` for Binance and the container `gunbot-kucoin`for Kucoin. If you do not need both, delete the one you are using.
+:info: The container `gunbot-kucoin` only trades USDT-CRO as I like Crypto.com - please adjust if you need anything else. The trading limit for USDT-CRO is set to USDT=150 per trade (see `"TRADING_LIMIT": "150",`in 
+
 1) If you have a mount-point `/volume1/`, create the directory `/volume1/docker/gunbot/` and skip to Step 3)
 
 2) If you do not have `/volume1/`, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
 
-3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder
+3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder.
 
 4) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile` to your local settings
 
-5) Place your config.js into `/config`
+5) Place your config.js into `/config` and/or `/config-kucoin`
 
 6) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
 
@@ -83,7 +86,12 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 cd /volume1/docker/gunbot/
 docker build -t gunbot .
 docker-compose up -d
-docker logs -f gunbot
+
+# Logs for Gunbot-Binance
+docker logs -n 100 -f gunbot
+
+# Logs for Gunbot-Kucoin
+docker logs -n 100 -f gunbot-kucoin
 ```
 
 ## Updating Gunbot
@@ -118,6 +126,8 @@ The idea is to have a fully automated setup for BTC-alt trading that trades rela
 <img width="1335" alt="CleanShot 2021-09-19 at 11 53 11@2x" src="https://user-images.githubusercontent.com/1632781/133923199-378e3e51-5771-4894-a4d6-e0ec3cd44ce3.png">
 
 The setup consists of a config.js and autoconfig.json file, which do the following (summarized):
+
+:warning: The "autoconfig.json" in the "gunbot" container trades as base both BTC-ALT and BNB-ALT and each base uses 6 pairs - so you will have 6 BTC-trades and 6-BNB-trades. Please adjust this if you do not want to trade in these volumes (you will need 0,3BTC and 2BNB for it to properly work)
 
 `Autoconfig.json`
 
