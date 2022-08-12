@@ -186,3 +186,5 @@ Referral: A great crypto currency tracking platform which can be selfhosted is [
 
 You can find the composer file under the `rotki` folder.
 
+
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=magicdude4eva.magicdude4eva)
