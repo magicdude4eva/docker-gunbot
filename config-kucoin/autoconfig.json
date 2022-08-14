@@ -1,1 +1,225 @@
-{}
+{
+    "addPairs_kucoin": {
+        "pairs": {
+            "exclude": "USDT-BTC,3S,3L,VAI",
+            "include": "USDT-,USDT-CRO,USDT-XLM",
+            "maxPairs": " (function maxPairs(data){const maxPairCount=3;if(typeof data.config.pairs?.kucoin==='undefined'){return maxPairCount+7}const configPairCount=Object.keys(data.config.pairs.kucoin).length;let haveInactivePair=JSON.stringify(data.config.pairs.kucoin).includes('inactive');if(configPairCount<maxPairCount){return maxPairCount+7}else if(configPairCount===maxPairCount&&haveInactivePair){return maxPairCount+7}else if(configPairCount===maxPairCount&&!haveInactivePair){return maxPairCount}else if(configPairCount>maxPairCount){return maxPairCount}})(this)",
+            "noCrossOver": true,
+            "exchange": "kucoin"
+        },
+        "filters": {
+            "alphabet": {
+                "type": "custom",
+                "target": " (function feedPairs(data){const currentMinute=new Date(Date.now()).getMinutes();const currentHour=new Date(Date.now()).getHours();const firstCharacter=data.pairName.split('-')[1].toLowerCase().charAt(0);const ranges=[['a','b','c','d'],['e','f','g','h'],['i','j','k'],['l','m','n'],['o','p','q'],['r','s','t'],['u','v','w'],['x','y','z','0','1','2','3','4','5','6','7','8','9']];if(currentMinute==0||currentMinute==1||currentMinute==35||currentMinute==36){if(currentHour%2!=0){if(ranges[0].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[1].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute==15||currentMinute==16||currentMinute==50||currentMinute==51){if(currentHour%2!=0){if(ranges[2].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[3].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute===30||currentMinute===31||currentMinute==20||currentMinute==21){if(currentHour%2!=0){if(ranges[4].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[5].indexOf(firstCharacter)>-1){return true;}}}else if(currentMinute===45||currentMinute===46||currentMinute==5||currentMinute==6){if(currentHour%2!=0){if(ranges[6].indexOf(firstCharacter)>-1){return true;}}else{if(ranges[7].indexOf(firstCharacter)>-1){return true;}}}else{return false;}})(this)"
+            },
+            "MedianVolume": {
+                "type": "aboveMedianVolume"
+            },
+            "spread": {
+                "type": "maxSpreadPct",
+                "max": 0.2
+            },
+            "Volatility": {
+                "type": "maxVolatilityPct24h",
+                "max": 12
+            },
+            "FastPriceChange": {
+                "type": "minStandardDevPctInterval",
+                "min": 0.5
+            },
+            "GotFreeSlots": {
+                "type": "custom",
+                "target": " (function checkFreeSlots(data){const base=data.pairName.split('-')[0];const config=data.config;let maxPerBase=999;let activePairSameBaseCount=0;let somePairIsTrailing=false;if(Object.keys(config).length>0){if(Object.keys(config?.pairs).length>0&&Object.keys(config?.pairs).indexOf('kucoin')>-1){if(Object.keys(config?.pairs?.kucoin).length>0){Object.keys(config?.pairs?.kucoin).forEach((pair=>{if(data.pairVariables.kucoin?.[pair]?.newOverrides?.isTrailing){somePairIsTrailing=true}if(parseFloat(config?.pairs?.kucoin?.[pair]?.override?.MAX_PAIR_PER_BASE)>0){maxPerBase=parseFloat(config?.pairs?.kucoin?.[pair]?.override?.MAX_PAIR_PER_BASE)}if(pair.split('-')[0]===base&&config?.pairs?.kucoin?.[pair]?.override?.STATUS==='active'){activePairSameBaseCount++}}))}}}if(somePairIsTrailing){return false}if(activePairSameBaseCount>=maxPerBase){return false}else{return true}})(this)"
+            }
+        },
+        "overrides": {
+            "TL_RATIO": 20,
+            "BASE_RESERVE_PCT": 0,
+            "MAX_PAIR_PER_BASE": 3,
+            "ALLOW_SL": true,
+            "TRADING_LIMIT": 0.00011,
+            "BUY_METHOD": "stepgridhybrid",
+            "SELL_METHOD": "stepgridhybrid",
+            "USE_TLR": true,
+            "USE_PSR": true,
+            "PARTIAL_SELL_RATIO": 0.4,
+            "MAX_BUY_COUNT": 999,
+            "MIN_VOLUME_TO_SELL": 10,
+            "PERIOD": 15,
+            "AUTO_STEP_SIZE": true,
+            "STEP_SIZE": "500",
+            "PCT_STEP_SIZE": false,
+            "ENFORCE_STEP": false,
+            "PCT_TRAILING_RANGE": false,
+            "CUSTOM_TRAILING_RANGE": 2,
+            "TREND_SYNC": false,
+            "TREND_BASIC": true,
+            "TREND_PLUS": true,
+            "TRAILING_MULTIPLIER": 2,
+            "SELL_STEP_MULTIPLIER": 1.2,
+            "CUSTOM_TRADING_RANGE_MODE": true,
+            "TRADING_RANGE_LOW": 0,
+            "TRADING_RANGE_HIGH": 0,
+            "TRADING_RANGE_STOP": 0,
+            "PULLBACK_MODE": true,
+            "VOLATILITY_MODE": true,
+            "TA_MODE": true,
+            "DYNAMIC_SL": true,
+            "STOP_AFTER_SELL": false,
+            "FOREVER_BAGS": false,
+            "BUY_ENABLED": false,
+            "SELL_ENABLED": true,
+            "PANIC_SELL": false,
+            "SMAPERIOD": "50",
+            "ATR_PERIOD": "50",
+            "KEEP_QUOTE": "0",
+            "IGNORE_TRADES_BEFORE": "0",
+            "STATUS": "new",
+            "BAG_SIZE": "none",
+            "RANKING_RESULT": -1,
+            "REMOVE": false,
+            "unit_cost": false,
+            "DYNAMIC_EXIT_LOGIC": true
+        },
+        "schedule": "*/5 * * * *",
+        "type": "addPairs",
+        "strategy": "sghybrid_controller",
+        "snapshots": "12",
+        "setITB": false,
+        "resume": true,
+        "debug": false,
+        "muteTG": true,
+        "enabled": true
+    },
+    "manageOverrides_kucoin": {
+        "pairs": {
+            "exclude": "USDT-BTC,3S,3L,VAI",
+            "include": "USDT-,USDT-CRO,USDT-XLM",
+            "exchange": "kucoin"
+        },
+        "filters": {
+            "Sanity checks": {
+                "type": "custom",
+                "target": " (function CheckDataExists(data){if(typeof data.pair.whatstrat==='undefined'){return false;} if(typeof data.pair.ABP==='undefined'){return false;} if(typeof data.pair.candlesclose==='undefined'){return false;} if(typeof data.pair.candlesopen==='undefined'){return false;} if(typeof data.pair.atr==='undefined'){return false;} if(typeof data.pair.trendCheck==='undefined'){return false;} if(typeof data.pair.quoteBalance==='undefined'){return false;}else{return true;}})(this)"
+            }
+        },
+        "setPairVariable": {
+            "newOverrides": " (function handleOverrides(data){const base=data.pairName.split('-')[0];let overrides={TRADING_LIMIT:data.pair.whatstrat.TRADING_LIMIT,STOP_AFTER_SELL:data.pair.whatstrat.STOP_AFTER_SELL,ALLOW_SL:data.pair.whatstrat.ALLOW_SL||false,BUY_ENABLED:data.pair.whatstrat.BUY_ENABLED,BUY_METHOD:data.pair.whatstrat.BUY_METHOD||'stepgridhybrid',SELL_METHOD:data.pair.whatstrat.SELL_METHOD||'stepgridhybrid',PANIC_SELL:data.pair.whatstrat.PANIC_SELL||false,BAG_SIZE:data.pair.whatstrat.BAG_SIZE,BAG_VALUE:data.pair.whatstrat.BAG_VALUE||'none',REMOVE:data.pair.whatstrat.REMOVE,RANKING_RESULT:data.pair.whatstrat.RANKING_RESULT,STATUS:data.pair.whatstrat.STATUS||'new',MIN_VOLUME_TO_SELL:base==='USDT'||base==='BUSD'||base==='USDC'||base==='USD'||base==='EUR'?10:base==='BTC'?2e-4:base==='ETH'?.005:base==='BNB'?.05:2e-4,trendData:data.pair.trendCheck||{},isTrailing:false};const bid=data.pair.Bid;const quoteBalance=data.pair.quoteBalance;const baseBalance=data.pair.baseBalance;const mvts=parseFloat(overrides.MIN_VOLUME_TO_SELL);const ABP=parseFloat(data.pair.ABP);const keepQuote=parseFloat(data.pair.whatstrat.KEEP_QUOTE);const baseReservePct=parseFloat(data.pair.whatstrat.BASE_RESERVE_PCT)/100||0;const notEnoughCandles=typeof data.pair.candlesclose==='undefined'?true:data.pair.candlesclose.length<80;const maxSameBase=parseFloat(data.pair.whatstrat.MAX_PAIR_PER_BASE);const totalBaseValue=parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)-parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)*baseReservePct;const rankingResult=parseFloat(overrides.RANKING_RESULT);const tl=parseFloat(overrides.TRADING_LIMIT);const status=overrides.STATUS;const TLRatio=parseFloat(data.pair.whatstrat?.[`TL_RATIO_${base}`])||parseFloat(data.pair.whatstrat?.TL_RATIO)||40;const reserveThreshold=parseFloat(data.pair.whatstrat.TOTAL_BASE_VALUE)*baseReservePct;const needFunds=quoteBalance>0&&baseBalance>=0&&baseBalance<tl*2||quoteBalance>0&&baseBalance>=0&&baseBalance<reserveThreshold;const lastOrderType=data.pair?.orders?.[0]?.type;const orderCount=data.pair?.orders.length;let worstBagSameBase='';let worstBagSameBaseUpnl=0;if(data.pair?.sellTrailingTarget>0||data.pair?.buyTrailingTarget>0){overrides.isTrailing=true}else{overrides.isTrailing=false}Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(pair.split('-')[0]===base){if(overrides.BAG_SIZE!=='none'&&overrides.BAG_VALUE!=='none'){const drawdown=parseFloat(overrides.BAG_SIZE)-parseFloat(overrides.BAG_VALUE);if(drawdown>worstBagSameBaseUpnl){worstBagSameBase=pair;worstBagSameBaseUpnl=drawdown}}}}));function updateIfEnoughDifference(oldValue,newValue){if(typeof oldValue=='string'&&typeof newValue!='string'){return newValue}else if(typeof oldValue!='string'&&typeof newValue=='string'){return newValue}const minimumDifference=oldValue*.005;let difference;if(oldValue>newValue){difference=oldValue-newValue}else{difference=newValue-oldValue}if(difference>minimumDifference){return newValue}else{return oldValue}}function setStatus(){let activePairsSameBase=0;Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(pair.split('-')[0]===base){if(data.config.pairs.kucoin[pair].override.STATUS==='active'){activePairsSameBase++}}}));const freeSlots=maxSameBase-activePairsSameBase;if(status==='new'&&rankingResult!=-1&&freeSlots>0){if(rankingResult===-2){overrides.STATUS='inactive';overrides.REMOVE=true}else if(rankingResult<=freeSlots){overrides.STATUS='active';return true}else{overrides.STATUS='inactive';overrides.REMOVE=true}}else if(status==='new'&&freeSlots<1){overrides.STATUS='inactive';overrides.REMOVE=true}if(status==='active'&&overrides.BAG_SIZE==='none'&&(lastOrderType==='sell'||orderCount<1)&&overrides.STOP_AFTER_SELL){overrides.STATUS='inactive';overrides.REMOVE=true;overrides.BUY_ENABLED=false}else if(needFunds&&status==='active'&&overrides.ALLOW_SL&&data.pairName===worstBagSameBase){overrides.BUY_METHOD='gain';overrides.SELL_METHOD='gain';overrides.PANIC_SELL=true;overrides.STOP_AFTER_SELL=true}else if(status==='inactive'&&!overrides.REMOVE){overrides.REMOVE=true}else if(status==='inactive'&&overrides.REMOVE&&overrides.BAG_SIZE!=='none'){overrides.STATUS='active';overrides.REMOVE=false;overrides.BUY_ENABLED=true}}function setBagSize(){if(overrides.BAG_SIZE!=='none'){if(lastOrderType==='sell'&&(quoteBalance-keepQuote)*bid<mvts){overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}else if((quoteBalance-keepQuote)*ABP>0){overrides.BAG_SIZE=updateIfEnoughDifference(overrides.BAG_SIZE,(quoteBalance-keepQuote)*ABP);overrides.BAG_VALUE=updateIfEnoughDifference(overrides.BAG_VALUE,(quoteBalance-keepQuote)*bid)}}else if((quoteBalance-keepQuote)*bid<mvts){overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}else{if((quoteBalance-keepQuote)*ABP>0){overrides.BAG_SIZE=updateIfEnoughDifference(overrides.BAG_SIZE,(quoteBalance-keepQuote)*ABP);overrides.BAG_VALUE=updateIfEnoughDifference(overrides.BAG_VALUE,(quoteBalance-keepQuote)*bid)}else{overrides.BAG_SIZE='none';overrides.BAG_VALUE='none'}}}function setTradingLimit(){const tl=totalBaseValue/maxSameBase/TLRatio;if(tl>mvts){overrides.TRADING_LIMIT=updateIfEnoughDifference(overrides.TRADING_LIMIT,tl.toPrecision(5));overrides.BUY_ENABLED=true}else{overrides.TRADING_LIMIT=mvts*1.1;overrides.BUY_ENABLED=true}}setBagSize();if(Object.is(totalBaseValue,NaN)||totalBaseValue===0||notEnoughCandles){return overrides}if(setStatus()===true){setTradingLimit()}if(overrides.BAG_SIZE==='none'&&overrides.STATUS==='active'&&!overrides.STOP_AFTER_SELL){setTradingLimit()}if(overrides.BAG_SIZE!=='none'&&overrides.STATUS==='active'&&tl<mvts){setTradingLimit()}return overrides})(this)"
+        },
+        "overrides": {
+            "TRADING_LIMIT": " this.pairVariables.kucoin[this.pairName].newOverrides.TRADING_LIMIT",
+            "BUY_ENABLED": " this.pairVariables.kucoin[this.pairName].newOverrides.BUY_ENABLED",
+            "MIN_VOLUME_TO_SELL": " this.pairVariables.kucoin[this.pairName].newOverrides.MIN_VOLUME_TO_SELL",
+            "STOP_AFTER_SELL": " (function deactivateWorstPair(data){const base=data.pairName.split('-')[0];let configPairCount=0;let sameBasePairs=[];let maxSameBase=0;const timeNow=Date.now();const oneHour=36e5;const checkRemove=function(trendData,pair){const overrides=data.config.pairs.kucoin[pair].override;const volatilityMode=overrides?.VOLATILITY_MODE||false;const taMode=overrides?.TA_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;if(volatilityMode){if(trendData?.endBullish4hLastHit>trendData?.volatilityBuy4hLastHit||trendData?.volatiltyExit4h>trendData?.volatilityBuy4h||trendData?.volatilityBuy4hLastHit===trendData?.volatiltyExit4h){return true}else if(trendData?.volatilityBuy4h===0&&overrides?.BAG_SIZE==='none'){return true}}else if(taMode){if(trendData?.taFractalsExitLastHit>trendData?.taFractalsLastHit||trendData?.endBullish4hLastHit>trendData?.taFractalsLastHit||trendData?.taFractalsLastHit===trendData?.taFractalsExitLastHit){return true}else if(trendData?.taFractals===0&&overrides?.BAG_SIZE==='none'){return true}}else if(pullbackMode){if(!trendData.pullback4h){return true}else if(trendData?.pullback4h===0&&overrides?.BAG_SIZE==='none'){return true}else if(timeNow-trendData?.pullback4hLastHit>oneHour*2&&overrides?.BAG_SIZE==='none'){return true}}else if(useCustomTradingRangeMode){if(timeNow-overrides?.timestamp*1e3>oneHour/2&&overrides?.BAG_SIZE==='none'){return true}}};Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(pair.split('-')[0]===base){configPairCount++;sameBasePairs.push(pair)}if(maxSameBase===0){maxSameBase=parseFloat(data.config.pairs.kucoin[pair].override.MAX_PAIR_PER_BASE)}}));let positions=[];let activePairCount=0;let pairsToRemove=[];let pairsAlreadyMarkedForRemoval=[];sameBasePairs.forEach((pair=>{if(Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1){if(parseFloat(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE)>0){positions.push(parseFloat(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE))}else if(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE==='none'){positions.push(0)}if(data.pairVariables.kucoin?.[pair]?.newOverrides?.STATUS==='active'){activePairCount++}if(data.pairVariables.kucoin?.[pair]?.newOverrides?.STOP_AFTER_SELL){pairsAlreadyMarkedForRemoval.push(pair)}if(checkRemove(data.pairVariables.kucoin?.[pair]?.newOverrides?.trendData,pair)&&data.pairVariables.kucoin?.[pair]?.newOverrides?.STOP_AFTER_SELL===false){pairsToRemove.push(pair)}}}));let pairsNotMarkedForRemoval=sameBasePairs.filter((pair=>[...pairsToRemove,...pairsAlreadyMarkedForRemoval].indexOf(pair)<0));if(activePairCount>=2&&data.config.pairs.kucoin[data.pairName].override?.BUY_METHOD==='gain'&&data.config.pairs.kucoin[data.pairName].override?.PANIC_SELL&&data.config.pairs.kucoin[data.pairName].override?.BAG_VALUE==='none'){return true}else if(positions.length===configPairCount&&activePairCount>=2&&pairsToRemove.indexOf(data.pairName)===0&&activePairCount-pairsAlreadyMarkedForRemoval.length>=1){return true}else if(positions.length===configPairCount&&activePairCount>maxSameBase&&pairsNotMarkedForRemoval.length>1&&pairsNotMarkedForRemoval.indexOf(data.pairName)===0){return true}else{return false}})(this)",
+            "BAG_SIZE": " this.pairVariables.kucoin[this.pairName].newOverrides.BAG_SIZE",
+            "BAG_VALUE": " this.pairVariables.kucoin[this.pairName].newOverrides.BAG_VALUE",
+            "VOLATILITY_MODE": " (function setVolatilityMode(data){const settingName='VOLATILITY_MODE';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf(settingName)===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "PULLBACK_MODE": " (function setPullbackMode(data){const settingName='PULLBACK_MODE';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf(settingName)===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "TA_MODE": " (function setUseTlr(data){const settingName='TA_MODE';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf(settingName)===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "CUSTOM_TRADING_RANGE_MODE": " (function setVolatilityMode(data){const settingName='CUSTOM_TRADING_RANGE_MODE';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf(settingName)===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "TRADING_RANGE_LOW": " (function setCustomTradingRangeLowPrice(data){const settingName='TRADING_RANGE_LOW';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return overrides?.[settingName]}if(possibleModes.indexOf('CUSTOM_TRADING_RANGE_MODE')===0){return data.pair.Bid*.98}}else{return overrides?.[settingName]}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "TRADING_RANGE_HIGH": " (function setCustomTradingRangeLowPrice(data){const settingName='TRADING_RANGE_HIGH';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return overrides?.[settingName]}if(possibleModes.indexOf('CUSTOM_TRADING_RANGE_MODE')===0){return data.pair.Bid*1.02}}else{return overrides?.[settingName]}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "DYNAMIC_SL": " (function setDynamicSl(data){const settingName='DYNAMIC_SL';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf('VOLATILITY_MODE')===0||possibleModes.indexOf('TA_MODE')===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "USE_TLR": " (function setUseTlr(data){const settingName='USE_TLR';const checkTrend=function(trendData,pair){let possibleModes=[];const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(overrides?.STATUS==='new'){if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){possibleModes.push('VOLATILITY_MODE')}else if(trendData?.structureSync){possibleModes.push('VOLATILITY_MODE')}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){possibleModes.push('TA_MODE')}else if(trendData?.structureSync){possibleModes.push('TA_MODE')}}else if(pullbackMode&&trendData.pullback4h){if(!useTrendSync){possibleModes.push('PULLBACK_MODE')}else if(trendData?.structureSync){possibleModes.push('PULLBACK_MODE')}}else if(useCustomTradingRangeMode&&trendData.structure&&trendData.structureSync&&trendData.tlr>.5&&trendData.exitTrail===false&&!hasActiveCustomRangePairs){possibleModes.push('CUSTOM_TRADING_RANGE_MODE')}else{return false}if(possibleModes.indexOf('VOLATILITY_MODE')===0){return true}}else{return overrides?.[settingName]||false}};return checkTrend(data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.trendData,data.pairName)})(this)",
+            "SELL_METHOD": " this.pairVariables.kucoin[this.pairName].newOverrides.SELL_METHOD",
+            "BUY_METHOD": " this.pairVariables.kucoin[this.pairName].newOverrides.BUY_METHOD",
+            "PANIC_SELL": " this.pairVariables.kucoin[this.pairName].newOverrides.PANIC_SELL",
+            "RANKING_RESULT": " (function rankNewPairs(data){const base=data.pairName.split('-')[0];let configSameBasePairCount=0;let sameBasePairs=[];let maxSameBase=0;const checkTrend=function(trendData,pair){const overrides=data.config.pairs.kucoin[pair].override;const useTrendSync=overrides?.TREND_SYNC||false;const volatilityMode=overrides?.VOLATILITY_MODE||false;const pullbackMode=overrides?.PULLBACK_MODE||false;const taMode=overrides?.TA_MODE||false;const useCustomTradingRangeMode=overrides?.CUSTOM_TRADING_RANGE_MODE||false;const testActiveCustomRangePairs=element=>data.config.pairs.kucoin[element]?.override?.STATUS==='active'&&data.config.pairs.kucoin[element]?.override?.CUSTOM_TRADING_RANGE_MODE&&data.config.pairs.kucoin[element]?.override?.BAG_SIZE!=='none';const hasActiveCustomRangePairs=Object.keys(data.config.pairs.kucoin).some(testActiveCustomRangePairs);if(volatilityMode&&trendData.structure&&trendData.volatilityBuy4h&&!trendData.doNotOpen){if(!useTrendSync){return true}else{return trendData?.structureSync||false}}else if(taMode&&trendData?.taFractals){if(!useTrendSync){return true}else{return trendData?.structureSync||false}}else if(pullbackMode&&trendData?.pullback4h){if(!useTrendSync){return true}else{return trendData?.structureSync||false}}else if(useCustomTradingRangeMode&&trendData?.structure&&trendData?.structureSync&&trendData?.tlr>.5&&trendData?.exitTrail===false&&!hasActiveCustomRangePairs){return true}};Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(pair.split('-')[0]===base){configSameBasePairCount++;sameBasePairs.push(pair)}if(maxSameBase===0){maxSameBase=parseFloat(data.config.pairs.kucoin[pair].override.MAX_PAIR_PER_BASE)}}));let positionSameBase=[];let newPairs=[];let greatNewPairs=[];let activePairCount=0;sameBasePairs.forEach((pair=>{if(data.config.pairs?.kucoin?.[pair]?.override?.STATUS==='active'||data.pairVariables.kucoin?.[pair]?.newOverrides?.STATUS==='active'){activePairCount++}if(Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1){if(parseFloat(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE)>0){positionSameBase.push(parseFloat(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE))}else if(data.pairVariables.kucoin?.[pair]?.newOverrides?.BAG_SIZE==='none'){positionSameBase.push(0)}if(data.pairVariables.kucoin?.[pair]?.newOverrides?.STATUS==='new'&&checkTrend(data.pairVariables.kucoin?.[pair]?.newOverrides?.trendData,pair)&&data.pairVariables.kucoin?.[pair]?.newOverrides?.trendData?.doNotOpen===false){newPairs.push(pair)}else if(data.pairVariables.kucoin?.[pair]?.newOverrides?.STATUS==='new'&&checkTrend(data.pairVariables.kucoin?.[pair]?.newOverrides?.trendData,pair)){greatNewPairs.push(pair)}}}));const resultPairs=[...greatNewPairs,...newPairs];const result=resultPairs.indexOf(data.pairName)>-1?resultPairs.indexOf(data.pairName)+1:-2;if(activePairCount>=maxSameBase){return-2}if(positionSameBase.length===configSameBasePairCount&&data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.STATUS==='new'&&data.pairVariables.kucoin?.[data.pairName]?.newOverrides?.RANKING_RESULT!==-2){return result}else{return-1}})(this)",
+            "TOTAL_BASE_VALUE": " (function totalBaseBalance(data){const baseBalance=data.pair.baseBalance;const base=data.pairName.split('-')[0];const currentValue=parseFloat(data.config.pairs['kucoin'][data.pairName]?.TOTAL_BASE_VALUE)||0;const updateThreshold=.005;let configPairCount=0;let sameBasePairs=[];function updateIfEnoughDifference(oldValue,newValue){if(typeof oldValue=='string'&&typeof newValue!='string'){return newValue}else if(typeof oldValue!='string'&&typeof newValue=='string'){return newValue}const minimumDifference=oldValue*updateThreshold;let difference;if(oldValue>newValue){difference=oldValue-newValue}else{difference=newValue-oldValue}if(difference>minimumDifference){return newValue}else{return oldValue}}Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(pair.split('-')[0]===base){configPairCount++;sameBasePairs.push(pair)}}));let positions=[];let combinedBaseValue=0;sameBasePairs.forEach((pair=>{if(Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1){if(parseFloat(data.pairVariables.kucoin[pair].newOverrides.BAG_SIZE)>0){positions.push(parseFloat(data.pairVariables.kucoin[pair].newOverrides.BAG_SIZE))}else if(data.pairVariables.kucoin[pair].newOverrides.BAG_SIZE==='none'){positions.push(0)}}else if(data.config.pairs.kucoin[pair].override.BAG_SIZE==='none'){positions.push(0)}}));if(positions.length===configPairCount){combinedBaseValue=positions.reduce((function(a,b){return a+b}),0)+baseBalance;const result=updateIfEnoughDifference(currentValue,combinedBaseValue);return result}else{return 0}})(this)",
+            "REMOVE": " (function dontLetLastPairBeRemoved(data){try{const configPairCount=Object.keys(data.config.pairs.kucoin).length;const isLastPair=data.pairName===Object.keys(data.config.pairs.kucoin)[configPairCount-1];let mainFunctionReturn=false;const testVariables=pair=>Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1&&typeof data.pairVariables?.kucoin?.[pair]!=='undefined';const havePairVarsForEachPair=Object.keys(data.config.pairs.kucoin).every(testVariables);let otherPairRemoveCount=0;let allOtherPairsWillStop=false;Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(typeof data.pairVariables?.kucoin?.[pair]!=='undefined'){if(typeof data.pairVariables?.kucoin?.[pair]?.newOverrides!=='undefined'){if(data.pairVariables?.kucoin?.[pair]?.newOverrides?.REMOVE&&pair!==Object.keys(data.config.pairs.kucoin)[configPairCount-1]){otherPairRemoveCount++}if(pair===data.pairName){mainFunctionReturn=data.pairVariables.kucoin[data.pairName].newOverrides.REMOVE}}}}));if(otherPairRemoveCount>=configPairCount-1){allOtherPairsWillStop=true}if(!havePairVarsForEachPair&&!isLastPair){return mainFunctionReturn}else if(!havePairVarsForEachPair&&isLastPair){return false}else if(isLastPair&&allOtherPairsWillStop){return false}else{return mainFunctionReturn}}catch(error){console.log(error);return false}})(this)",
+            "STATUS": " this.pairVariables.kucoin[this.pairName].newOverrides.STATUS"
+        },
+        "clearOverrides": false,
+        "schedule": "21,31,41,51 * * * * *",
+        "type": "manageOverrides",
+        "debug": false,
+        "enabled": true
+    },
+    "removePairs_kucoin": {
+        "pairs": {
+            "exclude": "USDT-BTC,3S,3L,VAI,USDT-CRO",
+            "noBag": false,
+            "removeDisabled": false,
+            "notRemoveBefore": 2,
+            "exchange": "kucoin",
+            "include": "USDT-"
+        },
+        "filters": {
+            "status": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.STATUS === 'inactive'"
+            },
+            "noBag": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.BAG_SIZE === 'none'"
+            },
+            "remove": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.REMOVE === true"
+            },
+            "lastPair": {
+                "type": "custom",
+                "target": " (function dontLetLastPairBeRemoved(data){try{const configPairCount=Object.keys(data.config.pairs.kucoin).length;const isLastPair=data.pairName===Object.keys(data.config.pairs.kucoin)[configPairCount-1];let mainFunctionReturn=false;const testVariables=pair=>Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1&&typeof data.pairVariables?.kucoin?.[pair]!=='undefined';const havePairVarsForEachPair=Object.keys(data.config.pairs.kucoin).every(testVariables);let otherPairRemoveCount=0;let allOtherPairsWillStop=false;Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(typeof data.pairVariables?.kucoin?.[pair]!=='undefined'){if(typeof data.pairVariables?.kucoin?.[pair]?.newOverrides!=='undefined'){if(data.pairVariables?.kucoin?.[pair]?.newOverrides?.REMOVE&&pair!==Object.keys(data.config.pairs.kucoin)[configPairCount-1]){otherPairRemoveCount++}if(pair===data.pairName){mainFunctionReturn=data.pairVariables.kucoin[data.pairName].newOverrides.REMOVE}}}}));if(otherPairRemoveCount>=configPairCount-1){allOtherPairsWillStop=true}if(!havePairVarsForEachPair&&!isLastPair){return mainFunctionReturn}else if(!havePairVarsForEachPair&&isLastPair){return false}else if(isLastPair&&allOtherPairsWillStop){return false}else{return mainFunctionReturn}}catch(error){console.log(error);return false}})(this)"
+            }
+        },
+        "filters2": {
+            "candles": {
+                "type": "custom",
+                "target": " (function notEnoughCandles(data){if(!data.pair?.['15mCandles']){return true}else if(data.pair?.['15mCandles']?.close.length>0){if(data.pair?.['15mCandles']?.close.length<199){return true}}if(!data.pair?.['1hCandles']){return true}else if(data.pair?.['1hCandles']?.close.length>0){if(data.pair?.['1hCandles']?.close.length<199){return true}}if(!data.pair?.['4hCandles']){return true}else if(data.pair?.['4hCandles']?.close.length>0){if(data.pair?.['4hCandles']?.close.length<199){return true}}})(this)"
+            },
+            "noBag": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.BAG_SIZE === 'none'"
+            },
+            "notRanked": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.RANKING_RESULT === -1"
+            },
+            "lastPair": {
+                "type": "custom",
+                "target": " (function dontLetLastPairBeRemoved(data){try{const configPairCount=Object.keys(data.config.pairs.kucoin).length;const isLastPair=data.pairName===Object.keys(data.config.pairs.kucoin)[configPairCount-1];let mainFunctionReturn=false;const testVariables=pair=>Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1&&typeof data.pairVariables?.kucoin?.[pair]!=='undefined';const havePairVarsForEachPair=Object.keys(data.config.pairs.kucoin).every(testVariables);let otherPairRemoveCount=0;let allOtherPairsWillStop=false;Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(typeof data.pairVariables?.kucoin?.[pair]!=='undefined'){if(typeof data.pairVariables?.kucoin?.[pair]?.newOverrides!=='undefined'){if(data.pairVariables?.kucoin?.[pair]?.newOverrides?.REMOVE&&pair!==Object.keys(data.config.pairs.kucoin)[configPairCount-1]){otherPairRemoveCount++}if(pair===data.pairName){mainFunctionReturn=data.pairVariables.kucoin[data.pairName].newOverrides.REMOVE}}}}));if(otherPairRemoveCount>=configPairCount-1){allOtherPairsWillStop=true}if(!havePairVarsForEachPair&&!isLastPair){return mainFunctionReturn}else if(!havePairVarsForEachPair&&isLastPair){return false}else if(isLastPair&&allOtherPairsWillStop){return false}else{return mainFunctionReturn}}catch(error){console.log(error);return false}})(this)"
+            }
+        },
+        "filters3": {
+            "candles": {
+                "type": "custom",
+                "target": " (function notEnoughCandles(data){if(!data.pair?.['15mCandles']){return true}else if(data.pair?.['15mCandles']?.close.length>0){if(data.pair?.['15mCandles']?.close.length<199){return true}}if(!data.pair?.['1hCandles']){return true}else if(data.pair?.['1hCandles']?.close.length>0){if(data.pair?.['1hCandles']?.close.length<199){return true}}if(!data.pair?.['4hCandles']){return true}else if(data.pair?.['4hCandles']?.close.length>0){if(data.pair?.['4hCandles']?.close.length<199){return true}}})(this)"
+            },
+            "noBag": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.BAG_SIZE === 'none'"
+            },
+            "notRanked": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.RANKING_RESULT === -1"
+            },
+            "lastPair": {
+                "type": "custom",
+                "target": " (function dontLetLastPairBeRemoved(data){try{const configPairCount=Object.keys(data.config.pairs.kucoin).length;const isLastPair=data.pairName===Object.keys(data.config.pairs.kucoin)[configPairCount-1];let mainFunctionReturn=false;const testVariables=pair=>Object.keys(data.pairVariables.kucoin).indexOf(pair)>-1&&typeof data.pairVariables?.kucoin?.[pair]!=='undefined';const havePairVarsForEachPair=Object.keys(data.config.pairs.kucoin).every(testVariables);let otherPairRemoveCount=0;let allOtherPairsWillStop=false;Object.keys(data.config.pairs.kucoin).forEach((pair=>{if(typeof data.pairVariables?.kucoin?.[pair]!=='undefined'){if(typeof data.pairVariables?.kucoin?.[pair]?.newOverrides!=='undefined'){if(data.pairVariables?.kucoin?.[pair]?.newOverrides?.REMOVE&&pair!==Object.keys(data.config.pairs.kucoin)[configPairCount-1]){otherPairRemoveCount++}if(pair===data.pairName){mainFunctionReturn=data.pairVariables.kucoin[data.pairName].newOverrides.REMOVE}}}}));if(otherPairRemoveCount>=configPairCount-1){allOtherPairsWillStop=true}if(!havePairVarsForEachPair&&!isLastPair){return mainFunctionReturn}else if(!havePairVarsForEachPair&&isLastPair){return false}else if(isLastPair&&allOtherPairsWillStop){return false}else{return mainFunctionReturn}}catch(error){console.log(error);return false}})(this)"
+            }
+        },
+        "filters4": {
+            "noBag": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.BAG_SIZE === 'none'"
+            },
+            "notRanked": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.RANKING_RESULT === -1"
+            },
+            "trendDataMissing": {
+                "type": "custom",
+                "target": " typeof this.pair.trendCheck === 'undefined'"
+            },
+            "status": {
+                "type": "custom",
+                "target": " this.pair.whatstrat.STATUS === 'new'"
+            }
+        },
+        "schedule": "* * * * *",
+        "type": "removePairs2",
+        "debug": false,
+        "muteTG": true,
+        "enabled": true
+    }
+}
