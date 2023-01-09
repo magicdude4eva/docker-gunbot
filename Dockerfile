@@ -1,6 +1,8 @@
 FROM bitnami/minideb:latest
 
 ARG INSTALL_URL="https://github.com/GuntharDeNiro/BTCT/releases/download/2432/gunthy_linux.zip"
+ARG HOST_FILE_PATH="./gunthy_linux.zip"
+ARG DOCKER_BUILD_FILE_PATH="./lin.zip"
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG VCS_REF
@@ -32,10 +34,11 @@ RUN fc-cache -fv
 
 ## Install Gunbot
 WORKDIR /tmp
-RUN curl -Lo /tmp/lin.zip ${INSTALL_URL}
+# RUN curl -Lo /tmp/${LOCAL_FILE_PATH} ${INSTALL_URL}
+COPY ${HOST_FILE_PATH} ${DOCKER_BUILD_FILE_PATH}
 
-RUN unzip -q lin.zip \
- && rm -rf lin.zip \
+RUN unzip -q ${DOCKER_BUILD_FILE_PATH} \
+ && rm -rf ${DOCKER_BUILD_FILE_PATH} \
  && rm -rf __MACOSX \
  && mv gunthy_* /gunbot \
 ## && mv lin* /gunbot \
