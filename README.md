@@ -73,7 +73,7 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 2) If you do not have `/volume1/`, adjust the mountpoints of `/volume1/docker/gunbot/` in `docker-compose.yml`
 
-3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder.
+3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder. If you also want to use beta-releases, use the `Dockerfile.slipstream.local` instead and rename it to `Dockerfile`. This requires that you have the beta-release in the same folder as the Dockerfile named as `gunthy-linux.zip`
 
 4) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile` to your local settings
 
