@@ -2,11 +2,11 @@ repo_name: magicdude4eva/docker-gunbot
 report_id: 93fa86e989ee4b4de0380fe635ddd218
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-04T15:09:20+00:00'
+timestamp: '2024-01-11T12:35:46+00:00'
 requested_by: magicdude4eva
 provider: github
 branch: main
-detected_tools_count: 5
+detected_tools_count: 3
 tools:
 - name: JavaScript
   description: Lightweight, interpreted, object-oriented language with first-class
@@ -19,18 +19,6 @@ tools:
   image_url: https://img.stackshare.io/service/1209/javascript.jpeg
   detection_source_url: https://github.com/magicdude4eva/docker-gunbot
   detection_source: Repo Metadata
-- name: pgvector
-  description: Open-source vector similarity search for Postgres
-  website_url: https://github.com/pgvector/pgvector/
-  open_source: false
-  hosted_saas: false
-  category: Data Stores
-  sub_category: Database Tools
-  image_url: https://img.stackshare.io/service/109221/default_b888cdf5617d936aa6aacf130911906955508639.png
-  detection_source_url: https://github.com/magicdude4eva/docker-gunbot/blob/main/config-kucoin/autoconfig-instructions.txt
-  detection_source: config-kucoin/autoconfig-instructions.txt
-  last_updated_by: magicdude4eva
-  last_updated_on: 2021-11-27 18:46:36.000000000 Z
 - name: Docker
   description: Enterprise Container Platform for High-Velocity Innovation.
   website_url: https://www.docker.com/
@@ -52,15 +40,3 @@ tools:
   image_url: https://img.stackshare.io/service/1046/git.png
   detection_source_url: https://github.com/magicdude4eva/docker-gunbot
   detection_source: Repo Metadata
-- name: LangChain
-  description: Build AI apps with LLMs through composability
-  website_url: https://github.com/hwchase17/langchain
-  open_source: true
-  hosted_saas: false
-  category: Communications
-  sub_category: Large Language Model Tools
-  image_url: https://img.stackshare.io/service/48790/default_5b6c6b73f1ff3775c85d2a1ba954cb87e30cbf13.jpg
-  detection_source_url: https://github.com/magicdude4eva/docker-gunbot/blob/main/config-kucoin/autoconfig-instructions.txt
-  detection_source: config-kucoin/autoconfig-instructions.txt
-  last_updated_by: magicdude4eva
-  last_updated_on: 2021-11-27 18:46:36.000000000 Z
