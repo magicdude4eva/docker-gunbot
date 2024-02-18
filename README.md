@@ -8,7 +8,7 @@
 [![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 [![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
 
-:white_check_mark: Compatible with Gunbot version : Gunbot v23 [https://github.com/GuntharDeNiro/BTCT/releases](https://github.com/GuntharDeNiro/BTCT/releases)
+:white_check_mark: Compatible with Gunbot version : Gunbot v28.4 [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
 
 :white_check_mark: Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
 
