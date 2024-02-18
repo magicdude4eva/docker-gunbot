@@ -50,7 +50,7 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 </p>
 
 
-🏆 If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://www.binance.com/en/register?ref=WXNEJLQB).
+🏆 If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://accounts.binance.com/register?ref=13896895).
 
 🏆 2021-11-20: I have started trading CRO on Kucoin with Gunbot - if you are not signed up with them use my link: [Kucoin Signup Referral](https://www.kucoin.com/ucenter/signup?rcode=7wrbxe)
 
