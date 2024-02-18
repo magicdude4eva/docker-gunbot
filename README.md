@@ -7,9 +7,8 @@
 ![GitHub issues](https://img.shields.io/github/issues/magicdude4eva/docker-gunbot)
 ![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised)
 ![Docker Stars](https://img.shields.io/docker/stars/magicdude4eva/gunbot-colorised)
-[![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
 [![GitHub last commit](https://img.shields.io/github/last-commit/magicdude4eva/docker-gunbot.svg)](https://github.com/magicdude4eva/docker-gunbot/commits/master)
-
+[![Build and Push Docker image](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml/badge.svg)](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml)
 
 :white_check_mark: Compatible with Gunbot version : Gunbot v28.4 [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
 
