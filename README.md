@@ -2,11 +2,14 @@
 
 # Gunbot Docker Edition for Synology NAS (Binance, Kucoin)
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
-[![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own version badge on microbadger.com")
-[![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
-[![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
+![GitHub stars](https://img.shields.io/github/stars/magicdude4eva/docker-gunbot?style=social)
+![GitHub forks](https://img.shields.io/github/forks/magicdude4eva/docker-gunbot?style=social)
+![GitHub issues](https://img.shields.io/github/issues/magicdude4eva/docker-gunbot)
+![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised)
+![Docker Stars](https://img.shields.io/docker/stars/magicdude4eva/gunbot-colorised)
+[![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
+[![GitHub last commit](https://img.shields.io/github/last-commit/magicdude4eva/docker-gunbot.svg)](https://github.com/magicdude4eva/docker-gunbot/commits/master)
+
 
 :white_check_mark: Compatible with Gunbot version : Gunbot v28.4 [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
 
