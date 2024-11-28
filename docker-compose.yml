@@ -1,10 +1,15 @@
 version: "3.9"
 
+networks:
+  gunbotnetwork:
+    name: gunbotnetwork
+    driver: bridge
+    enable_ipv6: false
+
 services:
-  gunbot:
-    container_name: gunbot
-    #image: gunbot:latest
-    build: .
+  gunbot-binance:
+    container_name: gunbot-binance
+    image: magicdude4eva/gunbot-colorised:latest
     restart: unless-stopped
     ports:
       - 5555:5000
@@ -12,6 +17,10 @@ services:
       - TZ=Europe/Vienna
       - PGID=1024
       - PUID=100
+    networks:
+      gunbotnetwork:
+        aliases:
+          - gunbot-binance
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +39,7 @@ services:
       
   gunbot-kucoin:
     container_name: gunbot-kucoin
-    build: .
+    image: magicdude4eva/gunbot-colorised:latest
     restart: unless-stopped
     ports:
       - 5556:5000
@@ -38,6 +47,10 @@ services:
       - TZ=Europe/Vienna
       - PGID=1024
       - PUID=100
+    networks:
+      gunbotnetwork:
+        aliases:
+          - gunbot-kucoin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro

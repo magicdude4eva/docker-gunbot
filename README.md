@@ -2,21 +2,25 @@
 
 # Gunbot Docker Edition for Synology NAS (Binance, Kucoin)
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised.svg)](https://hub.docker.com/r/magicdude4eva/gunbot-colorised)
-[![](https://images.microbadger.com/badges/image/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised "Get your own version badge on microbadger.com")
-[![Docker Automated build](https://img.shields.io/docker/automated/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
-[![Docker Build Status](https://img.shields.io/docker/build/magicdude4eva/gunbot-colorised.svg)](https://microbadger.com/images/magicdude4eva/gunbot-colorised)
+![GitHub stars](https://img.shields.io/github/stars/magicdude4eva/docker-gunbot?style=social)
+![GitHub forks](https://img.shields.io/github/forks/magicdude4eva/docker-gunbot?style=social)
+![GitHub issues](https://img.shields.io/github/issues/magicdude4eva/docker-gunbot)
+![Docker Pulls](https://img.shields.io/docker/pulls/magicdude4eva/gunbot-colorised)
+![Docker Stars](https://img.shields.io/docker/stars/magicdude4eva/gunbot-colorised)
+[![GitHub last commit](https://img.shields.io/github/last-commit/magicdude4eva/docker-gunbot.svg)](https://github.com/magicdude4eva/docker-gunbot/commits/master)
+[![Build and Push Docker image](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml/badge.svg)](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml)
 
-:white_check_mark: Compatible with Gunbot version : Gunbot v23 [https://github.com/GuntharDeNiro/BTCT/releases](https://github.com/GuntharDeNiro/BTCT/releases)
+✅ Compatible with Gunbot version: Gunbot v28.9.0 [https://gunthy.org/downloads/](https://gunthy.org/downloads/)
 
-:white_check_mark: Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
+✅ Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
+
+🆘 Help and support via [magicdude4eva/docker-gunbot](https://github.com/magicdude4eva/docker-gunbot)
 
 Although this Docker Image has been tested on a Synology NAS, it will work essentially in any Docker-environment with the adjustment of the mount-point needed. I have provided a base-configuration under `/config/` which I suggest you read and adjust. If you use the autoconfig (please read the `/config/autoconfig-instructions.txt` before enabling) provided, and once you have added your Binance credentials, the BOT will start trading.
 
-:warning: The provided config contains a Autoconfig using a Stepgrid trading algorithm with the base of BTC, trading 8 pairs. This works at the moment extremly well for at the current market (August 2021) with returns of 1-8% per trade and trading between 20-50 times per day on Binance. Do read the `/config/autoconfig-instructions.txt` and only change what is allowed. Alternatively use the standard Gunbot install and use an algorithm you understand / are comfortable with.
+🚸 The provided config contains a Autoconfig using a Stepgrid trading algorithm with the base of BTC, trading 8 pairs. This works at the moment extremely well for at the current market (August 2021) with returns of 1-8% per trade and trading between 20-50 times per day on Binance. Do read the `/config/autoconfig-instructions.txt` and only change what is allowed. Alternatively, use the standard Gunbot install and use an algorithm you understand / are comfortable with.
 
-:sob: Do not come crying to me if you lost your house and your wife left you because you traded away your savings. Be responsible and only trade what you are prepared to lose. I am not a financial advisor, and will not help you with your financial troubles.
+😭 Do not come crying to me if you lost your house and your wife left you because you traded away your savings. Be responsible and only trade what you are prepared to lose. I am not a financial advisor, and will not help you with your financial troubles.
 
 Detailed Gunbot documentation and support is available via [https://wiki.gunthy.org/](https://wiki.gunthy.org/)
 
@@ -27,7 +31,7 @@ Detailed Gunbot documentation and support is available via [https://wiki.gunthy.
 
 ___
 ![paypal](https://img.shields.io/badge/PayPal--ffffff.svg?style=social&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8%2F9hAAAABHNCSVQICAgIfAhkiAAAAZZJREFUOI3Fkb1PFFEUxX%2F3zcAMswFCw0KQr1BZSKUQYijMFibGkhj9D4zYYAuU0NtZSIiNzRZGamqD%2BhdoJR%2FGhBCTHZ11Pt%2B1GIiEnY0hFNzkFu%2FmnHPPPQ%2Buu%2BTiYGjy0ZPa5N1t0SI5m6mITeP4%2B%2FGP%2Fbccvto8j3cuCsQTSy%2FCzLkdxqkXpoUXJoUXJrkfFTLMwHiDYLrFz897Z3jT6ckdBwsiYDMo0tNOIGuBqS%2Beh7sdAkU2g%2BkBFGkd%2FrtSgD8Z%2BrBxj68MAGG1A9efRhVsXrKMU7Y4cNyGOwtDU28OtrqdUMetldvzFKxCYSHJ4NsJ%2BnRJGexHba7VJ%2FTff4BaQFBjVcbqIEZ1bESYn4PRUcHx2N952awUkOHZedUcWm14%2FtjqjREHawUEsgx6Ajg5%2Bsi7jWqBwA%2BmIrXlo9YHUVTmEP%2F6hOO1Ofiyy3pjo%2BsvBDX%2FZpSakhz4BqvQDvdYvrXQEXZViI5rPpBEOwR2l16vtN7bd9SN3L1WXj%2BjGSnN38rq%2B7VL8xXQOdDF%2F0KvXn8BlbuY%2FvUAHysAAAAASUVORK5CYII%3D)
-:beer: **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
+🍺 **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
 ___
 
 ### I am a Gunbot Reseller and Binance Affiliate
@@ -46,11 +50,14 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 </p>
 
 
-:trophy: If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://www.binance.com/en/register?ref=WXNEJLQB).
+🏆 If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://accounts.binance.com/register?ref=13896895).
 
-:trophy: 2021-11-20: I have started trading CRO on Kucoin with Gunbot - if you are not signed up with them use my link: [Kucoin Signup Referral](https://www.kucoin.com/ucenter/signup?rcode=7wrbxe)
+🏆 2021-11-20: I have started trading CRO on Kucoin with Gunbot - if you are not signed up with them use my link: [Kucoin Signup Referral](https://www.kucoin.com/ucenter/signup?rcode=7wrbxe)
 
-:rocket: 2021-11-20: If you have not signed up with Crypto.com to trade in CRO, read this: [Crypto.com Visa Debit Card with Cashback and 100% rebate on Netflix, Spotify & Amazon Prime](https://www.naschenweng.info/2021/11/10/crypto_com_visa_debit_card_supercharger/)
+🚀 2021-11-20: If you have not signed up with Crypto.com to trade in CRO, read this: [Crypto.com Visa Debit Card with Cashback and 100% rebate on Netflix, Spotify & Amazon Prime](https://www.naschenweng.info/2021/11/10/crypto_com_visa_debit_card_supercharger/)
+
+💳 2024-01-01: **Earn Free Crypto with Your Everyday Spending!** Sign up for Plutus and earn free crypto on your everyday debit card payments. Join now using my referral link: [Join Plutus!](https://dex.plutus.it/auth/referee/signup?refId=BUihTI)
+
 
 ## Docker image with colorised output & Telegram Support
 
@@ -66,8 +73,9 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 
 ## Setup On Synology
-:info: I use the container `gunbot` for Binance and the container `gunbot-kucoin`for Kucoin. If you do not need both, delete the one you are using.
-:info: The container `gunbot-kucoin` only trades USDT-CRO as I like Crypto.com - please adjust if you need anything else. The trading limit for USDT-CRO is set to USDT=150 per trade (see `"TRADING_LIMIT": "150",`in 
+ℹ️ I use the container `gunbot` for Binance and the container `gunbot-kucoin`for Kucoin. If you do not need both, delete the one you are using.
+
+ℹ️ The container `gunbot-kucoin` only trades USDT-CRO as I like Crypto.com - please adjust if you need anything else. The trading limit for USDT-CRO is set to USDT=150 per trade (see `"TRADING_LIMIT": "150",`in 
 
 1) If you have a mount-point `/volume1/`, create the directory `/volume1/docker/gunbot/` and skip to Step 3)
 
@@ -127,11 +135,11 @@ The idea is to have a fully automated setup for BTC-alt trading that trades rela
 
 The setup consists of a config.js and autoconfig.json file, which do the following (summarized):
 
-:warning: The "autoconfig.json" in the "gunbot" container trades as base both BTC-ALT and BNB-ALT and each base uses 6 pairs - so you will have 6 BTC-trades and 6-BNB-trades. Please adjust this if you do not want to trade in these volumes (you will need 0,3BTC and 2BNB for it to properly work)
+🚸 The "autoconfig.json" in the "gunbot" container trades as base both BTC-ALT and BNB-ALT and each base uses 6 pairs - so you will have 6 BTC-trades and 6-BNB-trades. Please adjust this if you do not want to trade in these volumes (you will need 0,3BTC and 2BNB for it to properly work)
 
 `Autoconfig.json`
 
-:children_crossing: Warnings:
+🚸 Warnings:
 * Because of how trading limit compounding is handled, the setup is difficult to combine with other trades on the same acount
 * Manual trading on the same exchange account and base currency, or manually made config changes can lead to unexpected behavior
 * Due to the lack of a bid/ask spread filter on Huobi, pair selection is likely more risky there
@@ -161,7 +169,7 @@ Notes:
 
 
 ## Donations are always welcome
-:beer: **Please support me**: If the above helped you in any way, then [follow me on Twitter](https://twitter.com/gerdnaschenweng) or send me some coins: 
+🍺 **Please support me**: If the above helped you in any way, then [follow me on Twitter](https://twitter.com/gerdnaschenweng) or send me some coins: 
 ```
 (CRO)    cro1w2kvwrzp23aq54n3amwav4yy4a9ahq2kz2wtmj (Memo: 644996249) or 0xb83c3Fe378F5224fAdD7a0f8a7dD33a6C96C422C (Cronos)
 (USDC)   0xb83c3Fe378F5224fAdD7a0f8a7dD33a6C96C422C
