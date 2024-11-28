@@ -10,7 +10,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/magicdude4eva/docker-gunbot.svg)](https://github.com/magicdude4eva/docker-gunbot/commits/master)
 [![Build and Push Docker image](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml/badge.svg)](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml)
 
-✅ Compatible with Gunbot version: Gunbot v28.9.0 [https://gunthy.org/downloads/](https://gunthy.org/downloads/)
+✅ Compatible with Gunbot version: Gunbot v29.3.6 [https://gunthy.org/downloads/](https://gunthy.org/downloads/)
 
 ✅ Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
 
@@ -166,6 +166,20 @@ Notes:
 
 
 -----
+
+## Troubleshooting
+If you do not manage to resolve your problems with basic troubleshooting, log a Issue in this project. For basic problems:
+
+1) Check that your permissions of folders are correct:
+<img width="578" alt="image" src="https://github.com/user-attachments/assets/78607496-c566-46b2-b903-97ed5951e1d9">
+
+2) Check the log output when starting the container
+`docker logs -n 100 -f gunbot`
+
+3) Check for any Gunbot errors - most of the time the JSON is invalid (missing brackets, commas, quotes)
+
+If you log an issue, ensure that you include your logs, but make sure to remove any reference to your API keys or Gunbot masterkeys/passwords.
+
 
 
 ## Donations are always welcome
