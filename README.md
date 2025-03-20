@@ -40,10 +40,9 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 | Gunbot Edition   |   Price    |  Link |
 | ---------------- |------------| ------------------------------------------------------------------------------ |
-| Gunbot Starter   | BTC 0.0100 | [gunbot/promoStarter](https://otc.gunthy.org/magicdude4eva/promoStarter)   |
-| Gunbot Standard  | BTC 0.0250 | [gunbot/promoStandard](https://otc.gunthy.org/magicdude4eva/promoStandard) |
-| Gunbot Pro       | BTC 0.0375 | [gunbot/promoPro](https://otc.gunthy.org/magicdude4eva/promoPro)           |
-| Gunbot Ultimate  | BTC 0.0625 | [gunbot/promoUltimate](https://otc.gunthy.org/magicdude4eva/promoUltimate) |
+| Gunbot Standard  |   $ 199,00 | [gunbot/promoStandard](https://checkout.gunbot.com/magicdude4eva/promoStandard) |
+| Gunbot Pro       |   $ 299,00 | [gunbot/promoPro](https://checkout.gunbot.com/magicdude4eva/promoPro)           |
+| Gunbot Ultimate  |   $ 499,00 | [gunbot/promoUltimate](https://checkout.gunbot.com/magicdude4eva/ultimate) |
 
 <p align="center">
 (*) You can always upgrade to a higher license later - I can help you - contact me on Telegram <a href="https://t.me/magicdude4eva" title="Contact @magicdude4eva on Telegram">@magicdude4eva</a>
@@ -52,11 +51,7 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 🏆 If you are new to Binance, [I can share my affiliate link where both of us will earn 10% commission on trades](https://accounts.binance.com/register?ref=13896895).
 
-🏆 2021-11-20: I have started trading CRO on Kucoin with Gunbot - if you are not signed up with them use my link: [Kucoin Signup Referral](https://www.kucoin.com/ucenter/signup?rcode=7wrbxe)
-
 🚀 2021-11-20: If you have not signed up with Crypto.com to trade in CRO, read this: [Crypto.com Visa Debit Card with Cashback and 100% rebate on Netflix, Spotify & Amazon Prime](https://www.naschenweng.info/2021/11/10/crypto_com_visa_debit_card_supercharger/)
-
-💳 2024-01-01: **Earn Free Crypto with Your Everyday Spending!** Sign up for Plutus and earn free crypto on your everyday debit card payments. Join now using my referral link: [Join Plutus!](https://dex.plutus.it/auth/referee/signup?refId=BUihTI)
 
 
 ## Docker image with colorised output & Telegram Support
@@ -181,25 +176,23 @@ If you do not manage to resolve your problems with basic troubleshooting, log a 
 If you log an issue, ensure that you include your logs, but make sure to remove any reference to your API keys or Gunbot masterkeys/passwords.
 
 
-
 ## Donations are always welcome
-🍺 **Please support me**: If the above helped you in any way, then send me some coins: 
+[paypal]: https://paypal.me/GerdNaschenweng
+:beer: **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
 ```
 (CRO)    0xBAdB43af444055c4031B79a76F74895469BA0CD7 (Cronos)
 (USDC)   0xBAdB43af444055c4031B79a76F74895469BA0CD7
 (ETH)    0xfc316ba7d8dc325250f1adfafafc320ad75d87c0
 (BTC)    1Mhq9SY6DzPhs7PNDx7idXFDWsGtyn7GWM
 (BNB)    0xfc316ba7d8dc325250f1adfafafc320ad75d87c0
-Crypto.com PayString: magicdude$paystring.crypto.com	
+Crypto.com PayString: magicdude$paystring.crypto.com    
 ```
 
+Go to [Curve.com to add your Crypto.com card to ApplePay](https://www.curve.com/join#DWPXKG6E) and signup to [Crypto.com for a staking and free Crypto debit card](https://crypto.com/app/ref6ayzqvp).
 
-Go to [Curve.com to add your Crypto.com card to ApplePay](https://www.curve.com/join#DWPXKG6E) and signup to [Crypto.com for a staking and free Crypto debit card](https://crypto.com/app/ref6ayzqvp) - please use referral **ref6ayzqvp** to get that sweep $25 bonus.
+Use [Binance Exchange](https://accounts.binance.com/register?ref=13896895) to trade #altcoins. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
 
 
-Use [Binance Exchange](https://www.binance.com/?ref=13896895) to trade #altcoins. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
-
-If you have no crypto, follow me at least on [Twitter](https://twitter.com/gerdnaschenweng).
 
 ## Use Rotki for Crypto Tracking
 Referral: A great crypto currency tracking platform which can be selfhosted is [Rotki](https://github.com/rotki/rotki)
