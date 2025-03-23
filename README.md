@@ -118,7 +118,7 @@ This is how to create a bot:
 Note: You will need to have at lease "Gunbot Standard" to support all strategies, and I strongly recommend it. If you want to trade on multiple exchanges use "Gunbot Pro" (3 API Slots) or "Gunbot Ultimate (5 API Slots)
 
 <p align="center">
-<a href="https://otc.gunthy.org/magicdude4eva/promoStandard"><img src="https://user-images.githubusercontent.com/1632781/107265057-18b88b80-6a44-11eb-8071-5c3f48ba4bf4.png" alt="Gunbot License differences"></a><br/>
+<a href="https://checkout.gunbot.com/magicdude4eva/promoStandard"><img src="https://user-images.githubusercontent.com/1632781/107265057-18b88b80-6a44-11eb-8071-5c3f48ba4bf4.png" alt="Gunbot License differences"></a><br/>
 <b>Gunbot License differences - click to purchase a "Gunbot Standard License" or pick other licenses from above</b><br/>
 </p>
 
