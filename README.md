@@ -82,7 +82,7 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 5) Place your config.js into `/config` and/or `/config-kucoin`
 
-6) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: https://github.com/GuntharDeNiro/BTCT/releases
+6) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
 
 7) and then execute:
 ```
