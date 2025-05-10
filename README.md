@@ -40,9 +40,9 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 | Gunbot Edition   |   Price    |  Link |
 | ---------------- |------------| ------------------------------------------------------------------------------ |
-| Gunbot Standard  |   $ 199,00 | [gunbot/promoStandard](https://checkout.gunbot.com/magicdude4eva/promoStandard) |
-| Gunbot Pro       |   $ 299,00 | [gunbot/promoPro](https://checkout.gunbot.com/magicdude4eva/promoPro)           |
-| Gunbot Ultimate  |   $ 499,00 | [gunbot/promoUltimate](https://checkout.gunbot.com/magicdude4eva/ultimate) |
+| Gunbot Standard  |   $ 199,00 | [gunbot/promoStandard](https://checkout.gunbot.com/awesome/promoStandard?inviteRef=EOTSI) |
+| Gunbot Pro       |   $ 299,00 | [gunbot/promoPro](https://checkout.gunbot.com/awesome/promoPro?inviteRef=EOTSI)           |
+| Gunbot Ultimate  |   $ 499,00 | [gunbot/promoUltimate](https://checkout.gunbot.com/awesome/ultimate?inviteRef=EOTSI) |
 
 <p align="center">
 (*) You can always upgrade to a higher license later - I can help you - contact me on Telegram <a href="https://t.me/magicdude4eva" title="Contact @magicdude4eva on Telegram">@magicdude4eva</a>
