@@ -78,13 +78,20 @@ You need at least a "Gunbot Standard" License to trade on Binance and use the pr
 
 3) Copy `docker-compose.yml`, `dockerignore` and `Dockerfile` from this repo to your `./gunbot/`-folder. If you also want to use beta-releases, use the `Dockerfile.slipstream.local` instead and rename it to `Dockerfile`. This requires that you have the beta-release in the same folder as the Dockerfile named as `gunthy-linux.zip`
 
-4) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile` to your local settings
+3.a.) I created a `setup.sh` which you can execute in your gunbot-directory which will do the copying of files and adjusting permissions - run this in your gunbot directory:
+```
+curl -fsSL -H 'Cache-Control: no-cache' -o setup.sh https://raw.githubusercontent.com/magicdude4eva/docker-gunbot/refs/heads/main/setup.sh && bash setup.sh
+```
 
-5) Place your config.js into `/config` and/or `/config-kucoin`
+ℹ️ Note: you will still need to adjust config/config.js and adjust your `docker-compose.yml`
 
-6) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
+5) Adjust the timezone setting `TZ=Europe/Vienna` in `docker-compose.yml` and `Dockerfile` to your local settings
 
-7) and then execute:
+6) Place your config.js into `/config` and/or `/config-kucoin`
+
+7) Adjust the download Link in `Dockerfile` for `INSTALL_URL`. The latest software can be found via: [https://www.gunbot.com/downloads/](https://www.gunbot.com/downloads/)
+
+8) and then execute:
 ```
 cd /volume1/docker/gunbot/
 docker build -t gunbot .
