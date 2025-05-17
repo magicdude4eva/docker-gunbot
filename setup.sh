@@ -21,10 +21,7 @@ done
 
 # Create config folder and download files
 echo "📁 Creating config directory..."
-mkdir -p config/config_backups
-mkdir -p config/json
-mkdir -p config/logs
-mkdir -p config/ssl
+mkdir -p config/backups config/json config/logs config/ssl
 
 echo "⬇️ Downloading config.js..."
 curl -fsSL "$BASE_URL/config/config.js" -o config/config.js || {
