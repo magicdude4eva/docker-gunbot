@@ -10,7 +10,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/magicdude4eva/docker-gunbot.svg)](https://github.com/magicdude4eva/docker-gunbot/commits/master)
 [![Build and Push Docker image](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml/badge.svg)](https://github.com/magicdude4eva/docker-gunbot/actions/workflows/docker-build.yml)
 
-✅ Compatible with Gunbot version: Gunbot v30.2.0 [https://gunthy.org/downloads/](https://gunthy.org/downloads/)
+✅ Compatible with Gunbot version: Gunbot v30.4.3 [https://gunthy.org/downloads/](https://gunthy.org/downloads/)
 
 ✅ Compatible with Synology DSM6.0, DSM7.0 (both on DS1019+)
 
