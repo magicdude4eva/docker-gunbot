@@ -184,23 +184,28 @@ If you log an issue, ensure that you include your logs, but make sure to remove 
 
 
 ## Donations are always welcome
+
 [paypal]: https://paypal.me/GerdNaschenweng
-:beer: **Please support me**: Although all my software is free, it is always appreciated if you can support my efforts on Github with a [contribution via Paypal][paypal] - this allows me to write cool projects like this in my personal time and hopefully help you or your business. 
+
+🍻 **Support my work**  
+All my software is free and built in my personal time. If it helps you or your business, please consider a small donation via [PayPal][paypal] — it keeps the coffee ☕ and ideas flowing!
+
+💸 **Crypto Donations**  
+You can also send crypto to one of the addresses below:
+
 ```
-(CRO)    0xBAdB43af444055c4031B79a76F74895469BA0CD7 (Cronos)
-(USDC)   0xBAdB43af444055c4031B79a76F74895469BA0CD7
-(ETH)    0xfc316ba7d8dc325250f1adfafafc320ad75d87c0
-(BTC)    1Mhq9SY6DzPhs7PNDx7idXFDWsGtyn7GWM
-(BNB)    0xfc316ba7d8dc325250f1adfafafc320ad75d87c0
-Crypto.com PayString: magicdude$paystring.crypto.com    
+(CRO)   0xb83c3Fe378F5224fAdD7a0f8a7dD33a6C96C422C (Cronos)  
+(USDC)  0xb83c3Fe378F5224fAdD7a0f8a7dD33a6C96C422C (ERC20)  
+(ETH)   0xfc316ba7d8dc325250f1adfafafc320ad75d87c0  
+(BNB)   0xfc316ba7d8dc325250f1adfafafc320ad75d87c0
+(BTC)   bc1q24fuw84l6whm20umlr56nvqjn908sec8pavk3z  
+Crypto.com PayString: magicdude$paystring.crypto.com
 ```
 
-Go to [Curve.com to add your Crypto.com card to ApplePay](https://www.curve.com/join#DWPXKG6E) and signup to [Crypto.com for a staking and free Crypto debit card](https://crypto.com/app/ref6ayzqvp).
-
-Use [Binance Exchange](https://accounts.binance.com/register?ref=13896895) to trade #altcoins. I also accept old-school **[PayPal](https://paypal.me/GerdNaschenweng)**.
-
-
-
+🧾 **Recommended Platforms**  
+- 👉 [Curve.com](https://www.curve.com/join#DWPXKG6E): Add your Crypto.com card to Apple Pay  
+- 🔐 [Crypto.com](https://crypto.com/app/ref6ayzqvp): Stake and get your free Crypto Visa card  
+- 📈 [Binance](https://accounts.binance.com/register?ref=13896895): Trade altcoins easily
 ## Use Rotki for Crypto Tracking
 Referral: A great crypto currency tracking platform which can be selfhosted is [Rotki](https://github.com/rotki/rotki)
 ![CleanShot 2021-10-03 at 10 09 53@2x](https://user-images.githubusercontent.com/1632781/135745563-1d0880a8-486d-450a-823a-499763f14d57.png)
