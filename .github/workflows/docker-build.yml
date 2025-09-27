@@ -134,11 +134,11 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          name: Gunbot v${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Gunbot ${{ steps.version.outputs.version }}
           generate_release_notes: true
           body: |
-            ## Gunbot Docker Image v${{ steps.version.outputs.version }}
+            ## Gunbot Docker Image ${{ steps.version.outputs.version }}
 
             ### 📦 Docker Tags
             - ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
