@@ -13,88 +13,91 @@ on:
       - 'Dockerfile'
       - '.github/workflows/docker-build.yml'
 
+# Least-privilege but enough to create releases and read repo
+permissions:
+  contents: write
+
 env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
 
+concurrency:
+  group: gunbot-docker-build
+  cancel-in-progress: false
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Extract Gunbot version from website
       id: version
+        shell: bash
       run: |
+        set -euo pipefail
         echo "Fetching Gunbot version from JavaScript files..."
-        
-        # Get HTML content first to find iframe and JS files
-        html_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "${{ env.GUNBOT_DOWNLOAD_URL }}")
-        
+
+        # Be a good citizen: retries + UA
+        UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "${{ env.GUNBOT_DOWNLOAD_URL }}")
+
         # Extract iframe URL (gunthy.org/downloads/)
         iframe_url=$(echo "$html_content" | grep -oP 'src="https://gunthy\.org/downloads/[^"]*' | head -1 | sed 's/src="//')
-        
+
         version=""
-        if [ -n "$iframe_url" ]; then
+          if [ -n "${iframe_url:-}" ]; then
           echo "Found iframe URL: $iframe_url"
-          
-          # Get iframe content to find main JS files
-          iframe_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "$iframe_url")
-          
-          # Extract main JS file URLs
-          js_files=$(echo "$iframe_content" | grep -oP 'src="[^"]*\.js"' | sed 's/src="//g' | sed 's/"//g' | grep -E "(main|chunk)" | head -5)
-          
+          iframe_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$iframe_url")
+
+          # Extract up to 5 JS file URLs likely to contain the version
+          js_files=$(echo "$iframe_content" | grep -oP 'src="[^"]*\.js"' | sed 's/src="//;s/"$//' | grep -E "(main|chunk)" | head -5 || true)
+
           for js_file in $js_files; do
             if [[ "$js_file" == /* ]]; then
-              # Relative URL, prepend domain
               js_url="https://gunthy.org${js_file}"
             else
               js_url="$js_file"
             fi
-            
             echo "Checking JS file: $js_url"
-            
-            # Download and search for version in JS file
-            js_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "$js_url")
-            
-            # Look for version patterns in the JS content
-            version=$(echo "$js_content" | grep -oP '30\.[0-9]+\.[0-9]+' | head -1)
-            
-            if [ -n "$version" ]; then
+            js_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$js_url" || true)
+
+            # Look for 30.x.y pattern
+            candidate=$(echo "$js_content" | grep -oP '30\.[0-9]+\.[0-9]+' | head -1 || true)
+            if [ -n "${candidate:-}" ]; then
+              version="v$candidate"
               echo "Found version in $js_file: $version"
               break
             fi
           done
         fi
-        
-        # Fallback if no version found
+
         if [ -z "$version" ]; then
-          echo "⚠️ Warning: Could not extract version from JS files"
-          echo "Using fallback version..."
-          version="30.5.9"
-          echo "⚠️ Using fallback version: $version"
+          echo "Warning: Could not extract version from JS files, using fallback"
+          version="v30.5.9"
         fi
-        
+
         echo "Detected Gunbot version: $version"
-        echo "version=$version" >> $GITHUB_OUTPUT
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
     - name: Check if version already exists on Docker Hub
       id: check
+        shell: bash
       run: |
-        version="v${{ steps.version.outputs.version }}"
-        echo "Checking if version $version already exists on Docker Hub..."
-        
-        # Check tag through Docker Hub API
-        response=$(curl -s "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/$version/")
-        
-        if echo "$response" | grep -q '"name"'; then
+        set -euo pipefail
+        version="${{ steps.version.outputs.version }}"
+        echo "Checking if Docker tag exists: $version"
+
+        # Public repo check via Docker Hub API
+        resp=$(curl -sS --retry 3 --retry-delay 2 "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/${version}/" || true)
+        if echo "$resp" | grep -q '"name"'; then
           echo "Version $version already exists on Docker Hub. Skipping build."
-          echo "exists=true" >> $GITHUB_OUTPUT
+          echo "exists=true" >> "$GITHUB_OUTPUT"
         else
-          echo "Version $version does not exist on Docker Hub. Proceeding with build."
-          echo "exists=false" >> $GITHUB_OUTPUT
+          echo "Version $version not found on Docker Hub. Proceeding."
+          echo "exists=false" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Set up Docker Buildx
@@ -120,33 +123,39 @@ jobs:
           ${{ env.DOCKER_IMAGE }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        # Optional: add OCI labels from the detected version
+        labels: |
+          org.opencontainers.image.title=Gunbot Colorised Docker Edition for Synology NAS
+          org.opencontainers.image.version=${{ steps.version.outputs.version }}
+          org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
+      # Create a GitHub release using a maintained action
     - name: Create GitHub Release
       if: steps.check.outputs.exists == 'false'
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
       with:
         tag_name: v${{ steps.version.outputs.version }}
-        release_name: Gunbot v${{ steps.version.outputs.version }}
+        name: Gunbot v${{ steps.version.outputs.version }}
+        generate_release_notes: true
         body: |
           ## Gunbot Docker Image v${{ steps.version.outputs.version }}
-          
-          ### 📦 Docker Tags
-          - `${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}`
-          - `${{ env.DOCKER_IMAGE }}:latest`
-         
-          ### 🔗 Links
-          - [Docker Hub](https://hub.docker.com/r/${{ env.DOCKER_IMAGE }})
-          - [Documentation](https://github.com/${{ github.repository }}/blob/main/README.md)
-          - [Gunbot Official](https://gunbot.com)
-        draft: false
-        prerelease: false
 
-    - name: Update repository description
+          ### 📦 Docker Tags
+          - ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+          - ${{ env.DOCKER_IMAGE }}:latest
+
+          ### 🔗 Links
+          - Docker Hub: https://hub.docker.com/r/${{ env.DOCKER_IMAGE }}
+          - Documentation: https://github.com/${{ github.repository }}/blob/main/README.md
+          - Gunbot Official: https://gunbot.com
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Summary
       if: steps.check.outputs.exists == 'false'
       run: |
-        echo "Successfully built and pushed Gunbot v${{ steps.version.outputs.version }} to Docker Hub"
-        echo "Image tags:"
+        echo "Successfully built and pushed Gunbot ${{ steps.version.outputs.version }} to Docker Hub"
+        echo "Tags:"
         echo "- ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}"
-        echo "- ${{ env.DOCKER_IMAGE }}:latest" 
+        echo "- ${{ env.DOCKER_IMAGE }}:latest"
