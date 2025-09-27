@@ -9,7 +9,7 @@ networks:
 services:
   gunbot-binance:
     container_name: gunbot-binance
-    image: magicdude4eva/gunbot-colorised:latest
+    image: magicdude4eva/gunbot-colorised:${GB_VERSION:-latest}
     restart: unless-stopped
     ports:
       - 5555:5000
@@ -22,24 +22,13 @@ services:
         aliases:
           - gunbot-binance
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
       - /etc/TZ:/etc/timezone:ro
-      - "/volume1/docker/gunbot/config/backups:/gunbot/backups"
-      - "/volume1/docker/gunbot/config/logs:/gunbot/gunbot_logs"
-      - "/volume1/docker/gunbot/config/logs/err.log:/gunbot/err.log"
-      - "/volume1/docker/gunbot/config/json:/gunbot/json"
-      - "/volume1/docker/gunbot/config/ssl:/gunbot/ssl"
-      - "/volume1/docker/gunbot/config/config.js:/gunbot/config.js"
-      - "/volume1/docker/gunbot/config/gunbotgui.db:/gunbot/gunbotgui.db"
-      - "/volume1/docker/gunbot/config/tgconfig.json:/gunbot/tgconfig.json"
-      - "/volume1/docker/gunbot/config/session.json:/gunbot/session.json"
-      - "/volume1/docker/gunbot/config/autoconfig.json:/gunbot/autoconfig.json"
-      - "/volume1/docker/gunbot/config/conversion.json:/gunbot/conversion.json"
-      
-  gunbot-kucoin:
-    container_name: gunbot-kucoin
-    image: magicdude4eva/gunbot-colorised:latest
+      - /volume2/docker/gunbot/binance_data:/data
+
+  gunbot-cryptocom:
+    container_name: gunbot-cryptocom
+    image: magicdude4eva/gunbot-colorised:${GB_VERSION:-latest}
     restart: unless-stopped
     ports:
       - 5556:5000
@@ -50,19 +39,8 @@ services:
     networks:
       gunbotnetwork:
         aliases:
-          - gunbot-kucoin
+          - gunbot-cryptocom
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
       - /etc/TZ:/etc/timezone:ro
-      - "/volume1/docker/gunbot/config-kucoin/backups:/gunbot/backups"
-      - "/volume1/docker/gunbot/config-kucoin/logs:/gunbot/gunbot_logs"
-      - "/volume1/docker/gunbot/config-kucoin/logs/err.log:/gunbot/err.log"
-      - "/volume1/docker/gunbot/config-kucoin/json:/gunbot/json"
-      - "/volume1/docker/gunbot/config-kucoin/ssl:/gunbot/ssl"
-      - "/volume1/docker/gunbot/config-kucoin/config.js:/gunbot/config.js"
-      - "/volume1/docker/gunbot/config-kucoin/gunbotgui.db:/gunbot/gunbotgui.db"
-      - "/volume1/docker/gunbot/config-kucoin/tgconfig.json:/gunbot/tgconfig.json"
-      - "/volume1/docker/gunbot/config-kucoin/session.json:/gunbot/session.json"
-      - "/volume1/docker/gunbot/config-kucoin/autoconfig.json:/gunbot/autoconfig.json"
-      - "/volume1/docker/gunbot/config-kucoin/conversion.json:/gunbot/conversion.json"
+      - /volume2/docker/gunbot/cryptocom_data:/data

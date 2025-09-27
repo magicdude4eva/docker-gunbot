@@ -1,2 +1,57 @@
+# Config directories
+binance_data
+cryptocom_data
 config
+config-cryptocom
 config-kucoin
+config-coinbase
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+docker-compose.yml.old
+update_gunbot.sh
+gunbot.version
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Node.js (if any local node_modules exist)
+node_modules/
+
+# Backup files
+*.bak
+*.backup
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.rar 
