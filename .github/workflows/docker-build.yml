@@ -1,33 +1,152 @@
-name: Build and Push Docker image
+name: Build and Push Gunbot Docker Image
 
 on:
+  schedule:
+    # Run daily at UTC 06:00 (KST 15:00)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual execution
   push:
     branches:
       - main
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/docker-build.yml'
+
+env:
+  DOCKER_IMAGE: magicdude4eva/gunbot-colorised
+  GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Extract Gunbot version from website
+      id: version
+      run: |
+        echo "Fetching Gunbot version from JavaScript files..."
+        
+        # Get HTML content first to find iframe and JS files
+        html_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "${{ env.GUNBOT_DOWNLOAD_URL }}")
+        
+        # Extract iframe URL (gunthy.org/downloads/)
+        iframe_url=$(echo "$html_content" | grep -oP 'src="https://gunthy\.org/downloads/[^"]*' | head -1 | sed 's/src="//')
+        
+        version=""
+        if [ -n "$iframe_url" ]; then
+          echo "Found iframe URL: $iframe_url"
+          
+          # Get iframe content to find main JS files
+          iframe_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "$iframe_url")
+          
+          # Extract main JS file URLs
+          js_files=$(echo "$iframe_content" | grep -oP 'src="[^"]*\.js"' | sed 's/src="//g' | sed 's/"//g' | grep -E "(main|chunk)" | head -5)
+          
+          for js_file in $js_files; do
+            if [[ "$js_file" == /* ]]; then
+              # Relative URL, prepend domain
+              js_url="https://gunthy.org${js_file}"
+            else
+              js_url="$js_file"
+            fi
+            
+            echo "Checking JS file: $js_url"
+            
+            # Download and search for version in JS file
+            js_content=$(curl -s --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "$js_url")
+            
+            # Look for version patterns in the JS content
+            version=$(echo "$js_content" | grep -oP '30\.[0-9]+\.[0-9]+' | head -1)
+            
+            if [ -n "$version" ]; then
+              echo "Found version in $js_file: $version"
+              break
+            fi
+          done
+        fi
+        
+        # Fallback if no version found
+        if [ -z "$version" ]; then
+          echo "⚠️ Warning: Could not extract version from JS files"
+          echo "Using fallback version..."
+          version="30.5.9"
+          echo "⚠️ Using fallback version: $version"
+        fi
+        
+        echo "Detected Gunbot version: $version"
+        echo "version=$version" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: magicdude4eva/gunbot-colorised:latest
+    - name: Check if version already exists on Docker Hub
+      id: check
+      run: |
+        version="v${{ steps.version.outputs.version }}"
+        echo "Checking if version $version already exists on Docker Hub..."
+        
+        # Check tag through Docker Hub API
+        response=$(curl -s "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/$version/")
+        
+        if echo "$response" | grep -q '"name"'; then
+          echo "Version $version already exists on Docker Hub. Skipping build."
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "Version $version does not exist on Docker Hub. Proceeding with build."
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
 
-      - name: Update Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: magicdude4eva/gunbot-colorised
-          readme-filepath: ./README.md
+    - name: Set up Docker Buildx
+      if: steps.check.outputs.exists == 'false'
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Docker Hub
+      if: steps.check.outputs.exists == 'false'
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      if: steps.check.outputs.exists == 'false'
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64
+        push: true
+        tags: |
+          ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+          ${{ env.DOCKER_IMAGE }}:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Create GitHub Release
+      if: steps.check.outputs.exists == 'false'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        release_name: Gunbot v${{ steps.version.outputs.version }}
+        body: |
+          ## Gunbot Docker Image v${{ steps.version.outputs.version }}
+          
+          ### 📦 Docker Tags
+          - `${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}`
+          - `${{ env.DOCKER_IMAGE }}:latest`
+         
+          ### 🔗 Links
+          - [Docker Hub](https://hub.docker.com/r/${{ env.DOCKER_IMAGE }})
+          - [Documentation](https://github.com/${{ github.repository }}/blob/main/README.md)
+          - [Gunbot Official](https://gunbot.com)
+        draft: false
+        prerelease: false
+
+    - name: Update repository description
+      if: steps.check.outputs.exists == 'false'
+      run: |
+        echo "Successfully built and pushed Gunbot v${{ steps.version.outputs.version }} to Docker Hub"
+        echo "Image tags:"
+        echo "- ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}"
+        echo "- ${{ env.DOCKER_IMAGE }}:latest" 
