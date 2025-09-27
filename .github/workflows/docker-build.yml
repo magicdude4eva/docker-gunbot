@@ -149,8 +149,8 @@ jobs:
             - Documentation: https://github.com/${{ github.repository }}/blob/main/README.md
             - Gunbot Official: https://gunbot.com
 
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Summary
         if: steps.check.outputs.exists == 'false'
