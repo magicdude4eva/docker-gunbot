@@ -11,7 +11,7 @@ on:
       - main
     paths:
       - "Dockerfile"
-      - ".github/workflows/docker-build.yml"
+      - ".github/workflows/docker-build-gunbot-core.yml"
 
 # Least-privilege but enough to create releases and read repo
 permissions:
