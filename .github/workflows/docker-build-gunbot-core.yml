@@ -147,7 +147,7 @@ jobs:
             ### 🔗 Links
             - Docker Hub: https://hub.docker.com/r/${{ env.DOCKER_IMAGE }}
             - Documentation: https://github.com/${{ github.repository }}/blob/main/README.md
-            - Gunbot Official: https://gunbot.com
+            - Purchase Gunbot: https://gunbot.at/
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
