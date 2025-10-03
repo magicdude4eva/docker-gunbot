@@ -79,7 +79,7 @@ jobs:
             version="v30.5.9"
           fi
 
-          echo "Detected Gunbot version: $version"
+          echo "Detected Gunbot GUI version: $version"
             echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Check if version already exists on Docker Hub
@@ -115,7 +115,7 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./gui
           platforms: linux/amd64
           push: true
           tags: |
