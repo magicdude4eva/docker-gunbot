@@ -1,4 +1,4 @@
-name: Build and Push Gunbot Docker Image
+name: Build and Push Gunbot GUI Docker Image
 
 on:
   schedule:
@@ -10,19 +10,19 @@ on:
     branches:
       - main
     paths:
-      - "Dockerfile"
-      - ".github/workflows/docker-build.yml"
+      - "gui/Dockerfile"
+      - ".github/workflows/docker-build-gunbot-gui.yml"
 
 # Least-privilege but enough to create releases and read repo
 permissions:
   contents: write
 
 env:
-  DOCKER_IMAGE: magicdude4eva/gunbot-colorised
+  DOCKER_IMAGE: magicdude4eva/gunbot-gui
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
 
 concurrency:
-  group: gunbot-docker-build
+  group: gunbot-docker-gui-build
   cancel-in-progress: false
 
 jobs:
@@ -33,12 +33,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract Gunbot version from website
+      - name: Extract Gunbot GUI version from website
         id: version
         shell: bash
         run: |
           set -euo pipefail
-          echo "Fetching Gunbot version from JavaScript files..."
+          echo "Fetching Gunbot GUI version from JavaScript files..."
 
           # Be a good citizen: retries + UA
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -65,7 +65,7 @@ jobs:
               js_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$js_url" || true)
 
               # Look for 30.x.y pattern
-              candidate=$(echo "$js_content" | grep -oP '30\.[0-9]+\.[0-9]+' | head -1 || true)
+              candidate=$(echo "$js_content" | grep -oP 'GUI for Linux.*Gunbot v\K[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
               if [ -n "${candidate:-}" ]; then
                 version="v$candidate"
                 echo "Found version in $js_file: $version"
@@ -79,7 +79,7 @@ jobs:
             version="v30.5.9"
           fi
 
-          echo "Detected Gunbot version: $version"
+          echo "Detected Gunbot GUI version: $version"
             echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Check if version already exists on Docker Hub
@@ -115,7 +115,7 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./gui
           platforms: linux/amd64
           push: true
           tags: |
@@ -125,7 +125,7 @@ jobs:
           cache-to: type=gha,mode=max
           # Optional: add OCI labels from the detected version
           labels: |
-            org.opencontainers.image.title=Gunbot Colorised Docker Edition for Synology NAS
+            org.opencontainers.image.title=Gunbot GUI Docker Image using minimal GlibC image
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
@@ -134,11 +134,12 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          name: Gunbot ${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}-gui
+          name: Gunbot GUI ${{ steps.version.outputs.version }}
           generate_release_notes: true
           body: |
-            ## Gunbot Docker Image ${{ steps.version.outputs.version }}
+            ## Gunbot GUI Docker Image ${{ steps.version.outputs.version }}
+            Use Gunbot GUI in detached mode and improve performance of your Gunbot Core in detached mode.
 
             ### 📦 Docker Tags
             - ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
@@ -147,7 +148,7 @@ jobs:
             ### 🔗 Links
             - Docker Hub: https://hub.docker.com/r/${{ env.DOCKER_IMAGE }}
             - Documentation: https://github.com/${{ github.repository }}/blob/main/README.md
-            - Gunbot Official: https://gunbot.com
+            - Purchase Gunbot: https://gunbot.at/
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -155,7 +156,7 @@ jobs:
       - name: Summary
         if: steps.check.outputs.exists == 'false'
         run: |
-          echo "Successfully built and pushed Gunbot ${{ steps.version.outputs.version }} to Docker Hub"
+          echo "Successfully built and pushed Gunbot GUI ${{ steps.version.outputs.version }} to Docker Hub"
           echo "Tags:"
           echo "- ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}"
           echo "- ${{ env.DOCKER_IMAGE }}:latest"
