@@ -42,7 +42,7 @@ To get familiar with Gunbot concepts and strategies:
 Run the one-liner below to download the latest `docker-compose.yml` and configuration:
 
 ```bash
-curl -fsSL -H 'Cache-Control: no-cache'   -o setup.sh https://raw.githubusercontent.com/magicdude4eva/docker-gunbot/refs/heads/main/setup.sh   && bash setup.sh
+curl -fsSL -H 'Cache-Control: no-cache' -o setup.sh https://raw.githubusercontent.com/magicdude4eva/docker-gunbot/refs/heads/main/setup.sh && bash setup.sh
 ```
 
 You’ll be prompted whether to install Gunbot in the current directory or in a new `./gunbot` folder.
