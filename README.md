@@ -173,6 +173,3 @@ You can also send crypto to one of the addresses below:
 - 👉 [Curve.com](https://www.curve.com/join#DWPXKG6E): Add your Crypto.com card to Apple Pay  
 - 🔐 [Crypto.com](https://crypto.com/app/ref6ayzqvp): Stake and get your free Crypto Visa card  
 - 📈 [Binance](https://accounts.binance.com/register?ref=13896895): Trade altcoins easily
-
-
-![visitors](https://visitor-badge.laobi.icu/badge?page_id=magicdude4eva.magicdude4eva)
