@@ -152,6 +152,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update README compatibility line
+        if: steps.check.outputs.exists == 'false'
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LC_ALL=C.UTF-8
+          version="${{ steps.version.outputs.version }}"
+          git config user.name  "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          if grep -q '^✅ Compatible with Gunbot version:' README.md; then
+            sed -i -E "s#^(✅ Compatible with Gunbot version: ).*#\1Gunbot ${version}#g" README.md
+          else
+            printf "\n✅ Compatible with Gunbot version: Gunbot %s\n" "${version}" >> README.md
+          fi
+          if ! git diff --quiet -- README.md; then
+            git add README.md
+            git commit -m "docs(README): update compatible Gunbot version to ${version} [skip ci]"
+            git push
+          else
+            echo "README already up to date; no commit."
+          fi
+
       - name: Summary
         if: steps.check.outputs.exists == 'false'
         run: |
