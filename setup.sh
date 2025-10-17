@@ -89,4 +89,7 @@ echo "────────────────────────�
 echo "You can manage containers with:"
 echo "  cd ${TARGET_DIR}"
 echo "  ${COMPOSE_CMD[*]} ps"
+echo
+echo "🌐 Gunbot Web UI is available at:"
+echo "   👉 http://localhost:5555/"
 echo "───────────────────────────────────────────────"
