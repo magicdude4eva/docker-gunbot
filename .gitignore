@@ -1,4 +1,3 @@
 
 .DS_Store
-config/ssl/localhost.key
-config/ssl/localhost.crt
+

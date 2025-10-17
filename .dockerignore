@@ -1,10 +1,7 @@
 # Config directories
 binance_data
 cryptocom_data
-config
-config-cryptocom
-config-kucoin
-config-coinbase
+
 
 # Git files
 .git
@@ -19,9 +16,6 @@ README.md
 Dockerfile
 docker-compose.yml
 .dockerignore
-docker-compose.yml.old
-update_gunbot.sh
-gunbot.version
 
 # OS files
 .DS_Store

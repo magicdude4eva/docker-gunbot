@@ -1,3 +1,26 @@
+# ---------------------------------------------------------------------------
+#  Gunbot Docker Image (Colorised Edition)
+#  Maintainer: https://github.com/magicdude4eva/docker-gunbot
+#
+#  Description:
+#    Builds a minimal Debian-based Gunbot container with colorised terminal
+#    output and sane defaults. Uses Bitnami's Minideb base for small footprint
+#    and GlibC compatibility.
+#
+#  Features:
+#    - Installs Gunthy binary from official source (https://gunthy.org)
+#    - Supports persistent data in /data (mounted via volume)
+#    - Adds color-friendly TERM and NPM config for better console readability
+#    - Uses gosu for clean user privilege handling
+#
+#  Build Example:
+#    docker build -t magicdude4eva/gunbot-colorised:latest .
+#
+#  Run Example:
+#    docker run -d --name gunbot -v $(pwd)/data:/data -p 5555:5000 magicdude4eva/gunbot-colorised
+#
+# ---------------------------------------------------------------------------
+
 FROM bitnami/minideb:latest
 
 ARG INSTALL_URL="https://gunthy.org/downloads/gunthy_linux.zip"
