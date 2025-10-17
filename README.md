@@ -47,7 +47,9 @@ curl -fsSL -H 'Cache-Control: no-cache' -o setup.sh https://raw.githubuserconten
 
 You’ll be prompted whether to install Gunbot in the current directory or in a new `./gunbot` folder.
 
-Once complete, your Gunbot stack will start automatically.
+
+
+🌐 Once complete, your Gunbot stack will start automatically. You can **Access the Gunbot Web UI** 👉 [http://localhost:5555/](http://localhost:5555/)
 
 Start and stop as usual:
 
