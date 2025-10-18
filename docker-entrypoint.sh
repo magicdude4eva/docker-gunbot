@@ -32,10 +32,7 @@ cd "${GUNTHY_DATA}"
 [ -L server.key ]   || ln -s "${GUNTHY_HOME}/server.key" server.key
 
 # Make sure /data is writable by the runtime user
-if [ ! -f "${GUNTHY_DATA}/.owned_by_gunthy" ]; then
-  chown -R gunthy:gunthy "${GUNTHY_DATA}" || true
-  touch "${GUNTHY_DATA}/.owned_by_gunthy"
-fi
+chown -R gunthy:gunthy "${GUNTHY_DATA}" || true
 
 # Run Gunbot with CWD=/data so all relative writes (config.js etc.) happen inside /data
 echo "Starting Gunbot with CWD=${GUNTHY_DATA} ..."
