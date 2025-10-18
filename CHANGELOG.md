@@ -1,5 +1,11 @@
 ## 2025-10-18
 
+### v30.6.7
+- fix hyperliquid payload for orders
+- @boekenbox commits Dashboard: fix total assets chart for mexc and other exchanges with non statndard tickers strucutre
+
+## 2025-10-18
+
 ### v30.6.6
 - Athena should work across GB support spot exchanges. Where your chosen spot exchange changes quote asset name, let me know and I’ll update the manual asset table so it works (example: Your exchange calls BTC, WBTC).
 - futuresgrid, sgsfutures, stepgridhedge: add additional protection against placing orders while exchange data went stale since last order (#258)
