@@ -1,3 +1,15 @@
+## 2025-10-18
+
+### v30.6.7
+- fix hyperliquid payload for orders
+- @boekenbox commits Dashboard: fix total assets chart for mexc and other exchanges with non statndard tickers strucutre
+- 📢 Introducing Candle Analysis Tournament Edition v1.83
+  - We’re pleased to share a new version of our trading strategy.
+  - 🔑 In This Update:
+  - When using Safe Mode improvements to sideways market detection
+  - We hope the Candle Analysis Tournament Edition v1.83 provides a helpful tool for your trading journey.
+  - Thank you for being part of our community!
+
 
 ### v30.6.6
 - @flightcommander commits:
