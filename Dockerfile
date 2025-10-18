@@ -77,6 +77,7 @@ COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/gunthy-linux ${GUNTHY_HOME
 COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/cs            ${GUNTHY_HOME}/cs
 COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/tulind        ${GUNTHY_HOME}/tulind
 COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/node_modules  ${GUNTHY_HOME}/node_modules
+RUN chmod 0555 /opt/gunthy/gunthy-linux
 
 # entrypoint
 COPY --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
