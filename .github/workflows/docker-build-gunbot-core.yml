@@ -32,6 +32,38 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # allow committing changelog updates
+
+      - name: Setup Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install telethon jq
+
+      - name: Fetch releases from Telegram
+        id: tg
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
+          TG_CHANNEL: ${{ secrets.TG_CHANNEL }}
+          SINCE_DAYS: "7"
+          MAX_MESSAGES: "100"
+        run: |
+          python .github/scripts/fetch_telegram_releases.py > releases.json
+          echo "count=$(jq '.releases | length' releases.json)" >> "$GITHUB_OUTPUT"
+          jq -r '.releases[0].version // empty' releases.json > latest_version.txt || true
+
+      - name: Summarize to Markdown
+        if: steps.tg.outputs.count != '0'
+        id: summarize
+        run: |
+          python .github/scripts/summarize_releases_noai.py < releases.json > CHANGELOG_SNIPPET.md
+          {
+            echo 'changes<<EOF'
+            cat CHANGELOG_SNIPPET.md
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
 
       - name: Extract Gunbot version from website
         id: version
@@ -129,6 +161,28 @@ jobs:
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
+      - name: Update CHANGELOG.md (prepend) and README
+        if: steps.tg.outputs.count != '0'
+        run: |
+          tg_ver=$(cat latest_version.txt || true)
+          touch CHANGELOG.md
+          if [ -n "$tg_ver" ] && ! grep -q "^### ${tg_ver}$" CHANGELOG.md; then
+            echo "Prepending ${tg_ver}"
+            {
+              printf "## %s\n\n" "$(date -u +'%Y-%m-%d')"
+              cat CHANGELOG_SNIPPET.md
+              echo
+              cat CHANGELOG.md
+            } > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.md
+          fi
+          if [ -n "$tg_ver" ] && grep -q '^✅ Compatible with Gunbot version:' README.md; then
+            sed -i -E "s#^(✅ Compatible with Gunbot version: ).*#\1Gunbot ${tg_ver}#g" README.md
+          fi
+          git diff --quiet -- CHANGELOG.md README.md || \
+            (git config user.name github-actions[bot]; git config user.email 41898282+github-actions[bot]@users.noreply.github.com; \
+             git add CHANGELOG.md README.md && git commit -m "docs: update changelog and bump README" && git push)
+
+
         # Create a GitHub release using a maintained action
       - name: Create GitHub Release
         if: steps.check.outputs.exists == 'false'
@@ -139,6 +193,9 @@ jobs:
           generate_release_notes: true
           body: |
             ## Gunbot Docker Image ${{ steps.version.outputs.version }}
+
+            ### Changes
+            ${{ steps.summarize.outputs.changes }}
 
             ### 📦 Docker Tags
             - ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
