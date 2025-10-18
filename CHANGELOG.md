@@ -6,7 +6,7 @@
 - Trading settings: make currency tabs smaller in the area for pair lists, to not need horizontal scrolling
 - update mexc v3 orderbook endpoint to their latest breaking change. Thanks @IwillDeliver
 
-## 2025-10-18
+## 2025-10-17
 
 ### v30.6.5
 - (no granular changes posted)
