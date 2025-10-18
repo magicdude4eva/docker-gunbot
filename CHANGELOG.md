@@ -1,5 +1,13 @@
 ## 2025-10-18
 
+### v30.6.6
+- Athena should work across GB support spot exchanges. Where your chosen spot exchange changes quote asset name, let me know and I’ll update the manual asset table so it works (example: Your exchange calls BTC, WBTC).
+- futuresgrid, sgsfutures, stepgridhedge: add additional protection against placing orders while exchange data went stale since last order (#258)
+- Trading settings: make currency tabs smaller in the area for pair lists, to not need horizontal scrolling
+- update mexc v3 orderbook endpoint to their latest breaking change. Thanks @IwillDeliver
+
+## 2025-10-17
+
 ### v30.6.5
 - (no granular changes posted)
 
