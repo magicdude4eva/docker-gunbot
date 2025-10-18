@@ -143,7 +143,7 @@ If you do not manage to resolve your problems with basic troubleshooting, log a 
 <img width="578" alt="image" src="https://github.com/user-attachments/assets/78607496-c566-46b2-b903-97ed5951e1d9">
 
 2) Check the log output when starting the container
-`docker logs -n 100 -f gunbot`
+`docker logs -n 100 -f gunbot-binance`
 
 3) Check for any Gunbot errors - most of the time the JSON is invalid (missing brackets, commas, quotes)
 
