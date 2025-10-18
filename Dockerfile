@@ -38,12 +38,7 @@ WORKDIR /tmp/gunthy
 RUN echo "CACHEBUST=${CACHEBUST}" >/dev/null \
  && curl -fsSL "${INSTALL_URL}?cb=${CACHEBUST}" | bsdtar -x -f -
 
-# 1) strip debug symbols if it's an ELF
-#RUN if file /tmp/gunthy/gunthy-linux | grep -q ELF; then \
-#      strip --strip-unneeded /tmp/gunthy/gunthy-linux || true; \
-#    fi
-
-# 2) prune non-linux native bindings
+# prune non-linux native bindings
 RUN find /tmp/gunthy -type f -name "index_osx.node" -delete \
  && find /tmp/gunthy -type f -name "index_win.node" -delete \
  && find /tmp/gunthy -type f -name "*.map" -delete \
