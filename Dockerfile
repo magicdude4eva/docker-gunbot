@@ -29,14 +29,15 @@ ARG INSTALL_URL="https://gunthy.org/downloads/gunthy_linux.zip"
 ARG CACHEBUST=1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates curl unzip libarchive-tools file binutils \
+      ca-certificates curl libarchive-tools \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/gunthy
 
-# stream-extract (no big zip left on disk)
-RUN echo "CACHEBUST=${CACHEBUST}" >/dev/null \
- && curl -fsSL "${INSTALL_URL}?cb=${CACHEBUST}" | bsdtar -x -f -
+# Stream-extract to avoid keeping a large .zip layer
+RUN echo "cb=${CACHEBUST}" >/dev/null \
+ && curl -fsSL "${INSTALL_URL}?cb=${CACHEBUST}" | bsdtar -x -f - \
+ && chmod 0555 /tmp/gunthy/gunthy-linux  
 
 # prune non-linux native bindings
 RUN find /tmp/gunthy -type f -name "index_osx.node" -delete \
@@ -51,6 +52,9 @@ RUN find /tmp/gunthy -type f -name "index_osx.node" -delete \
 FROM debian:bookworm-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
+LABEL org.label-schema.vcs-url="https://github.com/magicdude4eva/docker-gunbot" \
+      description="Gunbot Docker (Colorised Edition)"
+
 ENV TZ=Europe/Vienna \
     TERM=xterm-256color \
     FORCE_COLOR=true \
@@ -59,20 +63,15 @@ ENV TZ=Europe/Vienna \
     GUNTHY_DATA=/data
 
 # minimal runtime deps
-RUN apt-get update && apt-get -y upgrade && apt-get install -y --no-install-recommends \
-      ca-certificates gosu tzdata bash fontconfig fonts-dejavu-extra \
-    && apt-get clean \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates gosu tzdata bash fontconfig fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 
 # runtime user before COPY so --chown works
 RUN useradd -r -m -d /home/gunthy -s /usr/sbin/nologin gunthy
 
 # copy only what we need, with ownership set at copy time
-COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/gunthy-linux ${GUNTHY_HOME}/
-COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/cs            ${GUNTHY_HOME}/cs
-COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/tulind        ${GUNTHY_HOME}/tulind
-COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/node_modules  ${GUNTHY_HOME}/node_modules
-RUN chmod 0555 /opt/gunthy/gunthy-linux
+COPY --from=builder --chown=gunthy:gunthy /tmp/gunthy/ ${GUNTHY_HOME}/
 
 # entrypoint
 COPY --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
