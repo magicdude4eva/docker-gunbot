@@ -62,6 +62,7 @@ CUTOFF = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=SINCE_DAYS)
 
 # ---------------------------- Regex ------------------------------------------
 
+# Anchor allows optional leading "v" but we capture only the numeric part
 ANCHOR_RE    = re.compile(r"^\s*Gunbot\s+v?(\d+\.\d+\.\d+)\b", re.I)
 DOWNLOAD_RE  = re.compile(r"https?://www\.gunbot\.com/downloads/?", re.I)
 
@@ -75,13 +76,11 @@ KEEP_HEADING_RE = re.compile(
 KEEP_LINE_RE = re.compile(
     r"""
     ^\s*[-•–]\s+                                  |  # bullets
-    \b(?:fix|fixed|bug|issue|resolve|patch)\b     |  # bugfixes
-    \b(?:add|added|introduce|enable)\b            |  # additions
-    \b(?:change|changed|tweak|adjust)\b           |  # changes
-    \b(?:update|updated|upgrade)\b                |  # updates
-    \b(?:improve|improved|performance)\b          |  # quality
-    \b(?:optimis(?:e|ation)|optimiz(?:e|ation))\b |  # optimization
-    \b(?:security|safe\s*mode|stale\s*data)\b     |  # phrases seen
+    \b(?:fix|fixed|bug|issue|patch|resolve[sd]?)\b|  # bugfixes
+    \b(?:add|added|introduc(e|ed)|enable[sd]?|new)\b|# additions
+    \b(?:change[sd]?|tweak[sd]?|adjust(ed)?|update[sd]?|upgrade[sd]?)\b|
+    \b(?:improv(e|ed|ement)|optimis(e|ed|ation)|optimiz(e|ed|ation)|performance)\b|
+    \b(?:security|safe\s*mode|stale\s*data)\b     |
     \b(?:gui|server|endpoint|orderbook|dashboard|athena|options?)\b
     """,
     re.I | re.VERBOSE,
@@ -127,22 +126,18 @@ def extract_change_lines(text: str) -> List[str]:
     for raw in lines:
         l = raw.strip()
         if not l:
-            # blank line ends a section block
             in_section = False
             continue
 
-        # start of a section block
         if SECTION_HEAD_RE.match(l):
             out.append(f"- {l.rstrip(':')}:")
             in_section = True
             continue
 
-        # within a section, keep consecutive non-empty lines until blank or new heading
         if in_section:
             out.append(l if l.startswith(("-", "•", "–")) else f"- {l}")
             continue
 
-        # standalone headings or change-like lines
         if KEEP_HEADING_RE.search(l) or KEEP_LINE_RE.search(l):
             out.append(l if l.startswith(("-", "•", "–")) else f"- {l}")
 
@@ -188,11 +183,9 @@ async def extract_forward_meta(client: TelegramClient, m: Message) -> Tuple[bool
     username = None
     ident = None
 
-    # Prefer explicit from_name
     if getattr(fwd, "from_name", None):
         name = fwd.from_name
 
-    # Try to resolve from_id to an entity (user or channel)
     ent = None
     if getattr(fwd, "from_id", None):
         try:
@@ -205,14 +198,12 @@ async def extract_forward_meta(client: TelegramClient, m: Message) -> Tuple[bool
         ident = getattr(ent, "id", None)
         username = getattr(ent, "username", None)
         if not name:
-            # channels have 'title', users have 'first_name'/'last_name'
             name = getattr(ent, "title", None)
             if not name:
                 fn = getattr(ent, "first_name", "") or ""
                 ln = getattr(ent, "last_name", "") or ""
                 name = (fn + " " + ln).strip() or None
 
-    # Last fallback
     if not name:
         name = "Unknown"
 
@@ -239,7 +230,6 @@ async def build_releases() -> Dict[str, dict]:
             )
             raise SystemExit(f"Channel resolution failed: {e}\n{hint}")
 
-        # sort ascending by time for natural grouping
         messages.sort(key=lambda x: x.date or dt.datetime.min.replace(tzinfo=dt.timezone.utc))
 
         releases: Dict[str, dict] = {}
@@ -254,13 +244,15 @@ async def build_releases() -> Dict[str, dict]:
             # anchor?
             ma = ANCHOR_RE.search(text_raw)
             if ma:
-                current_version = ma.group(1)
+                numeric = ma.group(1)           # e.g. "30.6.7"
+                ver = f"v{numeric}"             # store with leading "v"
+                current_version = ver
                 releases[current_version] = {
-                    "version": current_version,
+                    "version": ver,             # <-- always "vX.Y.Z"
                     "anchor_id": m.id,
                     "anchor_time": iso(m.date),
                     "posts": [
-                        {"id": m.id, "date": iso(m.date), "type": "anchor", "text": f"Gunbot v{current_version}"}
+                        {"id": m.id, "date": iso(m.date), "type": "anchor", "text": f"Gunbot v{numeric}"}
                     ],
                 }
                 pending_committer = None
@@ -281,13 +273,12 @@ async def build_releases() -> Dict[str, dict]:
                     {"id": m.id, "date": iso(m.date), "type": "download", "text": text_raw}
                 )
                 current_version = None
-                pending_committer = None   # reset attribution at end of release
+                pending_committer = None
                 continue
 
             # details: forwarded vs normal
             is_fwd, fmeta = await extract_forward_meta(client, m)
             if is_fwd:
-                # Keep the first non-empty line as a title PLUS the pruned bullet lines
                 lines = [ln.strip() for ln in text_raw.splitlines() if ln.strip()]
                 title = lines[0] if lines else ""
                 bullets = prune_lines(text_raw)

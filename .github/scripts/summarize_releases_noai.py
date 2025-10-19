@@ -166,7 +166,7 @@ def render_release_md(rel: Dict) -> str:
 
     # build markdown
     out: List[str] = []
-    out.append(f"## Gunbot v{version}")
+    out.append(f"## Gunbot {version}")
     if date:
         out.append(f"_Released: {date}_")
     out.append("")
