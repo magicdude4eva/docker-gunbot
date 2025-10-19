@@ -14,26 +14,7 @@ _Released: 2025-10-18T14:42:19+00:00_
 #### Strategy
 - *📢 Introducing Candle Analysis Tournament Edition v1.83* - When using Safe Mode improvements to sideways market detection  _(by Ahpigsy)_
 
-
 ---
-
-## 2025-10-19
-
-## Gunbot v30.6.7
-_Released: 2025-10-18T14:42:19+00:00_
-
-### Fixes
-- fix hyperliquid payload for orders
-- @boekenbox commits Dashboard: fix total assets chart for mexc and other exchanges with non statndard tickers strucutre
-
-### Added
-- *📢 Introducing Candle Analysis Tournament Edition v1.83* - We’re pleased to share a new version of our trading strategy.  _(by Ahpigsy)_
-
-### Changed
-- *📢 Introducing Candle Analysis Tournament Edition v1.83* - 🔑 In This Update:  _(by Ahpigsy)_
-
-### Strategy
-- *📢 Introducing Candle Analysis Tournament Edition v1.83* - When using Safe Mode improvements to sideways market detection  _(by Ahpigsy)_
 
 ## Gunbot v30.6.6
 _Released: 2025-10-16T15:33:24+00:00_
@@ -56,6 +37,8 @@ _Released: 2025-10-16T15:33:24+00:00_
 - *Quanta Athena v1.2* - Method deciding ATM or ITM for options has better automated decision making.  _(by Dave)_
 - *Quanta Athena v1.2* - Edge case where rate is a string, buy low settings are not respected.  _(by Dave)_
 
+---
+
 ## Gunbot v30.6.5
 _Released: 2025-10-15T09:14:26+00:00_
 
@@ -71,6 +54,8 @@ _Released: 2025-10-15T09:14:26+00:00_
 ### Strategy
 - *📢 Introducing Candle Analysis Tournament Edition v1.82* - Fixes an error where some users were seeing an incorrect 'insufficient funds' message.  _(by Ahpigsy)_
 
+---
+
 ## Gunbot v30.6.4
 _Released: 2025-10-14T18:41:28+00:00_
 
@@ -85,6 +70,8 @@ _Released: 2025-10-14T18:41:28+00:00_
 ### Improved
 - Gui server: performance improvement
 
+---
+
 ## Gunbot v30.6.3
 _Released: 2025-10-14T08:42:03+00:00_
 
@@ -95,6 +82,8 @@ _Released: 2025-10-14T08:42:03+00:00_
 
 ### GUI
 - Dashboard: ensure pagination works properly in recent trades table (#250)
+
+---
 
 ## Gunbot v30.6.2
 _Released: 2025-10-12T12:46:41+00:00_
@@ -119,6 +108,8 @@ _Released: 2025-10-12T12:46:41+00:00_
 
 ### Other
 - initial commit of asterdex and asterdexFutures
+
+---
 
 ## Gunbot v30.6.1
 _Released: 2025-10-12T09:51:24+00:00_
@@ -147,6 +138,8 @@ _Released: 2025-10-12T09:51:24+00:00_
 - *Quanta Athena* - Thats a lot of technical words to unpack - a lot you might not yet understand… the good news is, you dont have to. Athena manages all this for you.  _(by Dave)_
 - *Quanta Athena* - TLDR; Athena tracks the behaviour of options traders (smart money) then uses models to project where spot market price will go. Like the competition winning Quanta G-Type, Athena is another 100% quantitative trading system.  _(by Dave)_
 
+---
+
 ## Gunbot v30.6.0
 _Released: 2025-10-02T09:30:24+00:00_
 
@@ -168,6 +161,8 @@ _Released: 2025-10-02T09:30:24+00:00_
 - *📜 Latest Change Log – GhostRider* - 📏 Adjusted DCA distance to be more practical for real market conditions  _(by Mfanya)_
 - *📜 Latest Change Log – GhostRider* - 💰 When Ride Profit Wave is disabled → positions now sell quickly at minimum profit level  _(by Mfanya)_
 - *📜 Latest Change Log – GhostRider* - ⚡️ General refinements for smoother execution & better market adaptation  _(by Mfanya)_
+
+---
 
 ## Gunbot v30.5.9
 _Released: 2025-09-26T08:45:59+00:00_
