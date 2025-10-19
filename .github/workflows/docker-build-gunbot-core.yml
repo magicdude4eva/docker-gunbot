@@ -210,7 +210,6 @@ jobs:
           if [ -n "$tg_ver" ] && ! grep -q "^### ${tg_ver}$" CHANGELOG.md; then
             echo "Prepending ${tg_ver} to CHANGELOG.md"
             {
-              printf "## %s\n\n" "$(date -u +'%Y-%m-%d')"
               cat CHANGELOG_SNIPPET.md
               echo
               cat CHANGELOG.md
@@ -240,7 +239,6 @@ jobs:
           body: |
             ## Gunbot Docker Image ${{ steps.version.outputs.version }}
 
-            ### ✨ Changes
             ${{ steps.summarize.outputs.changes }}
 
             ### 📦 Docker Tags

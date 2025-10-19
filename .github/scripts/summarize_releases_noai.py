@@ -175,7 +175,7 @@ def render_release_md(rel: Dict) -> str:
     order = ["Security", "Fixes", "Improved", "Added", "Changed", "GUI", "Exchange", "Strategy", "Other"]
     for k in order:
         if buckets[k]:
-            out.append(f"### {k}")
+            out.append(f"#### {k}")
             out.extend(buckets[k])
             out.append("")
 
@@ -185,6 +185,7 @@ def render_release_md(rel: Dict) -> str:
             out.append(f"**Download:** {download_text}")
             out.append("")
 
+    out.append("\n---\n")
     return "\n".join(out).rstrip() + "\n"
 
 def main() -> None:
