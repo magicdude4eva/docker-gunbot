@@ -1,234 +1,329 @@
 #!/usr/bin/env python3
 """
-Fetch Gunbot release messages from a private Telegram channel and output structured JSON.
+fetch_telegram_releases.py
 
-Grouping rules:
-  • Start collecting when a post begins with:  "Gunbot vX.Y.Z"
-  • Collect all following posts (incl. forwarded) until the first post that contains:
-      https://www.gunbot.com/downloads
-  • Keep only lines that look like change notes (bullets or fix/add/change/update/etc.).
-    Strip promo/invite lines from forwarded messages instead of dropping the whole post.
-  • Skip a post entirely only if it has no relevant lines after pruning.
+Scrape release notes for Gunbot from a Telegram "Announcements" channel and
+emit a machine-readable JSON bundle for downstream processing.
 
-Output JSON:
-{
-  "releases": [
-    {
-      "version": "v30.6.7",
-      "anchor_id": 12345,
-      "anchor_time": "2025-10-16T17:04:00+00:00",
-      "posts": [
-        {"id": 12345, "date": "...", "type": "anchor",  "text": "Gunbot v30.6.7"},
-        {"id": 12346, "date": "...", "type": "detail",  "text": "- Fix ..."},
-        {"id": 12347, "date": "...", "type": "download","text": "files are now available at https://www.gunbot.com/downloads"}
-      ]
-    }
-  ]
-}
+Release window:
+  - begins at a post like "Gunbot v<semver>"
+  - ends at the first post that includes https://www.gunbot.com/downloads
 
-Env:
-  TELEGRAM_API_ID, TELEGRAM_API_HASH, TELEGRAM_SESSION  -> Telethon user session
-  TG_CHANNEL  -> numeric private channel id (e.g., -1001122850092)
-Optional:
-  SINCE_DAYS=7, MAX_MESSAGES=100
+Between those markers we:
+  - store regular "detail" posts (lightly filtered for change-like lines)
+  - treat Forwarded messages specially:
+      * resolve the original author (user/channel) as the 'committer'
+      * keep the forward's title line PLUS pruned change bullets
+  - support "@user commits:" markers; subsequent change posts in the same
+    release get "committer": "@user" until another commits marker or until
+    the release ends (download link seen)
+
+Env vars:
+  TELEGRAM_API_ID, TELEGRAM_API_HASH, TELEGRAM_SESSION (Telethon StringSession)
+  TG_CHANNEL   -> numeric id (e.g. -1001122850092) or @username
+  SINCE_DAYS   -> default 14
+  MAX_MESSAGES -> default 400
 """
 
+from __future__ import annotations
+
+import asyncio
+import datetime as dt
+import json
 import os
 import re
-import sys
-import json
-import datetime
-from typing import Dict, Any
+from typing import Dict, List, Optional, Tuple
 
-from telethon.sync import TelegramClient
+from telethon import TelegramClient
 from telethon.sessions import StringSession
-from telethon.tl.types import PeerChannel
+from telethon.tl.patched import Message
+from telethon.tl.types import PeerChannel, PeerUser
 
-# --- Config -----------------------------------------------------------------
+# ---------------------------- Config -----------------------------------------
 
 API_ID = int(os.environ["TELEGRAM_API_ID"])
 API_HASH = os.environ["TELEGRAM_API_HASH"]
 SESSION = os.environ["TELEGRAM_SESSION"]
 
-CHANNEL_INPUT = os.environ.get("TG_CHANNEL", "").strip()
-if not CHANNEL_INPUT or not CHANNEL_INPUT.lstrip("-").isdigit():
-    raise SystemExit("Set TG_CHANNEL to the numeric channel id, e.g. export TG_CHANNEL='-1001122850092'")
+CHANNEL_INPUT_RAW = os.environ.get("TG_CHANNEL", "").strip()
+if not CHANNEL_INPUT_RAW:
+    raise SystemExit("Set TG_CHANNEL to the channel id (e.g. -100...) or @username.")
 
-SINCE_DAYS   = int(os.environ.get("SINCE_DAYS", "7"))
-MAX_MESSAGES = int(os.environ.get("MAX_MESSAGES", "100"))
+# Cast numeric channel ids to int so Telethon can resolve them
+if re.fullmatch(r"-?\d+", CHANNEL_INPUT_RAW):
+    CHANNEL_INPUT = int(CHANNEL_INPUT_RAW)
+else:
+    CHANNEL_INPUT = CHANNEL_INPUT_RAW  # @username
 
-cutoff = datetime.datetime.now(datetime.UTC) - datetime.timedelta(days=SINCE_DAYS)
+SINCE_DAYS = int(os.environ.get("SINCE_DAYS", "14"))
+MAX_MESSAGES = int(os.environ.get("MAX_MESSAGES", "400"))
 
-# --- Patterns ---------------------------------------------------------------
+CUTOFF = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=SINCE_DAYS)
+
+# ---------------------------- Regex ------------------------------------------
 
 ANCHOR_RE    = re.compile(r"^\s*Gunbot\s+v?(\d+\.\d+\.\d+)\b", re.I)
 DOWNLOAD_RE  = re.compile(r"https?://www\.gunbot\.com/downloads/?", re.I)
 
-# Lines to KEEP inside a post (bullets or change-y phrases)
-KEEP_LINE_RE = re.compile(
-    r"""
-    ^\s*[-•–]\s+                              |  # bullet lines
-    ^\s*\#?                                   # optional leading '#'
-    (?:fix|fixed|add|added|change|changed|
-       update|updated|improve|improved|
-       optimi[sz]e|bug|gui|server|performance|
-       strategy|athena|ghostrider|wick)\b
-    """,
-    re.I | re.X,
-)
-
-# Lines to DROP if not useful (promo/noise)
-DROP_LINE_RE = re.compile(
-    r"(join (our|us) on telegram|request to join|t\.me/|invite|contact them|support group)",
+# Keep headings like: Introducing..., In This Update, Changes in Behaviour, Enhancements, Bug Fixes
+KEEP_HEADING_RE = re.compile(
+    r"^\s*(introducing|in\s+this\s+update|changes\s+in\s+behavio[u]r|enhancements?|bug\s*fixes?)\b",
     re.I,
 )
 
-NOISE_HINTS = (
-    "reseller", "resellers", "community",
-    "introduction", "self-introduction",
+# Lines that are obviously change-like
+KEEP_LINE_RE = re.compile(
+    r"""
+    ^\s*[-•–]\s+                                  |  # bullets
+    \b(?:fix|fixed|bug|issue|resolve|patch)\b     |  # bugfixes
+    \b(?:add|added|introduce|enable)\b            |  # additions
+    \b(?:change|changed|tweak|adjust)\b           |  # changes
+    \b(?:update|updated|upgrade)\b                |  # updates
+    \b(?:improve|improved|performance)\b          |  # quality
+    \b(?:optimis(?:e|ation)|optimiz(?:e|ation))\b |  # optimization
+    \b(?:security|safe\s*mode|stale\s*data)\b     |  # phrases seen
+    \b(?:gui|server|endpoint|orderbook|dashboard|athena|options?)\b
+    """,
+    re.I | re.VERBOSE,
 )
 
-# --- Helpers ----------------------------------------------------------------
+# Section blocks like: "Changes in Behaviour:", "Enhancements:", "Bug Fixes:"
+SECTION_HEAD_RE = re.compile(
+    r"^\s*(changes\s+in\s+behavio[u]r|enhancements?|bug\s*fixes?)\s*:\s*$",
+    re.I,
+)
 
-def is_anchor(text: str):
-    m = ANCHOR_RE.search(text or "")
-    return (m is not None, f"v{m.group(1)}" if m else None)
+# Noise to drop
+DROP_LINE_RE = re.compile(
+    r"""
+    ^\s*(telegram|request\s+to\s+join)\b   |
+    \b(join\s+us\s+in\s+our\s+telegram)\b  |
+    \binvites?\s+you\s+to\s+join\b         |
+    \bcommunity\b                          |
+    \bfiles\s+are\s+being\s+uploaded\b
+    """,
+    re.I | re.VERBOSE,
+)
 
-def is_download_link(text: str):
-    return bool(DOWNLOAD_RE.search(text or ""))
+# "@username commits:" marker
+COMMITS_LINE_RE = re.compile(r"^@\s?([A-Za-z0-9_]+)\s+commits?:\s*$", re.I)
 
-def msg_text(m) -> str:
-    return (m.message or "").strip()
+# ---------------------------- Helpers -----------------------------------------
 
-def prune_message_text(raw: str) -> str:
-    """
-    Keep relevant lines from a post; drop pure promo lines.
-    If nothing matches keep-criteria, return empty string.
-    """
-    out = []
-    for ln in (raw or "").splitlines():
-        l = ln.strip()
+def normalize_text(t: Optional[str]) -> str:
+    """Keep Unicode (incl. emojis). Only drop nulls and normalize newlines."""
+    if not t:
+        return ""
+    t = t.replace("\x00", "")
+    t = t.replace("\r\n", "\n").replace("\r", "\n")
+    return t.strip()
+
+def extract_change_lines(text: str) -> List[str]:
+    """Return lines that are change-like, including section blocks."""
+    lines = [ln.rstrip() for ln in (text or "").splitlines()]
+    out: List[str] = []
+    in_section = False
+
+    for raw in lines:
+        l = raw.strip()
         if not l:
+            # blank line ends a section block
+            in_section = False
             continue
-        if KEEP_LINE_RE.search(l):
+
+        # start of a section block
+        if SECTION_HEAD_RE.match(l):
+            out.append(f"- {l.rstrip(':')}:")
+            in_section = True
+            continue
+
+        # within a section, keep consecutive non-empty lines until blank or new heading
+        if in_section:
             out.append(l if l.startswith(("-", "•", "–")) else f"- {l}")
             continue
-        if DROP_LINE_RE.search(l):
-            continue
-        # Keep short technical fragments, drop chatter
-        if len(l) >= 6 and not any(h in l.lower() for h in ("request to join", "telegram group")):
+
+        # standalone headings or change-like lines
+        if KEEP_HEADING_RE.search(l) or KEEP_LINE_RE.search(l):
             out.append(l if l.startswith(("-", "•", "–")) else f"- {l}")
-    # De-duplicate while preserving order (case-insensitive)
+
+    # de-dupe preserving order
     seen = set()
-    cleaned = []
+    cleaned: List[str] = []
     for line in out:
         key = line.lower()
         if key in seen:
             continue
         seen.add(key)
         cleaned.append(line)
-    return "\n".join(cleaned)
+    return cleaned
 
-def is_noise(text: str):
-    """Treat as noise only if there are *no* relevant lines after pruning."""
-    if not text:
-        return True
-    if KEEP_LINE_RE.search(text):
-        return False
-    t = text.lower()
-    return any(h in t for h in NOISE_HINTS)
+def prune_lines(raw: str) -> str:
+    """Filter out noise then return a joined block."""
+    if not raw:
+        return ""
+    kept = []
+    for l in extract_change_lines(raw):
+        if DROP_LINE_RE.search(l):
+            continue
+        kept.append(l)
+    return "\n".join(kept).strip()
 
-def resolve_channel(client: TelegramClient, ref: str):
-    try:
-        return client.get_entity(PeerChannel(int(ref)))
-    except Exception as e:
-        raise RuntimeError(
-            f"Failed to resolve numeric channel ID {ref}. "
-            "Ensure the Telegram account for this session is a member of the channel."
-        ) from e
+async def fetch_messages(client: TelegramClient, channel):
+    """Yield messages newer than cutoff (newest first from Telegram)."""
+    async for m in client.iter_messages(entity=channel, limit=MAX_MESSAGES):
+        if m.date and m.date.replace(tzinfo=dt.timezone.utc) < CUTOFF:
+            break
+        yield m
 
-# --- Main -------------------------------------------------------------------
+async def extract_forward_meta(client: TelegramClient, m: Message) -> Tuple[bool, dict]:
+    """
+    If message is forwarded, resolve the origin into a small 'committer' dict.
+    Returns (is_forwarded, meta_dict)
+    """
+    fwd = getattr(m, "fwd_from", None)
+    if not fwd:
+        return False, {}
+
+    name = None
+    username = None
+    ident = None
+
+    # Prefer explicit from_name
+    if getattr(fwd, "from_name", None):
+        name = fwd.from_name
+
+    # Try to resolve from_id to an entity (user or channel)
+    ent = None
+    if getattr(fwd, "from_id", None):
+        try:
+            if isinstance(fwd.from_id, (PeerUser, PeerChannel)):
+                ent = await client.get_entity(fwd.from_id)
+        except Exception:
+            ent = None
+
+    if ent is not None:
+        ident = getattr(ent, "id", None)
+        username = getattr(ent, "username", None)
+        if not name:
+            # channels have 'title', users have 'first_name'/'last_name'
+            name = getattr(ent, "title", None)
+            if not name:
+                fn = getattr(ent, "first_name", "") or ""
+                ln = getattr(ent, "last_name", "") or ""
+                name = (fn + " " + ln).strip() or None
+
+    # Last fallback
+    if not name:
+        name = "Unknown"
+
+    return True, {
+        "committer": name,
+        "committer_username": username,
+        "committer_id": ident,
+    }
+
+def iso(ts: Optional[dt.datetime]) -> str:
+    return (ts or dt.datetime.now(dt.timezone.utc)).astimezone(dt.timezone.utc).isoformat()
+
+# ---------------------------- Core logic -------------------------------------
+
+async def build_releases() -> Dict[str, dict]:
+    async with TelegramClient(StringSession(SESSION), API_ID, API_HASH) as client:
+        try:
+            messages = [m async for m in fetch_messages(client, CHANNEL_INPUT)]
+        except Exception as e:
+            hint = (
+                "Could not resolve TG channel. If you used a numeric id, make sure "
+                "TG_CHANNEL is numeric (no quotes) or use @username. "
+                "Also ensure the session account can view that channel."
+            )
+            raise SystemExit(f"Channel resolution failed: {e}\n{hint}")
+
+        # sort ascending by time for natural grouping
+        messages.sort(key=lambda x: x.date or dt.datetime.min.replace(tzinfo=dt.timezone.utc))
+
+        releases: Dict[str, dict] = {}
+        current_version: Optional[str] = None
+        pending_committer: Optional[str] = None  # from "@user commits:"
+
+        for m in messages:
+            text_raw = normalize_text(m.message or m.text or "")
+            if not text_raw:
+                continue
+
+            # anchor?
+            ma = ANCHOR_RE.search(text_raw)
+            if ma:
+                current_version = ma.group(1)
+                releases[current_version] = {
+                    "version": current_version,
+                    "anchor_id": m.id,
+                    "anchor_time": iso(m.date),
+                    "posts": [
+                        {"id": m.id, "date": iso(m.date), "type": "anchor", "text": f"Gunbot v{current_version}"}
+                    ],
+                }
+                pending_committer = None
+                continue
+
+            if not current_version:
+                continue  # chatter before the first anchor
+
+            # commits marker?
+            cm = COMMITS_LINE_RE.match(text_raw)
+            if cm:
+                pending_committer = f"@{cm.group(1)}"
+                continue
+
+            # end marker?
+            if DOWNLOAD_RE.search(text_raw):
+                releases[current_version]["posts"].append(
+                    {"id": m.id, "date": iso(m.date), "type": "download", "text": text_raw}
+                )
+                current_version = None
+                pending_committer = None   # reset attribution at end of release
+                continue
+
+            # details: forwarded vs normal
+            is_fwd, fmeta = await extract_forward_meta(client, m)
+            if is_fwd:
+                # Keep the first non-empty line as a title PLUS the pruned bullet lines
+                lines = [ln.strip() for ln in text_raw.splitlines() if ln.strip()]
+                title = lines[0] if lines else ""
+                bullets = prune_lines(text_raw)
+                merged_text = title if not bullets else f"{title}\n{bullets}"
+                if merged_text.strip():
+                    post = {
+                        "id": m.id,
+                        "date": iso(m.date),
+                        "type": "detail",
+                        "forwarded": True,
+                        "text": merged_text.strip(),
+                        **fmeta,
+                    }
+                    releases[current_version]["posts"].append(post)
+                continue
+
+            # normal detail
+            kept = prune_lines(text_raw)
+            if kept:
+                post = {
+                    "id": m.id,
+                    "date": iso(m.date),
+                    "type": "detail",
+                    "forwarded": False,
+                    "text": kept,
+                }
+                if pending_committer:
+                    post["committer"] = pending_committer
+                releases[current_version]["posts"].append(post)
+
+        ordered = sorted(releases.values(), key=lambda r: r["anchor_time"], reverse=True)
+        return {"releases": ordered}
 
 def main():
-    result: Dict[str, Any] = {"releases": []}
-
-    with TelegramClient(StringSession(SESSION), API_ID, API_HASH) as client:
-        entity = resolve_channel(client, CHANNEL_INPUT)
-
-        # Fetch newest → oldest; stop at cutoff and cap to MAX_MESSAGES
-        collected = []
-        for m in client.iter_messages(entity, reverse=False, limit=MAX_MESSAGES):
-            if not m or not m.date:
-                continue
-            md_utc = m.date.astimezone(datetime.UTC)
-            if md_utc < cutoff:
-                break
-            m._normalized_date = md_utc
-            collected.append(m)
-
-        msgs = list(reversed(collected))  # chronological for parser
-
-    if not msgs:
-        print(json.dumps({"releases": []}, ensure_ascii=False, indent=2))
-        return
-
-    releases: Dict[str, Dict[str, Any]] = {}
-    current_ver = None
-    collecting = False
-
-    for m in msgs:
-        raw = msg_text(m)
-        text = prune_message_text(raw)
-
-        # Start block on exact opener; use raw so we don't miss "Gunbot vX.Y.Z"
-        a_flag, ver = is_anchor(raw)
-        if a_flag:
-            current_ver = ver
-            collecting = True
-            if ver not in releases:
-                releases[ver] = {
-                    "version": ver,
-                    "anchor_id": m.id,
-                    "anchor_time": m._normalized_date.isoformat(),
-                    "posts": [],
-                }
-            releases[ver]["posts"].append({
-                "id": m.id,
-                "date": m._normalized_date.isoformat(),
-                "text": f"Gunbot {ver}",
-                "type": "anchor",
-            })
-            continue
-
-        if not collecting or current_ver is None:
-            continue
-
-        # End block on first download link (use raw to be safe)
-        if is_download_link(raw):
-            releases[current_ver]["posts"].append({
-                "id": m.id,
-                "date": m._normalized_date.isoformat(),
-                "text": raw.strip(),
-                "type": "download",
-            })
-            current_ver = None
-            collecting = False
-            continue
-
-        # Skip truly empty/noisy details
-        if is_noise(text):
-            continue
-
-        releases[current_ver]["posts"].append({
-            "id": m.id,
-            "date": m._normalized_date.isoformat(),
-            "text": text,
-            "type": "detail",
-        })
-
-    ordered = sorted(releases.values(), key=lambda r: r["anchor_time"], reverse=True)
-    print(json.dumps({"releases": ordered}, ensure_ascii=False, indent=2))
-
+    data = asyncio.run(build_releases())
+    print(json.dumps(data, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
     main()
