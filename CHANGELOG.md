@@ -1,3 +1,22 @@
+## Gunbot v30.6.7
+_Released: 2025-10-18T14:42:19+00:00_
+
+#### Fixes
+- fix hyperliquid payload for orders
+- @boekenbox commits Dashboard: fix total assets chart for mexc and other exchanges with non statndard tickers strucutre
+
+#### Added
+- *📢 Introducing Candle Analysis Tournament Edition v1.83* - We’re pleased to share a new version of our trading strategy.  _(by Ahpigsy)_
+
+#### Changed
+- *📢 Introducing Candle Analysis Tournament Edition v1.83* - 🔑 In This Update:  _(by Ahpigsy)_
+
+#### Strategy
+- *📢 Introducing Candle Analysis Tournament Edition v1.83* - When using Safe Mode improvements to sideways market detection  _(by Ahpigsy)_
+
+
+---
+
 ## 2025-10-19
 
 ## Gunbot v30.6.7
