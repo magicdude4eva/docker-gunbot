@@ -1,3 +1,24 @@
+## Gunbot v30.6.8
+_Released: 2025-10-20T18:28:47+00:00_
+
+#### Fixes
+- fix [Hyperliquid] GB post-only order method is not respected
+- @boekenbox fix [Kraken futures] Multiple orders sent instead of one
+- fix asterdex
+- fix [30.6.0] - DYDX - FARTCOIN, XRP, SOL missing on DYDX
+- fix fix parsing of bitget open orders (ccxt issue)
+- fix Quanta-G does not function on MEXC because gunbot does not detect a fulfilled sell order
+- fix PUMP token missing from Bitget
+- *📜 Exchange Fix Update – GhostRider v1.1.6* - 🔹 🧮 Fixed issue with Hyperliquid PnL calculations  _(by Mfanya)_
+- *📜 Exchange Fix Update – GhostRider v1.1.6* - 🔥 These fixes ensure more accurate performance tracking and reliable position management on Hyperliquid.  _(by Mfanya)_
+- *📜 Exchange Fix Update – GhostRider v1.1.6* - 📲 Join the discussion & get updates: https://t.me/tradewithmfanya  _(by Mfanya)_
+- *#Wick Magic R.C. 2.9.9 patch l* - #Fixed capital for all entries and re-entries.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch l* - #Fixed FGI to respect DCA entry too.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch l* - #Fixed an issue where breakout didn't respect HH with the long period.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v30.6.7
 _Released: 2025-10-18T14:42:19+00:00_
 
