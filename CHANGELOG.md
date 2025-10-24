@@ -1,3 +1,29 @@
+## Gunbot v30.6.9
+_Released: 2025-10-23T16:41:57+00:00_
+
+#### Fixes
+- Dashboard: fix date range filter behavior, which sometimes didn't show newly filtered data (#260)  _(by @boekenbox)_
+
+#### Improved
+- *📜 Latest Change Log – Mfanya Strategies* - 🕯 Added Wick Trade feature – automatically enabled for improved entry precision  _(by Mfanya)_
+- gui web server: increase compression to default setting, improve use of caching  _(by @boekenbox)_
+
+#### Changed
+- *📜 Latest Change Log – Mfanya Strategies* - 📏 Increased DCA distance slightly – previous range was too tight, now allows better trade spacing and safer scaling  _(by Mfanya)_
+
+#### Exchange
+- API key management: input field for vault address, needed when used on a subaccount at Hyperliquid  _(by @boekenbox)_
+
+#### Strategy
+- *Quanta Athena v1.3* - None  _(by Dave)_
+- *Quanta Athena v1.3* - Retrieve options unit basket data for assets where units are greater than 1. Thank you @ztam75  _(by Dave)_
+
+#### Other
+- Custom strategies: make it easier to collect candle data from all timeframes above the main strategy PERIOD. Set 'MULTI_COMP' true as override, regardless of ws or rest api, and get all higher tf candle data in gb.data.multiTfData  _(by @boekenbox)_
+
+
+---
+
 ## Gunbot v30.6.8
 _Released: 2025-10-20T18:28:47+00:00_
 
