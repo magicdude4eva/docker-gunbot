@@ -1,3 +1,30 @@
+## Gunbot v30.7.0
+_Released: 2025-10-25T11:20:13+00:00_
+
+#### Improved
+- AI: Based on the global indicators, your trading performance this week has been positive with a Return on Investment (ROI) of 0.32 and a Risk Reward ratio (RR) of 0.84. Your Capital Efficiency (CapEff) is at 74.06%, and you currently have assets totaling $10,397.58.
+- You: are those ROI, RR and Capital Efficiency values good or could you suggest something to improve my trades profit?
+- AI: The Return on Investment (ROI) of 0.32 means that for every dollar you have invested, you are currently earning $0.32 in profit. In the context of trading, an ROI of 0.32 is considered decent, but there is room for improvement.
+- To enhance your trading profitability, you could consider reallocating your investments towards exchanges or assets that have historically shown higher realized Profit and Loss (PnL). By focusing on exchanges or assets that have a track record of delivering better returns, you can potentially increase your ROI and overall trading performance.
+- It's important to conduct thorough research and analysis before reallocating your investments to ensure that you are making informed decisions based on historical data and market trends. Additionally, diversifying your portfolio across different exchanges or assets can help spread risk and potentially improve your ROI over time.
+- By strategically reallocating your investments towards exchanges with higher realized PnL, you can aim to enhance your trading profitability and optimize your portfolio efficiency.
+- To enhance your profits and optimize your capital allocation, here are some realistic reallocation ideas based on measurable metrics:
+- 1. Reallocation towards Bitget and Binance: Since Bitget and Binance have shown consistent positive returns over various timeframes, you could consider reallocating a portion of your capital from exchanges with lower PnL performance to Bitget and Binance. This reallocation can potentially increase your overall ROI and capitalize on the historical performance of these exchanges.
+- 2. Diversification: While Bitget and Binance have performed well, it's also important to diversify your portfolio to spread risk. Consider allocating a portion of your capital to gateio, which has shown moderate but positive returns. Diversification can help mitigate risk and potentially improve your overall portfolio efficiency.
+- 3. Regular Monitoring and Adjustment: Continuously monitor the performance of your investments on different exchanges and adjust your capital allocation accordingly. If an exchange starts underperforming or shows a decline in PnL, consider reallocating your capital to exchanges with better performance to optimize your returns.
+- By strategically reallocating your capital towards exchanges with better performance metrics and maintaining a diversified portfolio, you can aim to increase your returns and enhance your overall trading profitability. Remember to regularly review and adjust your capital allocation based on the performance of each exchange to optimize your trading strategy.
+
+#### Added
+- add convertedBalances in ledger (useful for Gunbot Monitor): they represent the total holding you have at your exchange, converted in each and every asset
+- I'm also uploading a new build for Gunbot Monitor, you will be able to download it from the same link you initially downloaded it (find it in your welcome email or ask uri)
+- added some more metrics in the Overview (please help me to understand which of those are really useful to you and what you would like to display there)
+- Added some more metrics in Analysis tab, help me find out what would be really interesting for us there (special KPI or whatever)
+- a better settings page, dividing config parameters and override by categories, also allowing to add any pair override you want directly from MONIT
+- she knows everything about your trading performances, about your capital allocation, about your profit and losses and she is always excited to give you new ideas to enhance your trading experience
+
+
+---
+
 ## Gunbot v30.6.9
 _Released: 2025-10-23T16:41:57+00:00_
 
