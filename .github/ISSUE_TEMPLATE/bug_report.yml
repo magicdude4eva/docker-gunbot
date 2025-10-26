@@ -1,0 +1,63 @@
+name: 🐛 Bug Report
+description: File a bug report for docker-gunbot
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out all fields. Issues without details may be closed.
+
+  - type: input
+    id: gunbot_version
+    attributes:
+      label: Gunbot version
+      description: The version you're running (from your container logs or Gunbot UI)
+      placeholder: e.g. v30.6.7
+    validations:
+      required: true
+
+  - type: input
+    id: operating_system
+    attributes:
+      label: Operating system
+      description: Your host OS or NAS model
+      placeholder: e.g. Synology DSM 7.2, Ubuntu 22.04, macOS
+    validations:
+      required: true
+
+  - type: textarea
+    id: data_directory
+    attributes:
+      label: Output of "ls -ltra /data"
+      description: Run this inside the container or mapped volume.
+      placeholder: |
+        Paste the output here, e.g.
+        drwxr-xr-x  1 docker docker  4096 Oct 22 20:05 .
+        drwxr-xr-x  1 root   root    4096 Oct 22 19:55 ..
+    validations:
+      required: false
+
+  - type: dropdown
+    id: pgid_puid_check
+    attributes:
+      label: Did you verify your PUID/PGID?
+      description: Run "id docker" on Synology or "id" for your Docker user and confirm below.
+      options:
+        - "✅ Yes, verified via id docker"
+        - "⚠️ No, not sure"
+        - "❌ Not yet, will verify"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the problem
+      description: Include logs or steps to reproduce.
+      placeholder: |
+        Steps:
+        1. Start container
+        2. Observe error XYZ in logs
+    validations:
+      required: true
