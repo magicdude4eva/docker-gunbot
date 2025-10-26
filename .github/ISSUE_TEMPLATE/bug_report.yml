@@ -7,12 +7,32 @@ body:
     attributes:
       value: |
         Please fill out all fields. Issues without details may be closed.
+        Before submitting, check the most common issues below 👇
+
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Common Issues (check before posting)
+        - **Port already in use** → Make sure port `5555` or `5000` isn't taken by another container.
+        - **Permissions or empty data folder** → Verify your `PUID` and `PGID` (e.g. run `id docker` on Synology and adjust docker-compose.yml).
+        - **Container fails to start** → Check the logs with `docker logs gunbot` for missing `/data` mount or wrong volume mapping.
+        - **Update issues** → Remove the old container and recreate with `docker pull magicdude4eva/gunbot:latest`.
+        - **Licensing errors** → Ensure your Gunbot key matches the configured exchange and wallet.
+
+  - type: checkboxes
+    id: common_issues_checked
+    attributes:
+      label: Have you checked the common issues above?
+      description: Please confirm that none of these solve your problem.
+      options:
+        - label: Yes, none of the above apply
+          required: true
 
   - type: input
     id: gunbot_version
     attributes:
       label: Gunbot version
-      description: The version you're running (from your container logs or Gunbot UI)
+      description: The version you're running (from container logs or Gunbot UI)
       placeholder: e.g. v30.6.7
     validations:
       required: true
@@ -38,18 +58,6 @@ body:
     validations:
       required: false
 
-  - type: dropdown
-    id: pgid_puid_check
-    attributes:
-      label: Did you verify your PUID/PGID?
-      description: Run "id docker" on Synology or "id" for your Docker user and confirm below.
-      options:
-        - "✅ Yes, verified via id docker"
-        - "⚠️ No, not sure"
-        - "❌ Not yet, will verify"
-    validations:
-      required: true
-
   - type: textarea
     id: description
     attributes:
@@ -59,5 +67,6 @@ body:
         Steps:
         1. Start container
         2. Observe error XYZ in logs
+        3. Expected vs actual result
     validations:
       required: true
