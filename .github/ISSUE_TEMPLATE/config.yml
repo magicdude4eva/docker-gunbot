@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📘 Gunbot FAQ and Troubleshooting
+    url: https://www.gunbot.com/support/guides/troubleshooting-and-support/faq/
+    about: Check this first for general Gunbot questions, licensing, and configuration issues.
