@@ -1,3 +1,16 @@
+## Gunbot v30.7.2
+_Released: 2025-10-28T21:45:11+00:00_
+
+#### Fixes
+- fix hyperliquid spinning with the new KPIs stats, thanks @crazymop @T_K_O_1 @DWT80s @iPUMPUSHA
+- fix Hyperliquid - simulator
+- fix GimmePairs on latest on kraken Spot doesn't return the USD-BTC pair.
+
+**Download:** files are available at https://www.gunbot.com/downloads
+
+
+---
+
 ## Gunbot v30.7.0
 _Released: 2025-10-25T11:20:13+00:00_
 
