@@ -1,3 +1,30 @@
+## Gunbot v30.7.3
+_Released: 2025-10-31T13:24:11+00:00_
+
+#### Fixes
+- *📜 New Update – MFRider & GhostRider* - 🧩 Fixed short DCA issues on Hyperliquid (HL)  _(by Mfanya)_
+- *📜 New Update – MFRider & GhostRider* - 🛠 General stability improvements and minor bug fixes  _(by Mfanya)_
+- *📜 New Update – MFRider & GhostRider* - 🛠 Fixed minor issues affecting execution and performance  _(by Mfanya)_
+- *📜 New Update – MFRider & GhostRider* - ⚡️ Additional small bug fixes and refinements  _(by Mfanya)_
+- FuturesGrid: fix for "The strat doesn't open its initial position" #277  _(by @boekenbox)_
+
+#### Added
+- *📜 New Update – MFRider & GhostRider* - 📲 Join the discussion & get updates: https://t.me/tradewithmfanya  _(by Mfanya)_
+
+#### Changed
+- trading settings: change import from leaderboard, previously imported strategy only, now also configures the pair for it  _(by @boekenbox)_
+
+#### GUI
+- Chart: use order timestamp for order notifications, instead of current time. #269  _(by @boekenbox)_
+
+#### Other
+- stepgrid, stepgridhybrid, stepgridscalp, channelmaestro: much faster math to determine partial sell volumes.  _(by @boekenbox)_
+
+**Download:** files are available at https://www.gunbot.com/downloads
+
+
+---
+
 ## Gunbot v30.7.2
 _Released: 2025-10-28T21:45:11+00:00_
 
