@@ -1,3 +1,12 @@
+## Gunbot v30.7.5
+_Released: 2025-11-08T14:26:17+00:00_
+
+#### Fixes
+- @boekenbox and @crazymop found a case where pnl values got null: the fix will allow us to play with this new toy for the week-end. Thank you boys
+
+
+---
+
 ## Gunbot v30.7.3
 _Released: 2025-10-31T13:24:11+00:00_
 
