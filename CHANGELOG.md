@@ -1,3 +1,31 @@
+## Gunbot v30.7.6
+_Released: 2025-11-13T20:56:00+00:00_
+
+#### Fixes
+- *#Wick Magic R.C. 2.9.9 patch m* - #First commit of Limit orders (post/limit) with orderbook smart placement.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch m* - #Fixed Typo in strategy editor Pullback field.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch m* - #Possible fix for Edge  Inverse wiring case, feedback needed.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch m* - #Added human readable time in console logs for breakout cooldown.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch m* - #Fixed displaying old grid lines when the user did swap strat to wick magic.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#Wick Magic R.C. 2.9.9 patch m* - #Fixed max capital respected with DCA.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- Trading settings: fix case that sometims required importing a strategy from leaderboard twice. #299  _(by @boekenbox)_
+
+#### Added
+- check the new implementation behaves like expected in terms of balances, position size, open and filled orders, orderbook, klines etc
+- to configure the above i've implemented a new parameter in your config.js same place you set your api keys (and @boekenbox is preparing a drowdown menu in the frontend for you)
+- *📢 Introducing update for Expected Move Version 1.07 and Expected Move Plus Version 1.2* - We’re pleased to share a new version of our trading strategy.  _(by Ahpigsy)_
+
+#### Changed
+- *📢 Introducing update for Expected Move Version 1.07 and Expected Move Plus Version 1.2* - 🔑 In This Update:  _(by Ahpigsy)_
+- *📢 Introducing update for Expected Move Version 1.07 and Expected Move Plus Version 1.2* - Fixes an error where in some circumstances Expected Move % returns 0% no matter what period is selected.  _(by Ahpigsy)_
+- *📢 Introducing update for Expected Move Version 1.07 and Expected Move Plus Version 1.2* - We hope the Expected Move updates  provides a helpful tool for your trading journey.  _(by Ahpigsy)_
+
+#### Other
+- Dasbhoard: ensure date range picker popover stays visible  _(by @boekenbox)_
+
+
+---
+
 ## Gunbot v30.7.5
 _Released: 2025-11-08T14:26:17+00:00_
 
