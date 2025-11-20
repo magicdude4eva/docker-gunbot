@@ -1,3 +1,27 @@
+## Gunbot v30.7.7
+_Released: 2025-11-19T13:44:34+00:00_
+
+#### Fixes
+- fix bybit url for global users. Thanks @crazymop
+- fix for Mexc - purchase too low
+- *Wick Magic R.C. 2.9.9 - Patch n released* - Introducing the Fear & Greed Index Mimix Profile  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - A new adaptive sentiment module that enhances precision in entries, exposure control and market alignment.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - This patch also brings the new Love This Shizcoin mode:  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - This patch also includes:  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - Refined % Capital Use display  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - Updated internal math for more accurate position metrics  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 - Patch n released* - Better risk alignment across all market conditions  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Added
+- API key management: add options to select bybit api url  _(by @boekenbox)_
+- frontend: add support for bitget period 3  _(by @boekenbox)_
+
+#### GUI
+- Dashboard: refresh total assets chart less often  _(by @boekenbox)_
+
+
+---
+
 ## Gunbot v30.7.6
 _Released: 2025-11-13T20:56:00+00:00_
 
