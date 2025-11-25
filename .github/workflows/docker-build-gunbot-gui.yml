@@ -38,49 +38,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "Fetching Gunbot GUI version from JavaScript files..."
-
-          # Be a good citizen: retries + UA
+          echo "Fetching Gunbot GUI version from download page..."
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "${{ env.GUNBOT_DOWNLOAD_URL }}")
-
-          # Extract iframe URL (gunthy.org/downloads/)
-          iframe_url=$(echo "$html_content" | grep -oP 'src="https://gunthy\.org/downloads/[^"]*' | head -1 | sed 's/src="//')
-
-          version=""
-            if [ -n "${iframe_url:-}" ]; then
-            echo "Found iframe URL: $iframe_url"
-            iframe_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$iframe_url")
-
-            # Extract up to 5 JS file URLs likely to contain the version
-            js_files=$(echo "$iframe_content" | grep -oP 'src="[^"]*\.js"' | sed 's/src="//;s/"$//' | grep -E "(main|chunk)" | head -5 || true)
-
-            for js_file in $js_files; do
-              if [[ "$js_file" == /* ]]; then
-                js_url="https://gunthy.org${js_file}"
-              else
-                js_url="$js_file"
-              fi
-              echo "Checking JS file: $js_url"
-              js_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$js_url" || true)
-
-              # Look for 30.x.y pattern
-              candidate=$(echo "$js_content" | grep -oP 'GUI for Linux.*Gunbot v\K[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
-              if [ -n "${candidate:-}" ]; then
-                version="v$candidate"
-                echo "Found version in $js_file: $version"
-                break
-              fi
-            done
-          fi
-
+          # Extract the version from the title attribute of the specific GUI Linux download link
+          version=$(echo "$html_content" | grep -oP 'href="https://gunthy\.org/downloads/beta/gui-linux\.zip"[^>]*title="[^"]*based on v\K[0-9]+\.[0-9]+\.[0-9]+' | head -1)
           if [ -z "$version" ]; then
-            echo "Warning: Could not extract version from JS files, using fallback"
-            version="v30.5.9"
+            echo "Warning: Could not extract version from download page, using fallback"
+            version="30.5.9"
+          else
+            version="v$version"
           fi
-
           echo "Detected Gunbot GUI version: $version"
-            echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"          
 
       - name: Check if version already exists on Docker Hub
         id: check
