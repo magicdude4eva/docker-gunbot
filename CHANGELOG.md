@@ -1,3 +1,12 @@
+## Gunbot v30.7.9
+_Released: 2025-11-27T22:00:58+00:00_
+
+#### Fixes
+- nightly build to fix hopefully the last urgent thing at refactored bitget exchange: by tomorrow you gotta use this build for your bitget. Thanks @UncreatedRolf @BoertjE77
+
+
+---
+
 ## Gunbot v30.7.7
 _Released: 2025-11-19T13:44:34+00:00_
 
