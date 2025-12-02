@@ -1,3 +1,15 @@
+## Gunbot v30.8.1
+_Released: 2025-11-28T23:46:53+00:00_
+
+#### Fixes
+- bitget v3 spot market orders fix. Thanks @crazymop @jay_nxtstrat
+
+#### Changed
+- The Prize Pool updates automatically at YT Streaming as fans deposit out loved, beloved, eternal and unique love: BITCOIN
+
+
+---
+
 ## Gunbot v30.7.9
 _Released: 2025-11-27T22:00:58+00:00_
 
