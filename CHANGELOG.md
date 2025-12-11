@@ -1,3 +1,12 @@
+## Gunbot v30.8.3
+_Released: 2025-12-07T11:29:28+00:00_
+
+#### Fixes
+- fix telegram enabled crashing win and lin users
+
+
+---
+
 ## Gunbot v30.8.1
 _Released: 2025-11-28T23:46:53+00:00_
 
