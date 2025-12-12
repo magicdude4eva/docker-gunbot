@@ -1,3 +1,33 @@
+## Gunbot v30.8.4
+_Released: 2025-12-10T11:55:49+00:00_
+
+#### Fixes
+- *Quanta G-Type v1.3* - v1.3 is a significant update to strategy code. Whilst all efforts are made and long term tested, it cannot be guaranteed bug free. Please test in a sim environment and ensure proper backing up of state files before updating your long term production instances.  _(by Dave)_
+- Dashboard: fix sorting issue in recent trades table
+
+#### Improved
+- *Quanta G-Type v1.3* - New ANALYSIS output in sidebar gives percentile performance and suggested interval  _(by Dave)_
+- gui server: serveral performance improvements
+
+#### Added
+- **Added Aditional temptlates and easier formating for easely deploying the no bag  one click strategies* - *added the BB trending scalps for BB buying and selling with Gtrends  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Changed
+- *Quanta G-Type v1.3* - Period changes will only affect the candle analysis  _(by Dave)_
+
+#### Strategy
+- *Quanta G-Type v1.3* - There is no activation or action needed to activate MM mode - simply see intervals in the sidebar and decide if you want to use them  _(by Dave)_
+- *Quanta G-Type v1.3* - QG data has its own state file and is no longer part of GB state  _(by Dave)_
+- *Quanta G-Type v1.3* - Autosetup #1 support request is no clearing previous trade data - this is now automated in the setup process  _(by Dave)_
+- *Quanta G-Type v1.3* - QG trims order history to ensure no slowdown over long periods of time  _(by Dave)_
+- *Quanta G-Type v1.3* - Code base refactor (efficiency etc)  _(by Dave)_
+- *Quanta G-Type v1.3* - Verbose ‘false’ produces a mini log output instead of full logging  _(by Dave)_
+- *Quanta G-Type v1.3* - HODL mode now posts sell order  _(by Dave)_
+- *Quanta G-Type v1.3* - If price exceeds bounds, orders will post when price once again inside bounds  _(by Dave)_
+
+
+---
+
 ## Gunbot v30.8.3
 _Released: 2025-12-07T11:29:28+00:00_
 
