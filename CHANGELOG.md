@@ -1,3 +1,35 @@
+## Gunbot v30.8.6
+_Released: 2025-12-22T13:54:06+00:00_
+
+#### Fixes
+- fix huobi and many other exchanges with initial startup errors in core
+- API slot management: fix hanging page triggered by tooltip hover #319
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Live price fix  _(by Ahpigsy)_
+
+#### Improved
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Improved candle handling  _(by Ahpigsy)_
+
+#### Added
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Trailing Minimum Sell Level (introduced in 1.84)  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - MSL now follows new highs upward – lets strong pumps run longer instead of selling on the first red candle.  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Added internal logging for cases where Safety Exit is not needed (e.g., price above Expected Low), without cluttering the panel.  _(by Ahpigsy)_
+
+#### Changed
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Improvements to Moon Mode and bag values updating.  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Smart cache refresh  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Improvements to Expected Move % and Profit Target values.  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Intra-candle Moon exit  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Independent Safety Exit (pseudo stop-loss)  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Refined Safety Exit messaging  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Updated messaging for Safety Exit to be more concise (e.g., removed ROE value from the blocked message for cleaner panel display).  _(by Ahpigsy)_
+- *Candle Analysis Tournament Edition – Change Log 1.84.  💪* - Overall stability  _(by Ahpigsy)_
+
+#### GUI
+- I'm also building the GUI (Gunbot User Interface) based on Gunbot v30.8.6
+
+
+---
+
 ## Gunbot v30.8.4
 _Released: 2025-12-10T11:55:49+00:00_
 
