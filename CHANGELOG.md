@@ -1,3 +1,33 @@
+## Gunbot v30.8.9
+_Released: 2026-01-02T20:45:31+00:00_
+
+#### Fixes
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - This update brings the pulse of the market directly into your strategy.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - While Patch R focused on internal precision, Patch S focuses on external intelligence. We have integrated the gold standard of crypto market sentiment analysis: The CoinMarketCap (CMC) Fear & Greed Index.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - Highlights of this update:  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - Dual-Mode Sentiment Logic Patch S introduces two distinct ways to utilize this powerful data, giving you total control over how the bot reacts to market fear:  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - The "Safety Shield" (Block Mode): If the market enters a state of panic (Index drops below your defined threshold), Wick Magic will automatically deploy a safety net. It pauses new buy entries and DCA operations to prevent "catching a falling knife," waiting for the panic to subside before resuming trading.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - Midnight Guard: Intelligently detects the exact moment CoinMarketCap updates their daily score (handling the UTC midnight crossover) and forces a data refresh, ensuring you never trade on yesterday's news.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *Wick Magic R.C. 2.9.9 – Patch S is now live* - 📅 Visual History Engine Your dashboard Sidebar has been upgraded with a new interactive element. Hovering over the CMC tile now reveals a dynamic historical log.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Improved
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - Solo-Trend Exits: Optimized Take-Profit and Break-even tracking  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Added
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - Happy New Year and Merry Christmas to all! 🎄🥂✨  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - A brand new year, fresh goals, and one mission:  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - To start the year with some exciting new toys, I've just separated the Futures strategy into ready-to-deploy templates for super-fast setup!  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - Plus, two powerful new modes:  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Changed
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - Important note: All updates have been thoroughly tested only on Bybit for now — please use caution if deploying on other exchanges!  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### GUI
+- *🚀 GTREND FUTURES HEDGING v10.2 | CHANGELOG HIGHLIGHTS* - Unified Neon Dashboard: Real-time P&L% and condition breakdown  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+
+---
+
 ## Gunbot v30.8.6
 _Released: 2025-12-22T13:54:06+00:00_
 
