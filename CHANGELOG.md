@@ -1,3 +1,14 @@
+## Gunbot v30.9.4
+_Released: 2026-01-24T14:05:32+00:00_
+
+#### Fixes
+- fix my charts disappearing
+- fix mexc market orders, thanks @Ahpigsy
+- @crazymop fix for an issue with limit orders at wickmagic
+
+
+---
+
 ## Gunbot v30.8.9
 _Released: 2026-01-02T20:45:31+00:00_
 
