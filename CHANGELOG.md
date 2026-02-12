@@ -1,3 +1,44 @@
+## Gunbot v30.9.5
+_Released: 2026-02-07T16:54:49+00:00_
+
+#### Fixes
+- [BUG] Gunbot State Candle Data Mismatch with GUI and Exchange OHLCV on Hyperliquid
+- [Bug] TradingView Charting Library Fails to Render (Blank Chart Area)
+- [30.9.4]| [Binance] | [Bug] - "Fetch Trade History" Result incorrect
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - Patch U focuses on stability, precision, and trust. This update tightens core execution logic and removes a few subtle edge cases that could affect real-world performance over long trading sessions.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - What’s new in Patch U:  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - We’ve resolved the remaining edge cases in the DCA flow. Re-entries now trigger exactly when conditions are met, without false blocks or missed opportunities after partial sells.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - 📉 Partial Sell Edge Case Fixed  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - 🧠 CoinMarketCap FGI Connection Fixed  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - 🛡 Improved Internal Guards & State Handling  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch U is live* - No new complexity added. Patch U is about reliability, not noise. Your charts, orders, and decisions now align even more tightly under the hood.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *#GTRENDFUTURES  10.6* - 🧹Fixed on the futures hedging GTREND_CUSTOM_STRATEGY": "automated_GTREND", fetching local timeframe from hedging timeframe issue thank you @V_Sheyko  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *#GTRENDFUTURES  10.6* - Visual Debug & Guided Reports 📸: Upload images/videos of errors for instant analysis. The AI ​​helps you generate a structured bug report with all the mandatory data required for developers to find solutions faster.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Improved
+- *#GTRENDFUTURES  10.6* - Performance Tracking 📉: Helps you monitor bot uptime and resource usage to ensure zero downtime.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *#GTRENDFUTURES  10.6* - Performance Tuning ⚙️: AI acts as a co-pilot, adjusting leverage suggestions based on current market risk levels.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Added
+- *#GTRENDFUTURES  10.6* - 🧹 Cleaned up unnecessary filters that were causing interference with the new micro-hedge maximum position logic. ⚙️  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *#GTRENDFUTURES  10.6* - G-Trend Roadmap and new toys: AI Specialist Gems 💎  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *#GTRENDFUTURES  10.6* - Update Guide 🔄: Simplifies software updates, helping you migrate settings to new versions safely.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Exchange
+- Bitget futures coin-m no base balance
+
+#### Other
+- Alpaca doesn't trade with ExoTrader, not enough candles
+- The pnl displayed in the main dashbord includes fees in one leg of each position instead of both.
+- Aster futures shows quote balance while no position
+- Aster futures market close doesn’t work
+- compact a bit more telegram messages
+
+**Download:** files are available at https://www.gunbot.com/downloads
+
+
+---
+
 ## Gunbot v30.9.4
 _Released: 2026-01-24T14:05:32+00:00_
 
