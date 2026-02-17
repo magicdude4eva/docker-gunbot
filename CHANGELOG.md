@@ -1,3 +1,35 @@
+## Gunbot v30.9.6
+_Released: 2026-02-14T14:40:37+00:00_
+
+#### Fixes
+- [Bug] TradingView Charting Library Fails to Render (Blank Chart Area)
+- *gtrendfutures 10.7* - 1. fixed dcaing entries: now reading from last purchase (was incorrectly reading break even) 📉  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *gtrendfutures 10.7* - 2. fixed reversals: users can use reversals before max position hit 🔄  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *gtrendfutures 10.7* - 3. fixed reentryvalue: now reading from the last order instead of the first 🎯  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Added
+- The 24h high price and low price in add pairs tab at kraken.com isn't updated.
+
+#### GUI
+- 30.7.7 - AsterFutures - Ghostrider - Limit order cannot be placed in GUI
+
+#### Exchange
+- #feature Hyperliquid does expose ClosedPnL + fees via API (fills endpoint)
+- Binance Futures: builder strategy double long opened in same candle
+- Kraken Futures orders parsing creates bogus orders (epoch 1970 + NaN rows)
+- Kraken Futures balance desync after manual position close (TypeError: position undefined)
+- futuresGrid roe an upnl in sidebar not correct when set with default cross leverage for kraken Futures.
+- Bitget futures coin-m no base balance
+
+#### Other
+- https://github.com/GuntharDeNiro/issues/issues/339
+- Aster futures shows quote balance while no position
+- Aster futures market close doesn’t work
+- Alpaca trading terminal retuns error : "message": "Request failed with status code 422",
+
+
+---
+
 ## Gunbot v30.9.5
 _Released: 2026-02-07T16:54:49+00:00_
 
