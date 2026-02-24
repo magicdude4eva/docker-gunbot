@@ -1,3 +1,31 @@
+## Gunbot v30.9.7
+_Released: 2026-02-20T17:21:50+00:00_
+
+#### Fixes
+- @boekenbox fix for OKX exchange: Autoconfig Add Pairs not wroking
+- @boekenbox  commits Chart: possibly fix a case where chart remains in loading status. ty @T_K_O_1(loading symbol based on query params works, sorry for last one)
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Massive reliability and precision patch. The bot is now leaner (1,400 lines of dead code removed), smarter, and more honest about what it's doing on your chart.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Chart lines now show the REAL DCA levels — exactly where the bot will actually buy, not an approximation.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Fixed a bug where DCA zones could appear ABOVE your last buy price (made no sense, now impossible).  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Freeze zone now tracks the correct reference price after partial sells.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Fixed a rare cooldown bypass where timestamp comparisons silently failed, letting trades through with zero delay.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Rebuilt limit order tracking from scratch — no more ghost orders or lost fills.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Auto-cancels stale orders (TTL expired, price drifted too far, or would execute as taker).  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Works across all entry types: Ultra, HA, Aggressive, Breakout, Pullback, Re-entries.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - 62 unused functions removed, 1,400+ lines of dead code gone.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Garbage Collector v2: clean state transitions when selling entire position.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V is live* - Faster execution, smaller memory footprint.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Added
+- How to enable self-signed ssl:
+
+#### GUI
+- some services demand SSL for gunbot, especially some i'm developing to be used in a near future. I've implemented a self-signed certificate function in gunbot that would automatically serve the gui over https
+- that's it: it will create self-signed certs and serve the gui over https
+
+
+---
+
 ## Gunbot v30.9.6
 _Released: 2026-02-14T14:40:37+00:00_
 
