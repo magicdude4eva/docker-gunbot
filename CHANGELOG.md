@@ -1,3 +1,30 @@
+## Gunbot v30.9.9
+_Released: 2026-03-07T09:55:01+00:00_
+
+#### Fixes
+- fix for Alpaca doesn't load under very latest
+- fix for Aster futures shows quote balance while no position
+- fix for bybit short pairs in Unrealized PnL column in the “Compare pairs” view shows n/a, while the LONG side of the same symbol correctly displays Unrealized PnL.
+- fix for Hyperliquid backtesting fail to start
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - The biggest usability upgrade yet. One click, fully configured. No more guessing which settings work for your style.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Wick Scalp — 1m ultra-fast entries, tight trailing, aggressive momentum. For adrenaline junkies with liquid pairs.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Fast Momentum — 5m balanced speed, smart DCA spacing. The all-rounder with teeth.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Trend Sniper — 15m confirmed entries only. SuperTrend shield, 2-green HA filter, higher profit targets. Patient and precise.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Swing Hunter — 15m swing trades with Smart Capital protection and same-ratio partial sells. Lets winners run.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Position Flow — 1h position building with limit orders, deep DCA zones and tight capital management. Set and forget.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Select a preset from the GUI, adjust your Capital, Trading Limit and Min Volume to Sell, and you are trading. Every override is written to config so Gunbot never falls back to engine defaults.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Changed your mind? Switch presets anytime. Want to tweak after? Go ahead, your adjustments are preserved until you pick a new preset.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Full parameter audit: defaults aligned across all 96 strategy variables  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - New Limit Orders section in the GUI (OL Spread, Depth, TTL)  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Pullback, cooldown and trailing params now exposed for advanced users  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🚀 Wick Magic R.C. 2.9.9 – Patch V4 is live* - Deprecated keys auto-cleaned on startup  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Other
+- created gb.method.returnPublicTradeHistory for custom strats
+
+
+---
+
 ## Gunbot v30.9.7
 _Released: 2026-02-20T17:21:50+00:00_
 
