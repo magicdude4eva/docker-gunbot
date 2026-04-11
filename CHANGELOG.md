@@ -1,3 +1,21 @@
+## Gunbot v31.0.1
+_Released: 2026-04-08T14:57:09+00:00_
+
+#### Fixes
+- fix TypeError: Converting circular structure to JSON during bb buy execution on Coinbase
+- fix Bot not spinning if autoconfig.json is totally missing
+- Hyperliquid: fix sidebar stats for non spot pairs  _(by @boekenbox)_
+- autoconfig: improve memory usage, especially for jobs using tickers data. fix possible crash on manageOverrides2 job type  _(by @boekenbox)_
+
+#### Improved
+- unit cost: improve handling of user configured 0 fees  _(by @boekenbox)_
+
+#### Changed
+- spotgridadvanced: change hardcoded upper tf 240 to use alternate in case exchange doesn't offer 240  _(by @boekenbox)_
+
+
+---
+
 ## Gunbot v30.9.9
 _Released: 2026-03-07T09:55:01+00:00_
 
