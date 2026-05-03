@@ -21,6 +21,7 @@ permissions:
 env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Opt into Node.js 24
 
 concurrency:
   group: gunbot-docker-build
