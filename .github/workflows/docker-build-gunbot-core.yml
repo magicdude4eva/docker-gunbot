@@ -21,7 +21,6 @@ permissions:
 env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Opt into Node.js 24
 
 concurrency:
   group: gunbot-docker-build
@@ -36,7 +35,7 @@ jobs:
       # Repo
       # ------------------------------------------------------------
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0  # allow committing CHANGELOG/README updates
 
