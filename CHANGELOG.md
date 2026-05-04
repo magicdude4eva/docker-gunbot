@@ -1,3 +1,36 @@
+## Gunbot v31.0.4
+_Released: 2026-05-02T11:00:14+00:00_
+
+#### Fixes
+- fix alpaca markets orderbook, thanks @CryptoArena
+- stepgridhybrid: fix a case where SMAPERIOD and ATR_PERIOD 14 led to inactive behavior.. ty @cashgirlz
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - 17 parameters were missing from the engine — including OF rebuy settings, signal pair, dump protection, and institution hours. If you changed them in the GUI, the engine would silently reset them on restart. Fixed. Your config stays exactly how you set it.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - 🐛 Duplicate Limit Orders Fixed  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Added
+- by reading their docs: v1 api keys will keep working, new api keys will automatically use v3
+- custom strategies: add optional timestamp prop to gb.method.setTimeScaleMark(pair, exchange, message, timestampMs)
+- Settings: add option to filter connected/registered exchanges
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - 📡 Cross-Exchange Signal Pair — NEW  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - 🛡 New Preset: Customized  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔥 [- Team machineGun News -] [- v5.5 Release Notes -] 🔥* - In this release we bring forth a number of new features, first and foremost Channel Protection! A completely new system that dynamically channels your orders based on real-time market trends.  _(by WhiteGoblin✌️machineguntrading.com)_
+- *🔥 [- Team machineGun News -] [- v5.5 Release Notes -] 🔥* - Using William Blau's predictive T-2 mathematics, it compares current price against the position of your last relevant order and determines whether a new order belongs or not.  _(by WhiteGoblin✌️machineguntrading.com)_
+- *🔥 [- Team machineGun News -] [- v5.5 Release Notes -] 🔥* - Alongside Channel Protection we've continued to expand our technical analysis library. Bringing in two completely new forms: the Accelerator Oscillator (AC) for short-term trends and the Awesome Oscillator (AO) for long-term reads. Both have all the features found across our already extensive technical analysis suite.  _(by WhiteGoblin✌️machineguntrading.com)_
+- *🔥 [- Team machineGun News -] [- v5.5 Release Notes -] 🔥* - 🎉 ...and then there are the new Rapid Profiles! 🎉  _(by WhiteGoblin✌️machineguntrading.com)_
+
+#### Changed
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - Works with your existing Gunbot Defi license. If you already own Wick Magic, this update is included — just replace the gunbot executable  file.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Exchange
+- *🧙 Wick Magic v2.9.v13 Stable — OrderFlow Magic 1.1.7* - Trade on illiquid bases like USDC-BTC while pulling OrderFlow signals from the deep, liquid USDT-BTC book. Set OF_SIGNAL_PAIR and OF_SIGNAL_EXCHANGE independently — the bot reads orderbook and PTH tape from the liquid pair, calibrates the GA against that data, and executes on your actual trading pair. Full depth where it matters. Essential for European traders under MiCA routing to USDC pairs.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Other
+- implemented asterdex v3 api endpoints (both spot and futures)
+- *🔥 [- Team machineGun News -] [- v5.5 Release Notes -] 🔥* - The third option allows both Rapid Return and Rapid Close to run exactly as our traditional profiles do. Stretching your Investment Level out across any number of steps you desire.  _(by WhiteGoblin✌️machineguntrading.com)_
+
+
+---
+
 ## Gunbot v31.0.1
 _Released: 2026-04-08T14:57:09+00:00_
 
