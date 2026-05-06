@@ -1,3 +1,21 @@
+## Gunbot v31.0.5
+_Released: 2026-05-05T11:00:29+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - Preset improvements & dYdX fixes. No breaking changes — existing configs are preserved.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - Liquidation Limit no longer forced by presets — your setting (on or off) is always respected  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - Buy Cooldown and Institutional Absorption now protected: preset won't overwrite your custom value  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - orderflow_scalp: SMART_SR enabled, Absorption enabled by default  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - orderflow_institutional: PERIOD_LONG corrected to 4h  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - LIQUIDATION_LIMIT and KILL_POSITION now use limit orders on dYdX. Hyperliquid and other exchanges keep using market close as before.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.0 — Patch Day 1* - Scaling no longer activates without an explicit FGI source (USE_FGI or USE_FGI_CMC). If you had Mimix toggled ON without a data source, TL stays at base — no phantom scaling  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Exchange
+- *✨ Introducing Wick Magic Futures – Launch Price $449* - #Trap Detection — spot bull/bear traps from orderbook vs trade history divergence.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.0.4
 _Released: 2026-05-02T11:00:14+00:00_
 
