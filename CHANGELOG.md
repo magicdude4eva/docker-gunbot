@@ -1,3 +1,17 @@
+## Gunbot v31.0.7
+_Released: 2026-05-12T14:19:58+00:00_
+
+#### Fixes
+- @crazymop fix for hyperliquid balances: the exchange now takes in consideration spot+usdc balances as collaterals when you trade perps
+- *🔧 Wick Magic Futures v1.2.4 — Patch Day 6* - 💰 Hyperliquid fix — Margin available now shows your actual USDC balance, not $0. Works correctly with Unified Accounts and spot holdings.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.4 — Patch Day 6* - 📊 Sidebar improvements — New "Position margin" tile. Margin Usage % now reflects your real account value. No more inflated percentages.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.4 — Patch Day 6* - 🔌 Multi-exchange — Improved margin reading for Binance Futures, dYdX, Kraken Futures and Hyperliquid.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.3 — Patch Day 5* - Fixed duplicate entry bug on small positions where strategy could open twice on the same pair.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.2.3 — Patch Day 5* - Used Capital now shows actual margin instead of full notional value — accurate across all leverage modes including dynamic (Kraken Futures).  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.0.5
 _Released: 2026-05-05T11:00:29+00:00_
 
