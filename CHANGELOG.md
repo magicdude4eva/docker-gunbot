@@ -1,3 +1,26 @@
+## Gunbot v31.1.4
+_Released: 2026-05-29T12:46:56+00:00_
+
+#### Fixes
+- fix an issue that would show error message if you started without a gunthy wallet or exchanges configured
+
+#### Added
+- *📸 Confluence in action — BTC SHORT @ 73.2k* - The new confluence engine reads the macro context as SHORT (Bull 3.5 vs Bear Score 5.5 vs , Grade B). Multiple confirmations aligned after the dump from 76k.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.2 — New Trend Engine: Confluence* - 🧭 New Institutional Trend Mode: "confluence"  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.2 — New Trend Engine: Confluence* - The AUTO side selector has a new engine option. Instead of relying on a single indicator to determine direction, "confluence" evaluates multiple technical confirmations simultaneously — moving averages, momentum, volume, directional strength, and higher timeframe bias — and only commits to LONG or SHORT when enough of them agree.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.2 — New Trend Engine: Confluence* - Why it matters to you: Single-indicator modes like SMA200 or SuperTrend can whipsaw when price oscillates around the reference level. Confluence requires broad agreement before flipping direction, which means fewer false side changes and more stable positioning in choppy markets.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.2 — New Trend Engine: Confluence* - 📊 New sidebar tiles: Bull Score, Bear Score, Grade (A+ to C), and HTF Bias — so you always see what the engine is thinking.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.1 — Smarter S/R Engine & Wrong-Side Protection* - Brand new feature. If the bot enters a position and the market structure shifts against it, the strategy can now recognize the mistake and get out early instead of holding and hoping.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.1 — Smarter S/R Engine & Wrong-Side Protection* - You'll see a new 🔄 S/R DirExit tile in the sidebar: ON when flat, ARMED when watching your position.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.1 — Smarter S/R Engine & Wrong-Side Protection* - ⚠️ ENABLED BY DEFAULT: S/R Direction Exit is active out of the box. This means the bot may close small wrong-side positions at a small loss (up to 2% ROE by default) to protect you from deeper drawdown. If you prefer the bot to never close below your entry price, disable S/R Direction Exit in your pair settings under the S/R section. You can also adjust Direction Exit Max Loss (%) to your comfort level.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Changed
+- *🔧 Wick Magic Futures v1.3.1 — Smarter S/R Engine & Wrong-Side Protection* - The S/R engine got a major brain upgrade. Instead of only looking at the single closest level, the bot now evaluates every support and resistance zone near your price and picks the strongest consensus. Daily levels — the big structural floors and ceilings — now carry real authority even when they appear alone.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.1 — Smarter S/R Engine & Wrong-Side Protection* - Why it matters to you: Before this update, the bot could open a SHORT right on top of a strong daily support that was clearly visible on your chart. The engine simply didn't see it. Now it does — and it will block that entry.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.0.7
 _Released: 2026-05-12T14:19:58+00:00_
 
