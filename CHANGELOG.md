@@ -1,3 +1,39 @@
+## Gunbot v31.1.5
+_Released: 2026-06-02T09:52:24+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Futures v1.3.3 — Patch Day 15: Deep OrderFlow Data & Ghost-Kill Guard* - Why it matters to you: When a Stop Loss or "Kill Position" executes, the exchange can take a few seconds (Or minutes) to update. On the next tick, the bot might still see the position as active and fire a second close order, accidentally opening an unwanted position in the opposite direction.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.3 — Patch Day 15: Deep OrderFlow Data & Ghost-Kill Guard* - What it does: I introduced a "Ghost-Kill Guard." Once a close order is sent, the bot locks out any further kill attempts on that pair for at least 2 candles, giving the exchange API time to update and preventing phantom double-orders.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *GTREND FUTURES 10.8 🚀* - 🛠 Fixed: Resolved chart line visualization issues for clearer trend tracking.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Improved
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Improved overall buy and sell decision making  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Improved candle analysis for better buy timing  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Smoother performance on different timeframes  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Improved automatic period adjustment (strategy can change timeframes by itself)  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Improved Expected Price Range calculation (more accurate targets)  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Improved safety when in losing positions  _(by Ahpigsy)_
+- *GTREND FUTURES 10.8 🚀* - 🛡 Optimized: Refined anti-liquidation and debagging protocols to maintain tighter DCA spreads, ensuring more precise hedging execution during volatile market shifts.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+- *GTREND FUTURES 10.8 🚀* - ⚡️ Performance: Implemented deeper code-level optimizations to boost execution speed and platform adaptability.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+#### Added
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Added smart cooldown system (prevents buying too often)  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Added Volatility display in the side panel  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Added Volatility Breakout system  _(by Ahpigsy)_
+
+#### Changed
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Better handling of price movements and safety checks  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Stronger safety exits when price moves against you  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Better tracking of last buy and sell times  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Better Moon Mode logic (lets profits run when in profit)  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Cleaner and more helpful messages in the panel  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Can now buy when market movement is strong  _(by Ahpigsy)_
+- *Candle Analysis Strategy Version 1.86 – Update Log* - Shows clear breakout messages in the panel  _(by Ahpigsy)_
+- *GTREND FUTURES 10.8 🚀* - ✨ UX Refinement: Updated default parameters to foster a more intuitive trend-following experience, significantly reducing the complexity of configuration.  _(by LUIS 🏴‍☠️ https://ai-markets.shop/en CRYPTO BOT, MINING & GOODS SUPPLIER)_
+
+
+---
+
 ## Gunbot v31.1.4
 _Released: 2026-05-29T12:46:56+00:00_
 
