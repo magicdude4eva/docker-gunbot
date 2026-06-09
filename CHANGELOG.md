@@ -1,3 +1,26 @@
+## Gunbot v31.1.6
+_Released: 2026-06-05T11:38:44+00:00_
+
+#### Fixes
+- fix steps for new comers registering their licenses. Thanks @Deebzie
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - What it does: New session mode that runs at full power all week and automatically shifts to protected mode on weekends only. No timers, no manual switching.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - Why it matters to you: A ranging market and a trending market look the same to a fixed threshold. One deserves caution, the other deserves confidence.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - What it does: The bot now reads real-time market intensity and adjusts entry difficulty accordingly — automatically raising the bar when conditions are extreme (too quiet or too wild) and relaxing it when things are healthy. Current status visible in the GUI at all times.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - How to activate: Enable ATR Strength Classifier in settings.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - What it does: A new pre-entry gate that confirms momentum is alive before allowing the order through. If the move is fading, the bot waits for a fresh burst instead of chasing the tail.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.3.4 — Patch Day 16: Weekend Shield, Market Radar & Momentum Guard* - How to activate: Enable ROC Momentum Filter in settings.  _(by ɄⱤł - Gunbot.com/es wickmagic.gunthy.es - @CrazyMop)_
+
+#### Added
+- implement 2fa settings for live and local new gui
+
+#### Other
+- vanilla build here
+
+**Download:** legacy executables are now available at https://www.gunbot.com/downloads/
+
+
+---
+
 ## Gunbot v31.1.5
 _Released: 2026-06-02T09:52:24+00:00_
 
