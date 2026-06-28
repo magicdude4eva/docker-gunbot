@@ -51,10 +51,10 @@ jobs:
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_DOWNLOAD_URL")
           # Extract the version from the Linux download link text
-          version=$(echo "$html_content" | grep -oP 'href="https://gunthy\.org/downloads/gunthy_linux\.zip".*?\(v\K[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          version=$(echo "$html_content" | grep -oP '<h2[^>]*>Linux<\/h2>\s*<span[^>]*>\K[^<]+' | head -1)
           if [ -z "$version" ]; then
             echo "Warning: Could not extract version from download page, using fallback"
-            version="30.5.9"
+            version="31.3.1"
           else
             version="v$version"
           fi
