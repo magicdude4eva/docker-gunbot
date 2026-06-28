@@ -19,7 +19,7 @@
 FROM debian:bookworm-slim AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG GUI_INSTALL_URL="https://gunthy.org/downloads/beta/gui-linux.zip"
+ARG GUI_INSTALL_URL="https://gunthy.org:3009/beta/gui-linux.zip"
 ARG CACHEBUST=1
 ARG TARGETPLATFORM
 ARG TARGETARCH
