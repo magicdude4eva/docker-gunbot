@@ -19,7 +19,7 @@
 FROM debian:bookworm-slim AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG INSTALL_URL="https://gunthy.org/downloads/gunthy_linux.zip"
+ARG INSTALL_URL="https://gunthy.org:3009/beta/gunthy-linux-x64.zip"
 ARG CACHEBUST=1
 ARG TARGETPLATFORM
 ARG TARGETARCH
