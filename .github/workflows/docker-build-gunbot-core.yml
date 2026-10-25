@@ -6,6 +6,11 @@ on:
     - cron: "0 6 * * *"
   workflow_dispatch:
     # Allow manual execution
+    inputs:
+      force:
+        description: "Rebuild even if the version tag already exists on Docker Hub"
+        type: boolean
+        default: false
   push:
     branches:
       - main
@@ -52,7 +57,10 @@ jobs:
           # The download page loads its version from checksums.json at runtime;
           # the prerendered HTML badge can lag behind, so only use it as a fallback.
           echo "Fetching Gunbot version from $GUNBOT_CHECKSUMS_URL..."
-          version=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_CHECKSUMS_URL" | jq -r '.version // empty' || true)
+          checksums=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_CHECKSUMS_URL" || true)
+          version=$(echo "$checksums" | jq -r '.version // empty' || true)
+          sha256=$(echo "$checksums" | jq -r '."gunthy-linux-x64.zip" // empty' || true)
+          echo "sha256=$sha256" >> "$GITHUB_OUTPUT"
           if [ -z "$version" ]; then
             echo "Warning: checksums.json had no version, falling back to download page HTML"
             html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_DOWNLOAD_URL")
@@ -81,7 +89,10 @@ jobs:
 
           # Public repo check via Docker Hub API
           resp=$(curl -sS --retry 3 --retry-delay 2 "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/${version}/" || true)
-          if echo "$resp" | grep -q '"name"'; then
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.force }}" = "true" ]; then
+            echo "Forced rebuild (${{ github.event_name }}). Proceeding."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          elif echo "$resp" | grep -q '"name"'; then
             echo "Version $version already exists on Docker Hub. Skipping build."
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
@@ -165,7 +176,8 @@ jobs:
           push: true
           # Bust the cached download layer so each version fetches a fresh binary
           build-args: |
-            CACHEBUST=${{ steps.version.outputs.version }}
+            CACHEBUST=${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha256 }}
+            INSTALL_SHA256=${{ steps.version.outputs.sha256 }}
           tags: |
             ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
             ${{ env.DOCKER_IMAGE }}:latest

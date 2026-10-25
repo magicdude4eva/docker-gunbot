@@ -19,7 +19,11 @@
 FROM debian:bookworm-slim AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG INSTALL_URL="https://gunthy.org:3009/beta/gunthy-linux-x64.zip"
+# Must match the source of the version in checksums.json used by CI
+# (the :3009/beta mirror lags behind and serves older builds)
+ARG INSTALL_URL="https://gunthy.org/downloads/gunthy-linux-x64.zip"
+# Optional: expected sha256 of the zip (from checksums.json); verified when set
+ARG INSTALL_SHA256=""
 ARG CACHEBUST=1
 ARG TARGETPLATFORM
 ARG TARGETARCH
@@ -31,9 +35,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /tmp/gunthy
 
-# Stream-extract (no giant .zip left behind)
+# Download, verify (if checksum given), extract, drop the zip
 RUN echo "cb=${CACHEBUST}" >/dev/null \
- && curl -fsSL "${INSTALL_URL}?cb=${CACHEBUST}" | bsdtar -x -f - \
+ && curl -fsSL -o /tmp/gunthy.zip "${INSTALL_URL}?cb=${CACHEBUST}" \
+ && if [ -n "${INSTALL_SHA256}" ]; then echo "${INSTALL_SHA256}  /tmp/gunthy.zip" | sha256sum -c -; fi \
+ && bsdtar -x -f /tmp/gunthy.zip \
+ && rm -f /tmp/gunthy.zip \
  && chmod 0555 /tmp/gunthy/gunthy-linux
 
 # Conservative pruning (keeps runtime intact)
