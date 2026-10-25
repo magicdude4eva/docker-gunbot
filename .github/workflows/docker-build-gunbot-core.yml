@@ -16,6 +16,7 @@ on:
       - main
     paths:
       - "Dockerfile"
+      - "docker-entrypoint.sh"
       - ".github/workflows/docker-build-gunbot-core.yml"
       - ".github/scripts/**"
 
