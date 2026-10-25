@@ -1,3 +1,43 @@
+## Gunbot v31.7.1
+_Released: 2026-10-23T12:38:18+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Futures v1.5.13 Patch Notes* - 💰 Fix: Compound Cutting The Trading Limit After A Winning Cycle  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.13 Patch Notes* - 🧹 Fix: Clean Restart When Compound Is Turned Back On  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.11 Patch Notes* - 💰 Fix: Compound On Cycles With Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.11 Patch Notes* - 📉 Fix: Compound On Short-Only Pairs  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.11 Patch Notes* - 🧹 Fix: Clean Restart When Compound Is Turned Back On  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Spot v2.9.v32 (OrderFlow Magic 1.2.19) Patch Notes* - 💰 Fix: Compound After Partial Sells  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Spot v2.9.v32 (OrderFlow Magic 1.2.19) Patch Notes* - 🧹 Fix: Clean Restart When Compound Is Turned Back On  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.11 Patch Notes* - 🔁 Fix: DCA Freezing After A Bounce  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.13 Patch Notes* - 🔁 Fix: Re-Entry After Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+
+#### Added
+- Start with two strategies, or add more to compare several alternatives at once.
+- 3. Add more if you want
+- Click Add to create another two dropdowns. Repeat as needed. Empty dropdowns are ignored.
+- The initial results come from historical candle replay. While observation remains active, new closed candles add forward observations, reported separately from the historical results.
+
+#### Changed
+- You can also expand a strategy’s simulation parameters to adjust settings such as its trading limit. These edits affect the virtual simulation only.
+- The full catalog is available in the dropdowns. Some entries still require a replay adapter or additional historical inputs, such as external signals or order-book updates. If a strategy cannot be simulated, it shows an explicit error. Results from other successful simulations remain available.
+- Multiverse Agent places no live orders and does not automatically change your pair’s strategy. Review the comparison, then decide which strategy and settings you want to apply yourself.
+
+#### GUI
+- A combined chart showing all completed simulations
+- An individual chart for each strategy
+
+#### Exchange
+- Optional pair-by-pair comparison details
+
+#### Other
+- Numeric results including return, equity, profit/loss, drawdown and buy/sell counts
+- A historical ranking, with the highest return first
+- I'm actually having issues uploading the builds at our server, i'll do ole times for now: i'll post executables here  _(by @crazymop)_
+
+
+---
+
 ## Gunbot v31.1.6
 _Released: 2026-06-05T11:38:44+00:00_
 
