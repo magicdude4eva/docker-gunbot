@@ -21,6 +21,7 @@ permissions:
 env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
+  GUNBOT_CHECKSUMS_URL: https://gunthy.org/downloads/checksums.json
 
 concurrency:
   group: gunbot-docker-build
@@ -45,46 +46,27 @@ jobs:
       - name: Extract Gunbot version from website
         id: version
         shell: bash
-        env:
-          GUNBOT_DOWNLOAD_URL: ${{ env.GUNBOT_DOWNLOAD_URL }}
         run: |
           set -euo pipefail
-
-          echo "Fetching Gunbot version from download page..."
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          html=$(curl -fsSL --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_DOWNLOAD_URL")
-
-          version=""
-          version="$(python3 - "$html" <<'PY'
-          import re, sys
-
-          html = sys.argv[1]
-
-          patterns = [
-              re.compile(r'(?is)<h[1-6][^>]*>\s*linux\s*</h[1-6]>.*?(?:v?(\d+\.\d+\.\d+))'),
-              re.compile(r'(?is)linux.*?(?:v?(\d+\.\d+\.\d+))'),
-              re.compile(r'(?is)v?(\d+\.\d+\.\d+)'),
-          ]
-
-          for p in patterns:
-              m = p.search(html)
-              if m:
-                  print(m.group(1))
-                  break
-          PY
-          )"
-
-          if [ -z "${version:-}" ]; then
-            echo "Warning: Could not extract version from download page, using fallback"
-            version="31.3.1"
+          # The download page loads its version from checksums.json at runtime;
+          # the prerendered HTML badge can lag behind, so only use it as a fallback.
+          echo "Fetching Gunbot version from $GUNBOT_CHECKSUMS_URL..."
+          version=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_CHECKSUMS_URL" | jq -r '.version // empty' || true)
+          if [ -z "$version" ]; then
+            echo "Warning: checksums.json had no version, falling back to download page HTML"
+            html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_DOWNLOAD_URL")
+            version=$(echo "$html_content" | grep -oP '<h2[^>]*>Linux<\/h2>\s*<span[^>]*>\K[^<]+' | head -1 || true)
           fi
-
+          # Normalise to "vX.Y.Z" whether or not the source already has a "v"
           version="${version#v}"
-          version="v${version}"
-
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: could not detect a valid Gunbot version (got '$version')"
+            exit 1
+          fi
+          version="v$version"
           echo "Detected Gunbot version: $version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-
 
       # ------------------------------------------------------------
       # Skip build if tag already exists on Docker Hub
@@ -181,6 +163,9 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
+          # Bust the cached download layer so each version fetches a fresh binary
+          build-args: |
+            CACHEBUST=${{ steps.version.outputs.version }}
           tags: |
             ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
             ${{ env.DOCKER_IMAGE }}:latest
