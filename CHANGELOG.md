@@ -1,3 +1,20 @@
+## Gunbot v31.7.2
+_Released: 2026-10-27T14:21:55+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Hedge v1.3.13 Patch Notes* - 🗜 Fix: SHORT Partials On DCA Lots  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.13 Patch Notes* - 🛡 Fix: HCM Rebalance No Longer Shorts The Bottom  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.13 Patch Notes* - 🎯 Fix: False Trailing After Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.13 Patch Notes* - 🧮 Fix: True Cost After Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.13 Patch Notes* - 🪙 Fix: Partials With Small Trade Size  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.15 Patch Notes* - 🎯 Fix: False Trailing After Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.15 Patch Notes* - 🧮 Fix: True Cost After Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.15 Patch Notes* - 🪙 Fix: Partials With Small Trade Size  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.15 Patch Notes* - 🏷 Fix: Clearer Sidebar And Chart Labels  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.7.1
 _Released: 2026-10-23T12:38:18+00:00_
 
