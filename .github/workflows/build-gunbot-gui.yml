@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - "gui/**"
-      - ".github/workflows/docker-build-gunbot-gui.yml"
+      - ".github/workflows/build-gunbot-gui.yml"
 
 # Least-privilege but enough to create releases and read repo
 permissions:
