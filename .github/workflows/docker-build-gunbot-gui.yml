@@ -6,11 +6,16 @@ on:
     - cron: "0 6 * * *"
   workflow_dispatch:
     # Allow manual execution
+    inputs:
+      force:
+        description: "Rebuild even if the version tag already exists on Docker Hub"
+        type: boolean
+        default: false
   push:
     branches:
       - main
     paths:
-      - "gui/Dockerfile"
+      - "gui/**"
       - ".github/workflows/docker-build-gunbot-gui.yml"
 
 # Least-privilege but enough to create releases and read repo
@@ -20,6 +25,8 @@ permissions:
 env:
   DOCKER_IMAGE: magicdude4eva/gunbot-gui
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
+  GUNBOT_CHECKSUMS_URL: https://gunthy.org/downloads/checksums.json
+  GUI_FALLBACK_URL: https://gunthy.org:3009/beta/gui-linux.zip
 
 concurrency:
   group: gunbot-docker-gui-build
@@ -33,24 +40,64 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Extract Gunbot GUI version from website
+      - name: Extract Gunbot GUI version and download URL
         id: version
         shell: bash
         run: |
           set -euo pipefail
-          echo "Fetching Gunbot GUI version from download page..."
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "${{ env.GUNBOT_DOWNLOAD_URL }}")
-          # Extract the version from the title attribute of the specific GUI Linux download link
-          version=$(echo "$html_content" | grep -oP 'href="https://gunthy\.org[^"]*/beta/gui-linux\.zip"[^>]*title="[^"]*based on v\K[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          html_content=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_DOWNLOAD_URL" || true)
+
+          # Version: checksums.json first, download-page link title as fallback
+          echo "Fetching Gunbot GUI version from $GUNBOT_CHECKSUMS_URL..."
+          checksums=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_CHECKSUMS_URL" || true)
+          version=$(echo "$checksums" | jq -r '.guiversion // empty' || true)
           if [ -z "$version" ]; then
-            echo "Warning: Could not extract version from download page, using fallback"
-            version="31.0.3"
-          else
-            version="v$version"
+            echo "Warning: checksums.json had no guiversion, falling back to download page HTML"
+            version=$(echo "$html_content" | grep -oP 'href="https://gunthy\.org[^"]*/gui-linux\.zip"[^>]*title="[^"]*based on v?\K[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
           fi
+          # Normalise to "vX.Y.Z" whether or not the source already has a "v"
+          version="${version#v}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: could not detect a valid Gunbot GUI version (got '$version')"
+            exit 1
+          fi
+          version="v$version"
+
+          # Download URL: Linux GUI link on the download page, fixed mirror as fallback
+          url=$(echo "$html_content" | grep -oP 'href="\Khttps://gunthy\.org[^"]*/gui-linux\.zip(?=")' | head -1 || true)
+          if [ -z "$url" ]; then
+            echo "Warning: GUI download link not found on download page, using $GUI_FALLBACK_URL"
+            url="$GUI_FALLBACK_URL"
+          fi
+          if ! [[ "$url" =~ ^https://gunthy\.org(:[0-9]+)?/ ]]; then
+            echo "Error: refusing download URL with unexpected host: $url"
+            exit 1
+          fi
+
+          # checksums.json has no hash for the GUI bundle, so pin the hash of
+          # what we download here; the Docker build verifies the same bytes.
+          curl -fsSL --retry 3 --retry-delay 2 -o gui.zip "$url"
+          size=$(stat -c %s gui.zip)
+          if [ "$size" -le 52428800 ]; then
+            echo "Error: GUI bundle is only $size bytes (expected > 50 MB)"
+            exit 1
+          fi
+          if ! unzip -Z1 gui.zip | grep -x 'gui-linux' >/dev/null; then
+            echo "Error: GUI bundle does not contain a gui-linux binary"
+            exit 1
+          fi
+          sha256=$(sha256sum gui.zip | cut -d' ' -f1)
+          rm -f gui.zip
+
           echo "Detected Gunbot GUI version: $version"
-          echo "version=$version" >> "$GITHUB_OUTPUT"          
+          echo "Download URL: $url ($size bytes)"
+          echo "sha256: $sha256"
+          {
+            echo "version=$version"
+            echo "url=$url"
+            echo "sha256=$sha256"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Check if version already exists on Docker Hub
         id: check
@@ -62,7 +109,10 @@ jobs:
 
           # Public repo check via Docker Hub API
           resp=$(curl -sS --retry 3 --retry-delay 2 "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/${version}/" || true)
-          if echo "$resp" | grep -q '"name"'; then
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.force }}" = "true" ]; then
+            echo "Forced rebuild (${{ github.event_name }}). Proceeding."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          elif echo "$resp" | grep -q '"name"'; then
             echo "Version $version already exists on Docker Hub. Skipping build."
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
@@ -88,18 +138,22 @@ jobs:
           context: ./gui
           platforms: linux/amd64
           push: true
+          # Bust the cached download layer whenever the version or bundle changes
+          build-args: |
+            GUI_INSTALL_URL=${{ steps.version.outputs.url }}
+            GUI_VERSION=${{ steps.version.outputs.version }}
+            CACHEBUST=${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha256 }}
+            INSTALL_SHA256=${{ steps.version.outputs.sha256 }}
           tags: |
             ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
             ${{ env.DOCKER_IMAGE }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          # Optional: add OCI labels from the detected version
           labels: |
             org.opencontainers.image.title=Gunbot GUI Docker Image using minimal GlibC image
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
-        # Create a GitHub release using a maintained action
       - name: Create GitHub Release
         if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
@@ -115,11 +169,14 @@ jobs:
             - ${{ env.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
             - ${{ env.DOCKER_IMAGE }}:latest
 
+            ### 🔒 Bundle
+            - Source: ${{ steps.version.outputs.url }}
+            - sha256: `${{ steps.version.outputs.sha256 }}`
+
             ### 🔗 Links
             - Docker Hub: https://hub.docker.com/r/${{ env.DOCKER_IMAGE }}
             - Documentation: https://github.com/${{ github.repository }}/blob/main/README.md
             - Purchase Gunbot: https://gunbot.at/
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
