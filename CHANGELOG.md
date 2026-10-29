@@ -1,3 +1,22 @@
+## Gunbot v31.7.3
+_Released: 2026-10-28T20:51:14+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - 🔪 Fix: Kill Position Trailing No Longer Closes At A Loss  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - How to activate: automatic (Futures Safety → Enable Trailing Stop on).  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - 🛑 Fix: SHORT Trailing Resets When Price Crosses Entry  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - 🪙 Fix: Aster Multi-Assets Blocking Entries  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - ₿ Fix: Total Capital In BTC Collateral Presets  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.14 Patch Notes* - 🏷 Fix: Above Guard Label On Shorts  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.16 Patch Notes* - 🔪 Fix: Kill Position Trailing No Longer Closes At A Loss  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.16 Patch Notes* - How to activate: automatic (Futures Safety → Enable Trailing Stop on).  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.16 Patch Notes* - 🪙 Fix: Aster Multi-Assets Blocking Entries  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.16 Patch Notes* - ₿ Fix: Total Capital In BTC Collateral Presets  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.16 Patch Notes* - 🏷 Fix: Above Guard Label On Shorts  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.7.2
 _Released: 2026-10-27T14:21:55+00:00_
 
