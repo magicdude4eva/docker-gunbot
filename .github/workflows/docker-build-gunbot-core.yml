@@ -28,6 +28,7 @@ env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
   GUNBOT_CHECKSUMS_URL: https://gunthy.org/downloads/checksums.json
+  GUNBOT_INSTALL_URL: https://gunthy.org/downloads/gunthy-linux-x64.zip
 
 concurrency:
   group: gunbot-docker-build
@@ -92,14 +93,32 @@ jobs:
           resp=$(curl -sS --retry 3 --retry-delay 2 "https://hub.docker.com/v2/repositories/${{ env.DOCKER_IMAGE }}/tags/${version}/" || true)
           if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.force }}" = "true" ]; then
             echo "Forced rebuild (${{ github.event_name }}). Proceeding."
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            exists=false
           elif echo "$resp" | grep -q '"name"'; then
             echo "Version $version already exists on Docker Hub. Skipping build."
-            echo "exists=true" >> "$GITHUB_OUTPUT"
+            exists=true
           else
             echo "Version $version not found on Docker Hub. Proceeding."
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            exists=false
           fi
+
+          # Upstream sometimes publishes checksums.json before the zip is re-uploaded.
+          # Verify before building; on mismatch skip like an existing tag (retried next run).
+          expected="${{ steps.version.outputs.sha256 }}"
+          if [ "$exists" = "false" ] && [ -n "$expected" ]; then
+            curl -fsSL --retry 3 --retry-delay 2 -o "$RUNNER_TEMP/gunthy.zip" "$GUNBOT_INSTALL_URL"
+            actual=$(sha256sum "$RUNNER_TEMP/gunthy.zip" | cut -d' ' -f1)
+            rm -f "$RUNNER_TEMP/gunthy.zip"
+            if [ "$actual" != "$expected" ]; then
+              msg="Bundle for $version does not match checksums.json yet (expected $expected, got $actual). Skipping build."
+              echo "::warning title=Gunbot checksum mismatch::$msg"
+              echo "### ⚠️ Skipped: $msg" >> "$GITHUB_STEP_SUMMARY"
+              exists=true
+            else
+              echo "Bundle sha256 matches checksums.json: $actual"
+            fi
+          fi
+          echo "exists=$exists" >> "$GITHUB_OUTPUT"
 
       # ------------------------------------------------------------
       # Telegram → changelog (tight window; only if building)
@@ -177,6 +196,7 @@ jobs:
           push: true
           # Bust the cached download layer so each version fetches a fresh binary
           build-args: |
+            INSTALL_URL=${{ env.GUNBOT_INSTALL_URL }}
             CACHEBUST=${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha256 }}
             INSTALL_SHA256=${{ steps.version.outputs.sha256 }}
           tags: |
