@@ -1,3 +1,29 @@
+## Gunbot v31.7.4
+_Released: 2026-11-02T12:54:44+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Spot v2.9.v33 (OrderFlow Magic 1.2.20) Patch Notes* - 🧹 Fix: Less Log Noise on S/R Zone Change  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Spot v2.9.v33 (OrderFlow Magic 1.2.20) Patch Notes* - Why it matters: after the price moved to a new support zone, the same “zone reset” line was written on every tick until the next re-buy, filling the logs.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Spot v2.9.v33 (OrderFlow Magic 1.2.20) Patch Notes* - What it does: the zone change is now logged once per change. Re-buys work the same.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Spot v2.9.v33 (OrderFlow Magic 1.2.20) Patch Notes* - 📖 Updated Bible up to 1.2.20: https://github.com/truitaman/wickmagic/wiki  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - 🛡 Fix: Short Trail Exit Blocked on Bitget/Bybit  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - 📏 New Feature: Partial Close Auto Distance (experimental)  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - Why it matters: DCA and Scale-In already space themselves with the market, but the partial close target was a fixed %, so it could close almost on top of each entry.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - What it does: the partial target follows volatility with the same settings as Re-Entry DCA: Auto Spread, so each partial sits at a consistent distance from the entry it closes. Never below Minimum Profit to Exit, exchange fees always added on top. The Next Partial Close tooltip shows the distance in use.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - How to activate: Experimental & Logging → Partial Close: Auto Distance ON (with Enable Partial Close ON).  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - ⚖️ Fix: Smart Rebalance After an Emergency Short Close  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - 🧾 New Feature: True Cost on the Short Pair  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - 🧾 Fix: Short Close Reason in Logs  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - 🧹 Fix: Less Log Noise on S/R Zone Change  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Hedge v1.3.16 Patch Notes* - What it does: the zone change is now logged once per change, on both legs.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.17 Patch Notes* - 🧹 Fix: Less Log Noise on S/R Zone Change  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.17 Patch Notes* - Why it matters: after the price moved to a new S/R zone, the same “zone changed” line was written on every tick until the next re-entry, filling the logs.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.17 Patch Notes* - What it does: the zone change is now logged once per change. Re-entries work the same.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.17 Patch Notes* - 📖 Bible updated up to 1.5.17: https://github.com/truitaman/OrderFlow-Magic-Futures/wiki  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.7.3
 _Released: 2026-10-28T20:51:14+00:00_
 
