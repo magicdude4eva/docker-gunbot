@@ -13,14 +13,17 @@ mkdir -p "${GUNTHY_DATA}/backtesting" \
          "${GUNTHY_DATA}/json" \
          "${GUNTHY_DATA}/logs"
 
-# Ensure a real config.js file lives in /data (no symlink)
-if [ ! -f "${GUNTHY_DATA}/config.js" ]; then
-  # seed from image example if present, else empty object
-  if [ -f "${GUNTHY_HOME}/config-js-example.txt" ]; then
-    cp -f "${GUNTHY_HOME}/config-js-example.txt" "${GUNTHY_DATA}/config.js"
-  else
-    echo '{}' > "${GUNTHY_DATA}/config.js"
+# Seed default configs from the full-install bundle as real files in /data (no symlinks);
+# never overwrite existing ones
+for cfg in config.js autoconfig.json UTAconfig.json; do
+  if [ ! -f "${GUNTHY_DATA}/${cfg}" ] && [ -f "${GUNTHY_HOME}/${cfg}" ]; then
+    cp "${GUNTHY_HOME}/${cfg}" "${GUNTHY_DATA}/${cfg}"
+    chown gunthy:gunthy "${GUNTHY_DATA}/${cfg}" || true
   fi
+done
+if [ ! -f "${GUNTHY_DATA}/config.js" ]; then
+  echo '{}' > "${GUNTHY_DATA}/config.js"
+  chown gunthy:gunthy "${GUNTHY_DATA}/config.js" || true
 fi
 
 # Symlink read-only runtime assets into /data so the binary can resolve them relative to CWD.
