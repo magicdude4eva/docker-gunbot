@@ -19,9 +19,10 @@
 FROM debian:bookworm-slim AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
-# Must match the source of the version in checksums.json used by CI
-# (the :3009/beta mirror lags behind and serves older builds)
-ARG INSTALL_URL="https://gunthy.org/downloads/gunthy-linux-x64.zip"
+# "Full Install" bundle (binary + default config.js, autoconfig.json, UTAconfig.json);
+# CI verifies it against the "gunthy_linux.zip" key in checksums.json.
+# The "executable only" gunthy-linux-x64.zip and the :3009/beta mirror can lag behind.
+ARG INSTALL_URL="https://gunthy.org/downloads/gunthy_linux.zip"
 # Optional: expected sha256 of the zip (from checksums.json); verified when set
 ARG INSTALL_SHA256=""
 ARG CACHEBUST=1

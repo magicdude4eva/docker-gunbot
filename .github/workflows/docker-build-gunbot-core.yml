@@ -28,7 +28,9 @@ env:
   DOCKER_IMAGE: magicdude4eva/gunbot-colorised
   GUNBOT_DOWNLOAD_URL: https://www.gunbot.com/downloads/
   GUNBOT_CHECKSUMS_URL: https://gunthy.org/downloads/checksums.json
-  GUNBOT_INSTALL_URL: https://gunthy.org/downloads/gunthy-linux-x64.zip
+  # "Full Install" bundle from the download page (binary + default configs);
+  # its sha256 is the "gunthy_linux.zip" key in checksums.json
+  GUNBOT_INSTALL_URL: https://gunthy.org/downloads/gunthy_linux.zip
 
 concurrency:
   group: gunbot-docker-build
@@ -61,7 +63,7 @@ jobs:
           echo "Fetching Gunbot version from $GUNBOT_CHECKSUMS_URL..."
           checksums=$(curl -sS --retry 3 --retry-delay 2 --user-agent "$UA" "$GUNBOT_CHECKSUMS_URL" || true)
           version=$(echo "$checksums" | jq -r '.version // empty' || true)
-          sha256=$(echo "$checksums" | jq -r '."gunthy-linux-x64.zip" // empty' || true)
+          sha256=$(echo "$checksums" | jq -r '."gunthy_linux.zip" // empty' || true)
           echo "sha256=$sha256" >> "$GITHUB_OUTPUT"
           if [ -z "$version" ]; then
             echo "Warning: checksums.json had no version, falling back to download page HTML"
