@@ -1,3 +1,16 @@
+## Gunbot v31.7.5
+_Released: 2026-11-08T22:57:30+00:00_
+
+#### Fixes
+- *🔧 Wick Magic Futures v1.5.19 Patch Notes* - What it does: shows the nearest liquidation clusters above and below price, in the sidebar and as lines on the chart. A cluster close to price is highlighted ⚠️. Observe only for now: entries, DCA and exits are not changed.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.19 Patch Notes* - 🛡 Fix: Minimum Close Profit Now Covers Fees  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.19 Patch Notes* - 🧾 Fix: True Cost Updated After Market Partials  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.19 Patch Notes* - What it does: market partial closes are now booked as soon as the exchange accepts them, so True Cost, partial cooldown and Compound Profits update as expected.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+- *🔧 Wick Magic Futures v1.5.19 Patch Notes* - 📖 Docs: Liquidation Map added to the Bible.  _(by ɄⱤł - Gunbot.com/es demo.gunthy.es - @CrazyMop)_
+
+
+---
+
 ## Gunbot v31.7.4
 _Released: 2026-11-02T12:54:44+00:00_
 
