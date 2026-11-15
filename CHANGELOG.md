@@ -1,3 +1,12 @@
+## Gunbot v31.7.7
+_Released: 2026-11-15T13:19:11+00:00_
+
+#### Security
+- security patch for people running custom strats in demo mode
+
+
+---
+
 ## Gunbot v31.7.6
 _Released: 2026-11-13T15:54:44+00:00_
 
